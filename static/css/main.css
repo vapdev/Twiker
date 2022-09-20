@@ -1,0 +1,23 @@
+body{
+    background: #f9f9f9;
+}
+
+.wrapper-tweeks{
+    margin-top: 30px;
+}
+
+.wrapper-tweeks .tweek{
+    margin-bottom: 10px;
+    padding: 20px;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.wrapper-tweeks .tweek .name{
+    font-weight: bold;
+}
+
+.wrapper-tweeks .tweek .info{
+    font-size: 12px;
+    color: #aaa;
+}

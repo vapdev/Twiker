@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% load humanize %}
+
+{% block content %}
+    <div class="container">
+        <div class="columns">
+            <div class="column is-12">
+                <h1 class="title">{{ user.username }}</h1>
+
+                {% if user.twikkerprofile.avatar %}
+                    <figure class="image is-128x128">
+                        <img src="{{ user.twikkerprofile.avatar.url }}" alt="Avatar">
+                    </figure>
+                {% endif %}
+
+                <hr>
+
+                <p><a href="{% url 'followers' user.username %}">Followers: {{ user.twikkerprofile.followed_by.count }}</a></p>
+                <p><a href="{% url 'follows' user.username %}">Follows: {{ user.twikkerprofile.follows.count }}</a></p>
+
+                {% if user != request.user %}
+                    {% if request.user.twikkerprofile in user.twikkerprofile.followed_by.all %}
+                        <a href="{% url 'unfollow_tweeker' user.username %}" class="button is-danger">Unfollow</a>
+                    {% else %}
+                        <a href="{% url 'follow_tweeker' user.username %}" class="button is-success">Follow</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-8">
+                <div class="wrapper-tweeks">
+                    {% for tweek in user.tweeks.all %}
+                        <div class="tweek">
+                            <article class="media">
+                                <figure class="media-left">
+                                    <p class="image is-64x64">
+                                        {%  if user.twikkerprofile.avatar %}
+                                            <img src="{{ user.twikkerprofile.avatar.url}}">
+                                        {% endif %}
+                                    </p>
+                                </figure>
+
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p>
+                                            <strong>{{ tweek.created_ny.username }}</strong>
+                                            <small>{{ tweek.created_at|naturaltime }}</small>
+                                            <br>
+                                            {{ tweek.body }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
