@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+
+{% load humanize %}
+
+{% block content %}
+    <div class="container">
+        <div class="columns">
+            <div class="column is-12">
+                <h1 class="title">All Users</h1>
+
+                <p>Total users: {{ users.count }}</p>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-8">
+                {% for tweeker in users %}
+                    <p><a href="{% url 'twikkerprofile' tweeker.user.username %}">{{ tweeker.user.username }}</a></p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

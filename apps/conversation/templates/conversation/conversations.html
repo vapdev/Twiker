@@ -3,7 +3,7 @@
 {% load humanize %}
 
 {% block content %}
-    <div class=""container>
+    <div class="container">
         <div class="columns">
             <div class="column is-12">
                 <h1 class="title">Conversations</h1>
@@ -14,7 +14,7 @@
                             {% for user in conversation.users.all %}
                                 {% if user != request.user %}
                                     <a href="{% url 'conversation' user.id %}">
-                                        <p>{{ user.username }} - {{ conversation.modified_at|naturaltime }}</p>]
+                                        <p>{{ user.username }} - {{ conversation.modified_at|naturaltime }}</p>
                                     </a>
                                 {% endif %}
                             {% endfor %}

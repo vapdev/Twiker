@@ -7,7 +7,7 @@ from .models import Notification
 @login_required
 def notifications(request):
     goto = request.GET.get('goto', '')
-    notification_id = request.GET.get('notification_id', 0)
+    notification_id = request.GET.get('notification', 0)
 
     if goto != '':
         notification = Notification.objects.get(pk=notification_id)
@@ -23,4 +23,4 @@ def notifications(request):
         elif notification.notification_type == Notification.MENTION:
             return redirect('twikkerprofile', username=notification.created_by.username)
 
-    return render(request, 'notification/notifications.html', {'notifications': request.user.notifications.all()})
+    return render(request, 'notification/notifications.html')

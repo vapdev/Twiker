@@ -12,7 +12,7 @@ class Conversation(models.Model):
 
 
 class ConversationMessage(models.Model):
-    conversation = models.ForeignKey(Conversation, related_name='messages', on_delete=models.CASCADE)
+    conversation = models.ForeignKey(Conversation, related_name='messages', on_delete=models.CASCADE, null=True)
     content = models.TextField()
     created_by = models.ForeignKey(User, related_name='messages', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -21,6 +21,7 @@ class ConversationMessage(models.Model):
         ordering = ['created_at']
 
     def save(self, *args, **kwargs):
-        self.conversation.save()
+        if self.conversation:
+            self.conversation.save()
 
         super(ConversationMessage, self).save(*args, **kwargs)

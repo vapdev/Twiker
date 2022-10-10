@@ -17,14 +17,14 @@ def api_add_tweek(request):
 
     tweek = Tweek.objects.create(body=body, created_by=request.user)
 
-    results = re.findall("(^|[^\w])@(\w{1,20})", body)
+    results = re.findall("(^|[^@\w])@(\w{1,20})", body)
 
     for result in results:
         result = result[1]
 
         print(result)
 
-        if User.objects.filter(username=result).exists() and results != request.user.username:
+        if User.objects.filter(username=result).exists() and result != request.user.username:
             user = User.objects.get(username=result)
             create_notification(request, user, 'mention')
 
@@ -38,6 +38,30 @@ def api_add_like(request):
     if not Like.objects.filter(tweek_id=tweek_id).filter(created_by=request.user).exists():
         like = Like.objects.create(tweek_id=tweek_id, created_by=request.user)
         tweek = Tweek.objects.get(pk=tweek_id)
-        create_notification(request, tweek.created_by, 'like')
+        if request.user != tweek.created_by:
+            create_notification(request, tweek.created_by, 'like')
+
+    return JsonResponse({'success': True})
+
+@login_required
+def api_remove_like(request):
+    data = json.loads(request.body)
+    tweek_id = data['tweek_id']
+
+    if Like.objects.filter(tweek_id=tweek_id).filter(created_by=request.user).exists():
+        like = Like.objects.get(tweek_id=tweek_id, created_by=request.user)
+        like.delete()
+
+    return JsonResponse({'success': True})
+
+@login_required
+def api_delete_tweek(request):
+    data = json.loads(request.body)
+    tweek_id = data['tweek_id']
+
+    tweek = Tweek.objects.get(pk=tweek_id)
+
+    if tweek.created_by == request.user:
+        tweek.delete()
 
     return JsonResponse({'success': True})

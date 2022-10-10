@@ -11,6 +11,12 @@ def conversations(request):
     return render(request, 'conversation/conversations.html', {'conversations': conversations})
 
 @login_required
+def global_chat(request):
+    messages = ConversationMessage.objects.filter(conversation_id=None).order_by('created_at')
+
+    return render(request, 'conversation/global.html', {'messages': messages})
+
+@login_required
 def conversation(request, user_id):
     conversations = Conversation.objects.filter(users__in=[request.user.id])
     conversations = conversations.filter(users__in=[user_id])

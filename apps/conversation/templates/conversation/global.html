@@ -6,10 +6,10 @@
     <div class="container" id="conversationapp">
         <div class="columns">
             <div class="column is-12">
-                <h1 class="title">Conversation</h1>
+                <h1 class="title">Global Chat</h1>
 
                 <div class="messages">
-                    {% for message in conversation.messages.all %}
+                    {% for message in messages %}
                         <div class="tweek">
                             <article class="media">
                                 <figure class="media-left">
@@ -98,7 +98,7 @@
                         'tweeker': this.tweeker,
                         'created_at': this.created_at,
                         'avatar': this.avatar,
-                        'conversation_id': '{{ conversation.id }}'
+                        'conversation_id': null
                     };
 
                     this.messages.push(message);
