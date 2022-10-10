@@ -10,3 +10,9 @@ class Tweek(models.Model):
 
     class Meta:
         ordering = ('-created_at',)
+
+
+class Like(models.Model):
+    tweek = models.ForeignKey(Tweek, related_name='likes', on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, related_name='likes', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)

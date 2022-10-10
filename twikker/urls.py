@@ -19,10 +19,13 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views
 
+from apps.conversation.views import conversations, conversation
 from apps.core.views import frontpage, signup
-from apps.feed.api import api_add_tweek
+from apps.feed.api import api_add_tweek, api_add_like
 from apps.feed.views import feed, search
+from apps.notification.views import notifications
 from apps.twikkerprofile.views import twikkerprofile, edit_profile, follow_tweeker, unfollow_tweeker, followers, follows
+from apps.conversation.api import api_add_message
 
 urlpatterns = [
     #
@@ -41,6 +44,9 @@ urlpatterns = [
     path('search/', search, name='search'),
     path('u/<str:username>', twikkerprofile, name='twikkerprofile'),
     path('editprofile/', edit_profile, name='edit_profile'),
+    path('notifications/', notifications, name='notifications'),
+    path('conversations/', conversations, name='conversations'),
+    path('conversation/<int:user_id>', conversation, name='conversation'),
     path('u/<str:username>/follow/', follow_tweeker, name='follow_tweeker'),
     path('u/<str:username>/unfollow/', unfollow_tweeker, name='unfollow_tweeker'),
     path('u/<str:username>/followers/', followers, name='followers'),
@@ -51,6 +57,8 @@ urlpatterns = [
     # API
 
     path('api/add_tweek/', api_add_tweek, name='api_add_tweek'),
+    path('api/add_like/', api_add_like, name='api_add_like'),
+    path('api/add_message/', api_add_message, name='api_add_message'),
 
     #
     #

@@ -6,7 +6,8 @@ body{
     margin-top: 30px;
 }
 
-.wrapper-tweeks .tweek{
+.wrapper-tweeks .tweek,
+.notifications-wrapper .media{
     margin-bottom: 10px;
     padding: 20px;
     border-radius: 4px;

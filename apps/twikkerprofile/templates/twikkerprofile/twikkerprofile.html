@@ -3,7 +3,7 @@
 {% load humanize %}
 
 {% block content %}
-    <div class="container">
+    <div class="container" id="twikkerprofileapp">
         <div class="columns">
             <div class="column is-12">
                 <h1 class="title">{{ user.username }}</h1>
@@ -20,6 +20,7 @@
                 <p><a href="{% url 'follows' user.username %}">Follows: {{ user.twikkerprofile.follows.count }}</a></p>
 
                 {% if user != request.user %}
+                    <a href="{% url 'conversation' user.id %}" class="button is-info">Send message</a>
                     {% if request.user.twikkerprofile in user.twikkerprofile.followed_by.all %}
                         <a href="{% url 'unfollow_tweeker' user.username %}" class="button is-danger">Unfollow</a>
                     {% else %}
@@ -32,7 +33,7 @@
         <div class="columns">
             <div class="column is-8">
                 <div class="wrapper-tweeks">
-                    {% for tweek in user.tweeks.all %}
+                    {% for tweek in tweeks %}
                         <div class="tweek">
                             <article class="media">
                                 <figure class="media-left">
@@ -50,6 +51,10 @@
                                             <small>{{ tweek.created_at|naturaltime }}</small>
                                             <br>
                                             {{ tweek.body }}
+                                            <br>
+                                            <a @click="likeTweek({{ tweek.id }})" v-if="!liked_tweeks.includes({{ tweek.id }})">Like</a>
+                                            <span v-if="liked_tweeks.includes({{ tweek.id }})">Liked</span>
+                                            <small id="likes-{{ tweek.id }}">{{ tweek.likes.count }} likes</small>
                                         </p>
                                     </div>
                                 </div>
@@ -60,4 +65,46 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    new Vue({
+        el: '#twikkerprofileapp',
+        delimiters: ['[[', ']]'],
+        data(){
+            return{
+                liked_tweeks: [{% for tweek in tweeks %}{% if tweek.liked %}{{ tweek.id }},{% endif %}{% endfor %}],
+            }
+        },
+        methods: {
+            likeTweek(tweek_id){
+                this.liked_tweeks.push(parseInt(tweek_id));
+                var tweek = {
+                    'tweek_id': tweek_id,
+                };
+
+                fetch('/api/add_like/',{
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        credentials: 'same-origin',
+                        body: JSON.stringify(tweek)
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+
+                    const el = document.getElementById('likes-' + tweek_id);
+                    const likes = parseInt(el.innerHTML.split(' ')[0] + 1);
+                    el.innerHTML = likes + ' likes';
+            },
+        }
+    })
+</script>
 {% endblock %}

@@ -2,13 +2,25 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 
+from apps.notification.utilities import create_notification
+
 from .forms import TwikkerProfileForm
 
 def twikkerprofile(request, username):
     user = get_object_or_404(User, username=username)
+    tweeks = user.tweeks.all()
+
+    for tweek in tweeks:
+        likes = tweek.likes.filter(created_by__id=request.user.id)
+
+        if likes.count() > 0:
+            tweek.liked = True
+        else:
+            tweek.liked = False
 
     context = {
         'user': user,
+        'tweeks': tweeks,
     }
 
     return render(request, 'twikkerprofile/twikkerprofile.html', context)
@@ -37,6 +49,8 @@ def follow_tweeker(request, username):
     user = get_object_or_404(User, username=username)
 
     request.user.twikkerprofile.follows.add(user.twikkerprofile)
+
+    create_notification(request, user, 'follower')
 
     return redirect('twikkerprofile', username=username)
 

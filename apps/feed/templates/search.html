@@ -29,9 +29,48 @@
                 <hr>
 
                 <div class="search-results">
-                    {% for tweeker in tweekers %}
-                        <p><a href="{% url 'twikkerprofile' tweeker.username %}">{{ tweeker.username }}</a></p>
-                    {% endfor %}
+                    {% if not tweeks and not tweekers %}
+                        <p>No results, please try a different search term..</p>
+                    {% endif %}
+
+                    {% if tweekers %}
+                        <strong>Tweekers</strong>
+
+                        {% for tweeker in tweekers %}
+                            <p><a href="{% url 'twikkerprofile' tweeker.username %}">{{ tweeker.username }}</a></p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if tweeks %}
+                        <strong>Tweeks</strong>
+
+                        <div class="wrapper-tweeks">
+                            {% for tweek in tweeks %}
+                            <div class="tweek">
+                                <article class="media">
+                                    <figure class="media-left">
+                                        <p class="image is-64x64">
+                                            {% if tweek.created_by.twikkerprofile.avatar %}
+                                                <img src="{{ tweek.created_by.twikkerprofile.avatar.url }}">
+                                            {% endif %}
+                                        </p>
+                                    </figure>
+    
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <p>
+                                                <strong><a href="{% url 'twikkerprofile' tweek.created_by.username %}">{{ tweek.created_by.username }}</a></strong>
+                                                <small>{{ tweek.created_at|naturaltime }}</small>
+                                                <br>
+                                                {{ tweek.body }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
 
             </div>

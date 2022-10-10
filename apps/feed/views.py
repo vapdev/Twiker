@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+from apps.notification.utilities import create_notification
+
 from .models import Tweek
 
 @login_required
@@ -11,7 +13,15 @@ def feed(request):
     for tweeker in request.user.twikkerprofile.follows.all():
         userids.append(tweeker.user.id)
 
-    tweeks = Tweek.objects.filter(created_by__id__in=userids).order_by('-created_at')
+    tweeks = Tweek.objects.filter(created_by__id__in=userids)
+
+    for tweek in tweeks:
+        likes = tweek.likes.filter(created_by__id=request.user.id)
+
+        if likes.count() > 0:
+            tweek.liked = True
+        else:
+            tweek.liked = False
 
     return render(request, 'feed.html', {'tweeks': tweeks})
 
@@ -21,12 +31,15 @@ def search(request):
 
     if len(query) > 0:
         tweekers = User.objects.filter(username__icontains=query)
+        tweeks = Tweek.objects.filter(body__icontains=query)
     else:
         tweekers = []
+        tweeks = []
 
     context = {
         'query': query,
         'tweekers': tweekers,
+        'tweeks': tweeks,
     }
 
     return render(request, 'search.html', context)
