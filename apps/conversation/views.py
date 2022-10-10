@@ -12,8 +12,8 @@ def conversations(request):
 
 @login_required
 def global_chat(request):
-    messages = ConversationMessage.objects.filter(conversation_id=None).order_by('created_at')
-
+    messages = ConversationMessage.objects.filter(conversation_id=None).order_by('-created_at')[:15]
+    messages = messages[::-1]
     return render(request, 'conversation/global.html', {'messages': messages})
 
 @login_required
