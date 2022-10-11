@@ -34,12 +34,12 @@
             <div class="column is-8">
                 <div class="wrapper-tweeks">
                     {% for tweek in tweeks %}
-                        <div class="tweek">
+                        <div class="box" id="tweek-{{ tweek.id }}">
                             <article class="media">
                                 <figure class="media-left">
-                                    <p class="image is-64x64">
-                                        {%  if user.twikkerprofile.avatar %}
-                                            <img src="{{ user.twikkerprofile.avatar.url}}">
+                                    <p class="image is-3by4 is-64x64">
+                                        {%  if tweek.created_by.twikkerprofile.avatar %}
+                                            <img class="is-rounded" src="{{ tweek.created_by.twikkerprofile.avatar.url}}">
                                         {% endif %}
                                     </p>
                                 </figure>
@@ -47,10 +47,10 @@
                                 <div class="media-content">
                                     <div class="content">
                                         <p>
-                                            <strong>{{ tweek.created_by.username }}</strong>
+                                            <strong><a href="{% url 'twikkerprofile' tweek.created_by.username %}">{{ tweek.created_by.username }}</a></strong>
                                             <small>{{ tweek.created_at|naturaltime }}</small>
                                             <br>
-                                            {{ tweek.body }}
+                                            <span class="subtitle">{{ tweek.body }}</span>
                                             <br>
                                             <a @click="likeTweek({{ tweek.id }})" v-if="!liked_tweeks.includes({{ tweek.id }})">Like</a>
                                             <a @click="dislikeTweek({{ tweek.id }})" v-if="liked_tweeks.includes({{ tweek.id }})">Dislike</a>

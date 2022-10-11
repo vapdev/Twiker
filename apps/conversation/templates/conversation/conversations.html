@@ -10,12 +10,24 @@
 
                 <div class="conversations-list">
                     {% for conversation in conversations %}
-                        <div class="conversations-list-item">
+                        <div class="conversations-list-item freestyle">
                             {% for user in conversation.users.all %}
                                 {% if user != request.user %}
-                                    <a href="{% url 'conversation' user.id %}">
-                                        <p>{{ user.username }} - {{ conversation.modified_at|naturaltime }}</p>
-                                    </a>
+                                    <div class="box">
+                                        <article class="media">
+                                            <figure class="media-left">
+                                                <p class="image is-3by4 is-64x64">
+                                                    {%  if user.twikkerprofile.avatar %}
+                                                        <img class="is-rounded" src="{{ user.twikkerprofile.avatar.url}}">
+                                                    {% endif %}
+                                                </p>
+                                            </figure>
+                                             <div class="media-content">
+                                                 <p class="title is-8"><a href="{% url 'conversation' user.id %}">{{ user.username }}</a></p>
+                                                 <p class="subtitle is-4">{{ conversation.modified_at|naturaltime }}</p>
+                                             <div class="content">
+                                        </article>
+                                    </div>
                                 {% endif %}
                             {% endfor %}
                         </div>

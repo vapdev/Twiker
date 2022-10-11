@@ -3,6 +3,7 @@ db.sqlite3
 media/*
 *.pyc
 __pycache__
+__pycache__/*
 */*.pyc
 */*/*.pyc
 venv/

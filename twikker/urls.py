@@ -31,7 +31,7 @@ urlpatterns = [
     #
     #
 
-    path('', frontpage, name='frontpage'),
+    path('cornelios/', frontpage, name='frontpage'),
     path('signup/', signup, name='signup'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('login/', views.LoginView.as_view(template_name='core/login.html'), name='login'),
@@ -40,7 +40,7 @@ urlpatterns = [
     #
 
 
-    path('feed/', feed, name='feed'),
+    path('', feed, name='feed'),
     path('search/', search, name='search'),
     path('u/<str:username>', twikkerprofile, name='twikkerprofile'),
     path('editprofile/', edit_profile, name='edit_profile'),

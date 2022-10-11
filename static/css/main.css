@@ -1,7 +1,7 @@
 body, html{
     height: 100%;
     background-color: lightgrey;
-    background-image: url("/static/img/cp.jpg") !important;
+    /*background-image: url("/static/img/cp.jpg") !important;*/
 }
 
 .wrapper-tweeks{
@@ -58,7 +58,4 @@ textarea{
 
 .freestyle{
     display: inline-block;
-}
-
-.cornelios{
 }
