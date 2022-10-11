@@ -1,5 +1,7 @@
-body{
-    background-color: #343330;
+body, html{
+    height: 100%;
+    background-color: lightgrey;
+    background-image: url("/static/img/cp.jpg") !important;
 }
 
 .wrapper-tweeks{
@@ -24,9 +26,39 @@ body{
 }
 
 .box{
-    background-color: #dc851f;
+    background-color: palegreen;
     padding: 10px;
     border-radius: 45px;
     margin-bottom: 10px !important;
     width: fit-content !important;
+    border-color: white !important;
+    border: 3px solid white !important;
+}
+
+button{
+    background-color: palegreen !important;
+    color: black !important;
+    border-color: white !important;
+    border: 3px solid white !important;
+}
+
+.title, .subtitle, strong, small{
+    color: black;
+}
+
+textarea{
+    resize: none !important;
+    color: black !important;
+    border-color: palegreen !important;
+}
+
+.area{
+    width: 50% !important;
+}
+
+.freestyle{
+    display: inline-block;
+}
+
+.cornelios{
 }
