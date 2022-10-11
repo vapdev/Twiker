@@ -14,7 +14,12 @@
     <!-- navbar -->
     <nav class="navbar is-black" role="navigation">
         <div class="navbar-brand">
-            <a href="/" class="navbar-item">Twikker</a>
+            <a href="{% url 'feed' %}" class="navbar-item">Feed</a>
+            <a href="/" class="navbar-item">
+                <p class="image is-32x32">
+                    <img src="{% static 'img/cp.jpg' %}">
+                </p>
+            </a>
             <a role="button" data-target="navBar" class="navbar-burger">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -43,7 +48,6 @@
                     <a href="{% url 'users' %}" class="navbar-item">All Users</a>
                     <a href="{% url 'global' %}" class="navbar-item">Global Chat</a>
                     <a href="{% url 'notifications' %}" class="navbar-item">Notifications ({{ notifications.count }})</a>
-                    <a href="{% url 'feed' %}" class="navbar-item">Feed</a>
                     <a href="{% url 'conversations' %}" class="navbar-item">Conversations</a>
                     <a href="{% url 'twikkerprofile' request.user.username %}" class="navbar-item">Profile</a>
                     <a href="{% url 'edit_profile' %}" class="navbar-item">Edit profile</a>

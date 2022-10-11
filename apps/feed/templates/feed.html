@@ -8,14 +8,14 @@
             <div class="column is-12">
                 <div class="wrapper-form">
                     <form v-on:submit.prevent="submitTweek()">
-                        <div class="field">
+                        <div class="field column is-two-fifths">
                             <div class="control">
                                 <textarea class="textarea" v-model="body" placeholder="What are you tweeking?"></textarea>
                             </div>
                         </div>
                         <div class="field">
                             <div class="control">
-                                <button class="button is-success" type="submit">Submit</button>
+                                <button class="button" type="submit">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -49,7 +49,7 @@
                     </div>
 
                     {% for tweek in tweeks %}
-                        <div style="width: fit-content;" class="box" id="tweek-{{ tweek.id }}">
+                        <div class="box" id="tweek-{{ tweek.id }}">
                             <article class="media">
                                 <figure class="media-left">
                                     <p class="image is-3by4 is-64x64">
@@ -195,7 +195,7 @@
                     };
 
                     // Send to backend
-                    ide = await fetch('/api/add_tweek/',{
+                    id = await fetch('/api/add_tweek/',{
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

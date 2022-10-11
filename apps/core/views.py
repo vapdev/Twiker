@@ -9,11 +9,11 @@ def frontpage(request):
 
 
 def users(request):
-    profiles = [user.twikkerprofile for user in User.objects.all()]
+    users = User.objects.all()
 
 
     context = {
-        'users': profiles,
+        'users': users,
     }
 
     return render(request, 'core/users.html', context)
