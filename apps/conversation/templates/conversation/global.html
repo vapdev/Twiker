@@ -1,7 +1,6 @@
 {% extends 'core/base.html' %}
 
 {% load humanize %}
-
 {% block content %}
     <div class="container" id="conversationapp">
         <div class="columns">
@@ -10,12 +9,12 @@
 
                 <div class="messages">
                     {% for message in messages %}
-                        <div class="tweek">
-                            <article class="media">
+                        <div class="tweek" style="width: fit-content; height: fit-content; padding:10px; margin: 10px;">
+                            <article class="media box">
                                 <figure class="media-left">
-                                    <p class="image is-64x64">
+                                    <p class="image is-3by4 is-64x64">
                                         {% if message.created_by.twikkerprofile.avatar %}
-                                            <img src="{{ message.created_by.twikkerprofile.avatar.url }}">
+                                            <img class="is-rounded" src="{{ message.created_by.twikkerprofile.avatar.url }}">
                                         {% endif %}
                                     </p>
                                 </figure>
@@ -26,7 +25,7 @@
                                             <strong>{{ message.created_by.username }}</strong>
                                             <small>{{ message.created_at|naturaltime }} </small>
                                             <br>
-                                            {{ message.content }}
+                                            <span class="subtitle">{{ message.content }}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -34,11 +33,11 @@
                         </div>
                     {% endfor %}
 
-                    <div class="tweek" v-for="message in messages">
-                        <article class="media">
+                    <div class="tweek" v-for="message in messages" style="width: fit-content; height: fit-content; padding:10px; margin: 10px;">
+                        <article class="media box">
                             <figure class="media-left">
-                                <p class="image is-64x64">
-                                    <img :src="message.avatar">
+                                <p class="image is-3by4 is-64x64">
+                                    <img class="is-rounded" :src="message.avatar">
                                 </p>
                             </figure>
 
@@ -120,6 +119,7 @@
                     })
 
                     this.content = '';
+
                 }
             }
         }

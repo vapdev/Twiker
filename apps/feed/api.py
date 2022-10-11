@@ -28,7 +28,7 @@ def api_add_tweek(request):
             user = User.objects.get(username=result)
             create_notification(request, user, 'mention')
 
-    return JsonResponse({'success': True})
+    return JsonResponse({'id': tweek.id, 'success': True})
 
 @login_required
 def api_add_like(request):
@@ -47,7 +47,6 @@ def api_add_like(request):
 def api_remove_like(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
-
     if Like.objects.filter(tweek_id=tweek_id).filter(created_by=request.user).exists():
         like = Like.objects.get(tweek_id=tweek_id, created_by=request.user)
         like.delete()

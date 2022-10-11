@@ -25,9 +25,9 @@ SECRET_KEY = 'django-insecure-m^j#u-gwb!(24-a1--w@yua99ui079w9c*)t+oxu&lsq$gp83z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['895a-186-194-144-20.sa.ngrok.io', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
-CSRF_TRUSTED_ORIGINS = ['https://895a-186-194-144-20.sa.ngrok.io']
+CSRF_TRUSTED_ORIGINS = []
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'feed'
