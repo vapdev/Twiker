@@ -1,4 +1,4 @@
 # Twikker
-Twitter like app made with Django, Vue.js and Bulma
+Social network built with Django, Vue.js and Bulma
 
 Work in progress
