@@ -46,9 +46,9 @@
                         <div class="tweek" id="tweek-{{ tweek.id }}">
                             <article class="media">
                                 <figure class="media-left">
-                                    <p class="image is-64x64">
+                                    <p class="image is-3by4 is-64x64">
                                         {%  if tweek.created_by.twikkerprofile.avatar %}
-                                            <img src="{{ tweek.created_by.twikkerprofile.avatar.url}}">
+                                            <img class="is-rounded" src="{{ tweek.created_by.twikkerprofile.avatar.url}}">
                                         {% endif %}
                                     </p>
                                 </figure>
