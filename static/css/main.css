@@ -1,6 +1,7 @@
 body, html{
     height: 100%;
-    background-color: lightgrey;
+    width: 100%;
+    background-color: lightgray;
     /*background-image: url("/static/img/cp.jpg") !important;*/
 }
 
@@ -52,10 +53,18 @@ textarea{
     border-color: palegreen !important;
 }
 
-.area{
-    width: 50% !important;
+.is-fluid{
+    padding: 0px !important;
+    margin: 0px !important;
+}
+.sidebar{
+    background-color: black !important;
 }
 
 .freestyle{
     display: inline-block;
+}
+.messages{
+    overflow: auto;
+    height: 580px;
 }

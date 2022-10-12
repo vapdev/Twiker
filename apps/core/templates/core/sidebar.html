@@ -1,0 +1,8 @@
+<div class="column sidebar is-2">
+    <a href="{% url 'users' %}" class="navbar-item">All Users</a>
+        <a href="{% url 'global' %}" class="navbar-item">Global Chat</a>
+        <a href="{% url 'notifications' %}" class="navbar-item">Notifications ({{ notifications.count }})</a>
+        <a href="{% url 'conversations' %}" class="navbar-item">Conversations</a>
+        <a href="{% url 'twikkerprofile' request.user.username %}" class="navbar-item">Profile</a>
+        <a href="{% url 'edit_profile' %}" class="navbar-item">Edit profile</a>
+</div>  
