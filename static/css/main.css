@@ -2,7 +2,6 @@ body, html{
     height: 100%;
     width: 100%;
     background-color: #0a0a0a;
-    /*background-image: url("/static/img/cp.jpg") !important;*/
 }
 
 .wrapper-tweeks{
@@ -67,26 +66,19 @@ textarea{
 }
 .globalbox{
     overflow: auto;
-    height: 540px;
+    height: 570px;
 }
 .profilebox{
-    padding-top: 4px;
     overflow: auto;
     height: 540px;
 }
 .feedbox{
     overflow: auto;
-    height: 665px;
+    height: 700px;
 }
 .conversationbox{
     overflow: auto;
-    height: 510px;
-}
-section{
-    height: 80% !important;
-}
-.columns{
-    height: 100% !important;
+    height: 550px;
 }
 .white{
     color: #fff;
@@ -102,8 +94,11 @@ section{
     border-radius: 10px;
     background-color: lightgray;
     /* height: fit-content !important; */
-    height: 800px !important;
+    height: 840px !important;
 }
 .submit-button{
     margin-bottom: 10px;
+}
+.top_margin_text{
+    margin-top: 4px;
 }
