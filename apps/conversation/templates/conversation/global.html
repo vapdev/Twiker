@@ -18,7 +18,7 @@
                                 <div class="media-content">
                                     <div class="content">
                                         <p>
-                                            <strong>{{ message.created_by.username }}</strong>
+                                            <strong><a href="{% url 'twikkerprofile' message.created_by %}">{{ message.created_by.username }}</a></strong>
                                             <small>{{ message.created_at|naturaltime }} </small>
                                             <br>
                                             <span class="subtitle">{{ message.content }}</span>

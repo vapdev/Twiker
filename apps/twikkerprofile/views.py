@@ -51,7 +51,7 @@ def follow_tweeker(request, username):
     request.user.twikkerprofile.follows.add(user.twikkerprofile)
 
     if request.user != user:
-        create_notification(request, user, 'follow')
+        create_notification(request, user, 'follower')
 
     return redirect('twikkerprofile', username=username)
 
