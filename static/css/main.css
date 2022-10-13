@@ -11,7 +11,7 @@ body, html{
 
 .wrapper-tweeks .tweek,
 .notifications-wrapper .media{
-    margin-bottom: 2px;
+    margin-bottom: 4px;
     padding: 20px;
     border-radius: 4px;
     background: #fff;
@@ -29,11 +29,12 @@ body, html{
 .box{
     background-color: palegreen;
     padding: 10px;
-    border-radius: 45px;
-    margin-bottom: 10px !important;
+    border-radius: 4px;
+    margin-bottom: 4px !important;
     width: fit-content !important;
     border-color: white !important;
-    border: 3px solid white !important;
+    border: 2px solid white !important;
+    box-shadow: none;
 }
 
 button{
@@ -69,6 +70,7 @@ textarea{
     height: 540px;
 }
 .profilebox{
+    padding-top: 4px;
     overflow: auto;
     height: 540px;
 }
@@ -91,7 +93,7 @@ section{
 }
 .rounded{
     border: grey 5px !important;
-    border-radius: 3px !important;
+    border-radius: 4px !important;
 }
 .main{
     border-left: 5px  solid gray;

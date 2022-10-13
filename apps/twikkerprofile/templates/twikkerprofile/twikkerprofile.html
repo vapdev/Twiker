@@ -10,9 +10,9 @@
                         {% if user.twikkerprofile.avatar %}
                         <article class="media">
                             <figure class="media-left">
-                                <p class="image is-3by4 is-128x128">
+                                <p class="image is-3by4 is-128x128" >
                                     {%  if user.twikkerprofile.avatar %}
-                                        <img src="{{ user.twikkerprofile.avatar.url}}">
+                                        <img src="{{ user.twikkerprofile.avatar.url}}" style="border-radius: 4px;">
                                     {% endif %}
                                 </p>
                             </figure>
