@@ -4,83 +4,79 @@
 
 {% block content %}
     <div class="container" id="feedapp">
-        <div class="columns">
-            <div class="column is-12">
-                <div class="wrapper-form">
-                    <form v-on:submit.prevent="submitTweek()">
-                        <div class="field area">
-                        <div class="field area">
-                            <div class="control">
-                                <textarea class="textarea" v-model="body" placeholder="What are you tweeking?"></textarea>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <button class="button submit-button" type="submit">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="wrapper-tweeks">
-                    <div class="tweek box" v-for="tweek in tweeks" style="width: fit-content;" v-bind:id="'tweek-'+tweek.id">
-                        <article class="media">
-                            <figure class="media-left">
-                                <p class="image is-3by4 is-64x64">
-                                    <img :src="tweek.avatar" class="is-rounded">
-                                </p>
-                            </figure>
 
-                            <div class="media-content">
-                                <div class="content">
-                                    <p>
-                                        <strong><a href="">[[ tweek.tweeker ]]</a></strong>
-                                        <small>[[ tweek.created_at ]]</small>
-                                        <br>
-                                        [[ tweek.body ]]
-                                        <br>
-                                        <a @click="toggleLike(tweek.id)" v-if="!liked_tweeks.includes(tweek.id)">Like</a>
-                                        <a @click="toggleLike(tweek.id)" v-if="liked_tweeks.includes(tweek.id)">Dislike</a>
-                                        <small v-bind:id="'likes-'+tweek.id">0 likes</small>
-                                        <br>
-                                        <a @click="deleteTweek(tweek.id)">Apagar</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </article>
+        <div class="wrapper-form">
+            <form v-on:submit.prevent="submitTweek()">
+                <div class="field area">
+                    <div class="control ">
+                        <textarea class="textarea"rows="1" cols="40" v-model="body" placeholder="What are you tweeking?"></textarea>
                     </div>
-
-                    {% for tweek in tweeks %}
-                        <div class="box" id="tweek-{{ tweek.id }}">
-                            <article class="media">
-                                <figure class="media-left">
-                                    <p class="image is-3by4 is-64x64">
-                                        {%  if tweek.created_by.twikkerprofile.avatar %}
-                                            <img class="is-rounded" src="{{ tweek.created_by.twikkerprofile.avatar.url}}">
-                                        {% endif %}
-                                    </p>
-                                </figure>
-
-                                <div class="media-content">
-                                    <div class="content">
-                                        <p>
-                                            <strong><a href="{% url 'twikkerprofile' tweek.created_by.username %}">{{ tweek.created_by.username }}</a></strong>
-                                            <small>{{ tweek.created_at|naturaltime }}</small>
-                                            <br>
-                                            <span class="subtitle">{{ tweek.body }}</span>
-                                            <br>
-                                            <a @click="likeTweek({{ tweek.id }})" v-if="!liked_tweeks.includes({{ tweek.id }})">Like</a>
-                                            <a @click="dislikeTweek({{ tweek.id }})" v-if="liked_tweeks.includes({{ tweek.id }})">Dislike</a>
-                                            <small id="likes-{{ tweek.id }}">{{ tweek.likes.count }} likes</small>
-                                            <br>
-                                            <a @click="deleteTweek({{ tweek.id }})" v-if="tweeker=='{{ tweek.created_by.username }}'">Apagar</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    {% endfor %}
                 </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button submit-button" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="wrapper-tweeks feedbox">
+            <div class="tweek" v-for="tweek in tweeks" v-bind:id="'tweek-'+tweek.id">
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-3by4 is-64x64">
+                            <img :src="tweek.avatar" class="is-rounded">
+                        </p>
+                    </figure>
+
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong><a href="">[[ tweek.tweeker ]]</a></strong>
+                                <small>[[ tweek.created_at ]]</small>
+                                <br>
+                                <span class="subtitle">[[ tweek.body ]]</span>
+                                <br>
+                                <a @click="toggleLike(tweek.id)" v-if="!liked_tweeks.includes(tweek.id)">Like</a>
+                                <a @click="toggleLike(tweek.id)" v-if="liked_tweeks.includes(tweek.id)">Dislike</a>
+                                <small v-bind:id="'likes-'+tweek.id">0 likes</small>
+                                <br>
+                                <a @click="deleteTweek(tweek.id)">Apagar</a>
+                            </p>
+                        </div>
+                    </div>
+                </article>
             </div>
+
+            {% for tweek in tweeks %}
+                <div class="tweek" id="tweek-{{ tweek.id }}">
+                    <article class="media">
+                        <figure class="media-left">
+                            <p class="image is-3by4 is-64x64">
+                                {%  if tweek.created_by.twikkerprofile.avatar %}
+                                    <img class="is-rounded" src="{{ tweek.created_by.twikkerprofile.avatar.url}}">
+                                {% endif %}
+                            </p>
+                        </figure>
+
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <strong><a href="{% url 'twikkerprofile' tweek.created_by.username %}">{{ tweek.created_by.username }}</a></strong>
+                                    <small>{{ tweek.created_at|naturaltime }}</small>
+                                    <br>
+                                    <span class="subtitle">{{ tweek.body }}</span>
+                                    <br>
+                                    <a @click="likeTweek({{ tweek.id }})" v-if="!liked_tweeks.includes({{ tweek.id }})">Like</a>
+                                    <a @click="dislikeTweek({{ tweek.id }})" v-if="liked_tweeks.includes({{ tweek.id }})">Dislike</a>
+                                    <small id="likes-{{ tweek.id }}">{{ tweek.likes.count }} likes</small>
+                                    <br>
+                                    <a @click="deleteTweek({{ tweek.id }})" v-if="tweeker=='{{ tweek.created_by.username }}'">Apagar</a>
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

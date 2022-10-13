@@ -9,12 +9,16 @@
                 <h1 class="title">Edit profile</h1>
 
                 {% if user.twikkerprofile.avatar %}
-                    <figure class="image is-128x128">
-                        <img src="{{ user.twikkerprofile.avatar.url }}" alt="Avatar">
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-3by4 is-128x128">
+                            {%  if user.twikkerprofile.avatar %}
+                                <img src="{{ user.twikkerprofile.avatar.url}}">
+                            {% endif %}
+                        </p>
                     </figure>
+                </article> 
                 {% endif %}
-
-                <hr>
 
                 <form method="post" enctype="multipart/form-data" action=".">
                     {% csrf_token %}

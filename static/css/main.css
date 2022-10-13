@@ -1,17 +1,17 @@
 body, html{
     height: 100%;
     width: 100%;
-    background-color: lightgray;
+    background-color: #0a0a0a;
     /*background-image: url("/static/img/cp.jpg") !important;*/
 }
 
 .wrapper-tweeks{
-    margin-top: 30px;
+    margin-top: px;
 }
 
 .wrapper-tweeks .tweek,
 .notifications-wrapper .media{
-    margin-bottom: 10px;
+    margin-bottom: 2px;
     padding: 20px;
     border-radius: 4px;
     background: #fff;
@@ -23,7 +23,7 @@ body, html{
 
 .wrapper-tweeks .tweek .info{
     font-size: 12px;
-    color: #aaa;
+    color: white;
 }
 
 .box{
@@ -58,13 +58,50 @@ textarea{
     margin: 0px !important;
 }
 .sidebar{
-    background-color: black !important;
+    background-color: #0a0a0a !important;
 }
 
 .freestyle{
     display: inline-block;
 }
-.messages{
+.globalbox{
     overflow: auto;
-    height: 580px;
+    height: 540px;
+}
+.profilebox{
+    overflow: auto;
+    height: 540px;
+}
+.feedbox{
+    overflow: auto;
+    height: 665px;
+}
+.conversationbox{
+    overflow: auto;
+    height: 510px;
+}
+section{
+    height: 80% !important;
+}
+.columns{
+    height: 100% !important;
+}
+.white{
+    color: #fff;
+}
+.rounded{
+    border: grey 5px !important;
+    border-radius: 3px !important;
+}
+.main{
+    border-left: 5px  solid gray;
+    border-right: 5px  solid gray;
+    border-bottom: 5px  solid gray;
+    border-radius: 10px;
+    background-color: lightgray;
+    /* height: fit-content !important; */
+    height: 800px !important;
+}
+.submit-button{
+    margin-bottom: 10px;
 }

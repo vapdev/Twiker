@@ -4,68 +4,66 @@
 
 {% block content %}
     <div class="container" id="twikkerprofileapp">
-        <div class="columns">
-            <div class="column is-12">
                 <h1 class="title">{{ user.username }}</h1>
-
-                {% if user.twikkerprofile.avatar %}
-                    <figure class="image is-128x128">
-                        <img src="{{ user.twikkerprofile.avatar.url }}" alt="Avatar">
-                    </figure>
-                {% endif %}
-
-                <hr>
-
-                <p><a href="{% url 'followers' user.username %}">Followers: {{ user.twikkerprofile.followed_by.count }}</a></p>
-                <p><a href="{% url 'follows' user.username %}">Follows: {{ user.twikkerprofile.follows.count }}</a></p>
-
-                {% if user != request.user %}
-                    <a href="{% url 'conversation' user.id %}" class="button is-info">Send message</a>
-                    {% if request.user.twikkerprofile in user.twikkerprofile.followed_by.all %}
-                        <a href="{% url 'unfollow_tweeker' user.username %}" class="button is-danger">Unfollow</a>
-                    {% else %}
-                        <a href="{% url 'follow_tweeker' user.username %}" class="button is-success">Follow</a>
-                    {% endif %}
-                {% endif %}
-            </div>
-        </div>
-
-        <div class="columns">
-            <div class="column is-8">
-                <div class="wrapper-tweeks">
-                    {% for tweek in tweeks %}
-                        <div class="box" id="tweek-{{ tweek.id }}">
-                            <article class="media">
-                                <figure class="media-left">
-                                    <p class="image is-3by4 is-64x64">
-                                        {%  if tweek.created_by.twikkerprofile.avatar %}
-                                            <img class="is-rounded" src="{{ tweek.created_by.twikkerprofile.avatar.url}}">
-                                        {% endif %}
-                                    </p>
-                                </figure>
-
-                                <div class="media-content">
-                                    <div class="content">
-                                        <p>
-                                            <strong><a href="{% url 'twikkerprofile' tweek.created_by.username %}">{{ tweek.created_by.username }}</a></strong>
-                                            <small>{{ tweek.created_at|naturaltime }}</small>
-                                            <br>
-                                            <span class="subtitle">{{ tweek.body }}</span>
-                                            <br>
-                                            <a @click="likeTweek({{ tweek.id }})" v-if="!liked_tweeks.includes({{ tweek.id }})">Like</a>
-                                            <a @click="dislikeTweek({{ tweek.id }})" v-if="liked_tweeks.includes({{ tweek.id }})">Dislike</a>
-                                            <small id="likes-{{ tweek.id }}">{{ tweek.likes.count }} likes</small>
-                                            <br>
-                                            <a @click="deleteTweek({{ tweek.id }})" v-if="'{{ request.user }}'=='{{ user }}'">Apagar</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    {% endfor %}
+                <div class="is-flex">
+                    <div>
+                        {% if user.twikkerprofile.avatar %}
+                        <article class="media">
+                            <figure class="media-left">
+                                <p class="image is-3by4 is-128x128">
+                                    {%  if user.twikkerprofile.avatar %}
+                                        <img src="{{ user.twikkerprofile.avatar.url}}">
+                                    {% endif %}
+                                </p>
+                            </figure>
+                        </article> 
+                        {% endif %}
+                    </div>
+                    <div class="is-aligned-content-flex-end">
+                        <p><a href="{% url 'followers' user.username %}">Followers: {{ user.twikkerprofile.followed_by.count }}</a></p>
+                        <p><a href="{% url 'follows' user.username %}">Follows: {{ user.twikkerprofile.follows.count }}</a></p>
+                        {% if user != request.user %}
+                            <a href="{% url 'conversation' user.id %}" class="button is-info">Send message</a>
+                            {% if request.user.twikkerprofile in user.twikkerprofile.followed_by.all %}
+                                <a href="{% url 'unfollow_tweeker' user.username %}" class="button is-danger">Unfollow</a>
+                            {% else %}
+                                <a href="{% url 'follow_tweeker' user.username %}" class="button is-success">Follow</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
+            <div class="profilebox wrapper-tweeks">
+                {% for tweek in tweeks %}
+                    <div class="tweek" id="tweek-{{ tweek.id }}">
+                        <article class="media">
+                            <figure class="media-left">
+                                <p class="image is-3by4 is-64x64">
+                                    {%  if tweek.created_by.twikkerprofile.avatar %}
+                                        <img class="is-rounded" src="{{ tweek.created_by.twikkerprofile.avatar.url}}">
+                                    {% endif %}
+                                </p>
+                            </figure>
+
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <strong><a href="{% url 'twikkerprofile' tweek.created_by.username %}">{{ tweek.created_by.username }}</a></strong>
+                                        <small>{{ tweek.created_at|naturaltime }}</small>
+                                        <br>
+                                        <span class="subtitle">{{ tweek.body }}</span>
+                                        <br>
+                                        <a @click="likeTweek({{ tweek.id }})" v-if="!liked_tweeks.includes({{ tweek.id }})">Like</a>
+                                        <a @click="dislikeTweek({{ tweek.id }})" v-if="liked_tweeks.includes({{ tweek.id }})">Dislike</a>
+                                        <small id="likes-{{ tweek.id }}">{{ tweek.likes.count }} likes</small>
+                                        <br>
+                                        <a @click="deleteTweek({{ tweek.id }})" v-if="'{{ request.user }}'=='{{ user }}'">Apagar</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
             </div>
-        </div>
     </div>
 {% endblock %}
 

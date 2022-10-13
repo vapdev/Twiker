@@ -1,8 +1,12 @@
+{% if request.user.is_authenticated %}
 <div class="column sidebar is-2">
-    <a href="{% url 'users' %}" class="navbar-item">All Users</a>
-        <a href="{% url 'global' %}" class="navbar-item">Global Chat</a>
-        <a href="{% url 'notifications' %}" class="navbar-item">Notifications ({{ notifications.count }})</a>
-        <a href="{% url 'conversations' %}" class="navbar-item">Conversations</a>
-        <a href="{% url 'twikkerprofile' request.user.username %}" class="navbar-item">Profile</a>
-        <a href="{% url 'edit_profile' %}" class="navbar-item">Edit profile</a>
+    <a href="{% url 'users' %}" class="navbar-item"><span class="white">All Users</span></a>
+        <a href="{% url 'global' %}" class="navbar-item"><span class="white">Global Chat</span></a>
+        <a href="{% url 'notifications' %}" class="navbar-item"><span class="white">Notifications ({{ notifications.count }})</span></a>
+        <a href="{% url 'conversations' %}" class="navbar-item"><span class="white">Conversations</span></a>
+        <a href="{% url 'twikkerprofile' request.user.username %}" class="navbar-item"><span class="white">Profile</span></a>
+        <a href="{% url 'edit_profile' %}" class="navbar-item"><span class="white">Edit profile</span></a>
 </div>  
+{% else %}
+<div class="column sidebar is-2"></div>
+{% endif %}

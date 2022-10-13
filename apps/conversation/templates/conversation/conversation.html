@@ -8,14 +8,14 @@
             <div class="column is-12">
                 <h1 class="title">Conversation</h1>
 
-                <div class="messages">
+                <div class="conversationbox">
                     {% for message in conversation.messages.all %}
                         <div class="tweek">
-                            <article class="media">
+                            <article class="media box">
                                 <figure class="media-left">
-                                    <p class="image is-64x64">
+                                    <p class="image is-32x32">
                                         {% if message.created_by.twikkerprofile.avatar %}
-                                            <img src="{{ message.created_by.twikkerprofile.avatar.url }}">
+                                            <img class="is-rounded" src="{{ message.created_by.twikkerprofile.avatar.url }}">
                                         {% endif %}
                                     </p>
                                 </figure>
@@ -35,10 +35,10 @@
                     {% endfor %}
 
                     <div class="tweek" v-for="message in messages">
-                        <article class="media">
+                        <article class="media box">
                             <figure class="media-left">
-                                <p class="image is-64x64">
-                                    <img :src="message.avatar">
+                                <p class="image is-32x32">
+                                    <img class="is-rounded" :src="message.avatar">
                                 </p>
                             </figure>
 

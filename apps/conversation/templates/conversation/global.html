@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container is-fluid" id="conversationapp">
                 <h1 class="title">Global Chat</h1>
-                <div class="messages">
+                <div class="globalbox">
                     {% for message in messages %}
                         <div class="tweek">
                             <article class="media box">
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <form v-on:submit.prevent="submitMessage()">
-                    <div class="field area">
+                    <div class="field">
                         <div class="control">
                             <textarea class="textarea" v-model="content" placeholder="Your message..."></textarea>
                         </div>
