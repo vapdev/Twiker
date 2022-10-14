@@ -1,13 +1,8 @@
 {% extends 'core/base.html' %}
-
 {% load humanize %}
-
 {% block content %}
     <div class="container" id="conversationapp">
-        <div class="columns">
-            <div class="column is-12">
                 <h1 class="title">Conversation</h1>
-
                 <div class="conversationbox" id="chatcontainer">
                     {% for message in conversation.messages.all %}
                         <div class="tweek">
@@ -19,7 +14,6 @@
                                         {% endif %}
                                     </p>
                                 </figure>
-
                                 <div class="media-content">
                                     <div class="content">
                                         <p>
@@ -35,12 +29,9 @@
                     {% endfor %}
                     {% include 'conversation/new_message.html' %}
                 </div>
-            </div>
-        </div>
         {% include 'conversation/submit_button.html' %}
     </div>
 {% endblock %}
-
 {% block script %}
 {% include "conversation/chat.html" %}
 {% endblock %}
