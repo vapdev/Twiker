@@ -22,16 +22,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     # Receive message from web socket
     async def receive(self, text_data):
-        print("PAS22SING")
         data = json.loads(text_data)
         content = data['content']
         tweeker = data['tweeker']
         created_at = 'Now'
         avatar = data['avatar']
-        try:
-            room = data['conversation']
-        except:
-            room = None
+        room = data['conversation_id']
 
         await self.save_message(tweeker, room, content)
 
@@ -49,7 +45,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     # Receive message from room group
     async def chat_message(self, event):
-        print("PA2SSING")
         content = event['content']
         tweeker = event['tweeker']
         created_at = event['created_at']
@@ -64,7 +59,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @sync_to_async
     def save_message(self, tweeker_username, conversation_id, content):
-        print("PASSING")
         tweeker= User.objects.get(username=tweeker_username)
         try:
             conversation = Conversation.objects.get(id=conversation_id)

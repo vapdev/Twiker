@@ -8,7 +8,7 @@
             <div class="column is-12">
                 <h1 class="title">Conversation</h1>
 
-                <div class="conversationbox">
+                <div class="conversationbox" id="chatcontainer">
                     {% for message in conversation.messages.all %}
                         <div class="tweek">
                             <article class="media box">
@@ -23,7 +23,7 @@
                                 <div class="media-content">
                                     <div class="content">
                                         <p>
-                                            <strong>{{ message.created_by.username }}</strong>
+                                            <strong><a href="{% url 'twikkerprofile' message.created_by %}">{{ message.created_by.username }}</a></strong>
                                             <small>{{ message.created_at|naturaltime }} </small>
                                             <br>
                                             {{ message.content }}
@@ -33,93 +33,14 @@
                             </article>
                         </div>
                     {% endfor %}
-
-                    <div class="tweek" v-for="message in messages">
-                        <article class="media box">
-                            <figure class="media-left">
-                                <p class="image is-32x32">
-                                    <img class="is-rounded" :src="message.avatar">
-                                </p>
-                            </figure>
-
-                            <div class="media-content">
-                                <div class="content">
-                                    <p>
-                                        <strong>[[ message.tweeker ]]</strong>
-                                        <small>[[ message.created_at ]]</small>
-                                        <br>
-                                        [[ message.content ]]
-                                    </p>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
+                    {% include 'conversation/new_message.html' %}
                 </div>
             </div>
         </div>
-        <form class="top_margin_text" v-on:submit.prevent="submitMessage()">
-            <div class="field">
-                <div class="control">
-                    <textarea class="textarea" v-model="content" placeholder="Your message..."></textarea>
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <button class="button is-primary">Send</button>
-                </div>
-            </div>
-        </form>
+        {% include 'conversation/submit_button.html' %}
     </div>
 {% endblock %}
 
 {% block script %}
-<script>
-    var conversationapp = new Vue({
-        el: '#conversationapp',
-        delimiters: ['[[', ']]'],
-        data () {
-            return {
-                messages: [],
-                content: '',
-                tweeker: '{{ request.user.username }}',
-                created_at: 'Now',
-                avatar: '{% if request.user.twikkerprofile.avatar %}{{ request.user.twikkerprofile.avatar.url }}{% endif %}'
-            }
-        },
-        methods: {
-            submitMessage() {
-                if (this.content.length > 0) {
-                    var message = {
-                        'content': this.content,
-                        'tweeker': this.tweeker,
-                        'created_at': this.created_at,
-                        'avatar': this.avatar,
-                        'conversation_id': '{{ conversation.id }}'
-                    };
-
-                    this.messages.push(message);
-
-                    fetch('/api/add_message/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
-                        credentials: 'same-origin',
-                        body: JSON.stringify(message)
-                    })
-                    .then((response) => {
-                        console.log(response)
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    })
-
-                    this.content = '';
-                }
-            }
-        }
-    })
-</script>
+{% include "conversation/chat.html" %}
 {% endblock %}

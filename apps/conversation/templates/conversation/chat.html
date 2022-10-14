@@ -1,0 +1,62 @@
+{% load chat %}
+<script>
+    function scrollToBottom(new_message=false) {
+        let objDiv = document.getElementById("chatcontainer");
+        objDiv.scrollTop= objDiv.scrollHeight;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        scrollToBottom();
+    });
+
+    {% if conversation %}
+        {% get_chat_user_id conversation request.user.id as userid %}
+    {% endif %}
+
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/'
+        + 'chat/'
+        + '{% if conversation %}{{ userid }}{% else %}0{% endif %}'
+        + '/'
+    );
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        conversationapp.messages.push(data);
+        setTimeout(() => {
+            scrollToBottom();
+        }, 0);
+    };
+
+    var conversationapp = new Vue({
+        el: '#conversationapp',
+        delimiters: ['[[', ']]'],
+        data () {
+            return {
+                messages: [],
+                content: '',
+                tweeker: '{{ request.user.username }}',
+                created_at: 'Now',
+                avatar: '{% if request.user.twikkerprofile.avatar %}{{ request.user.twikkerprofile.avatar.url }}{% endif %}'
+            }
+        },
+        methods: {
+            submitMessage() {
+                if (this.content.length > 0) {
+                    var message = {
+                        'content': this.content,
+                        'tweeker': this.tweeker,
+                        'created_at': this.created_at,
+                        'avatar': this.avatar,
+                        'conversation_id': {% if conversation %}{{ conversation.id }}{% else %}null{% endif %},
+                    };
+                    chatSocket.send(JSON.stringify(message));
+                    this.content = '';
+
+                }
+            },
+        }
+    })
+</script>
