@@ -2,54 +2,8 @@
 {% load humanize %}
 {% block content %}
     <div class="container is-fluid" id="conversationapp">
-<<<<<<< HEAD
-                <h1 class="title">Global Chat</h1>
-                <div class="globalbox" id="globalchat">
-                    {% for message in messages %}
-                        <div class="tweek">
-                            <article class="media box">
-                                <figure class="media-left">
-                                    <p class="image is-3by4 is-32x32">
-                                        {% if message.created_by.twikkerprofile.avatar %}
-                                            <img class="is-rounded" src="{{ message.created_by.twikkerprofile.avatar.url }}">
-                                        {% endif %}
-                                    </p>
-                                </figure>
-
-                                <div class="media-content">
-                                    <div class="content">
-                                        <p>
-                                            <strong><a href="{% url 'twikkerprofile' message.created_by %}">{{ message.created_by.username }}</a></strong>
-                                            <small>{{ message.created_at|naturaltime }} </small>
-                                            <br>
-                                            <span class="subtitle">{{ message.content }}</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    {% endfor %}
-
-                    <div class="tweek" v-for="message in messages">
-                        <article class="media box">
-                            <figure class="media-left">
-                                <p class="image is-3by4 is-32x32">
-                                    <img class="is-rounded" :src="message.avatar">
-                                </p>
-                            </figure>
-
-                            <div class="media-content" id="new_message">
-                                <div class="content">
-                                    <p>
-                                        <strong>[[ message.tweeker ]]</strong>
-                                        <small>[[ message.created_at ]]</small>
-                                        <br>
-                                        <span class="subtitle">[[ message.content ]]</span>
-                                    </p>
-                                </div>
-=======
         <h1 class="title">Global Chat</h1>
-        <div class="globalbox">
+        <div class="globalbox" id="globalchat">
             {% for message in messages %}
                 <div class="tweek">
                     <article class="media box">
@@ -68,7 +22,6 @@
                                     <br>
                                     <span class="subtitle">{{ message.content }}</span>
                                 </p>
->>>>>>> 9a7292ad5b4cb918afd884741101f2e6521cbf91
                             </div>
                         </div>
                     </article>
