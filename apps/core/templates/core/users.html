@@ -1,7 +1,5 @@
 {% extends 'core/base.html' %}
-
 {% load humanize %}
-
 {% block content %}
     <div class="container">
         <div class="columns">
@@ -11,25 +9,24 @@
                 <p>Total users: {{ users.count }}</p>
             </div>
         </div>
-
         <div class="columns">
             <div class="column is-8">
                 {% for tweeker in users %}
                     <div class="box freestyle">
-                    <article class="media">
-                                <figure class="media-left">
-                                    <p class="image is-3by4 is-64x64">
-                                        {%  if tweeker.twikkerprofile.avatar %}
-                                            <img class="is-rounded" src="{{ tweeker.twikkerprofile.avatar.url}}">
-                                        {% endif %}
-                                    </p>
-                                </figure>
-                                 <div class="media-content">
-                                    <h1 class="title is-8"><a href="{% url 'twikkerprofile' tweeker %}">{{ tweeker }}</a></h1>
-                                    <p><a href="{% url 'followers' tweeker.username %}">Followers: {{ tweeker.twikkerprofile.followed_by.count }}</a></p>
-                                    <p><a href="{% url 'follows' tweeker.username %}">Follows: {{ tweeker.twikkerprofile.follows.count }}</a></p>
-                                <div class="content">
-                    </article>
+                        <article class="media">
+                                    <figure class="media-left">
+                                        <p class="image is-3by4 is-64x64">
+                                            {%  if tweeker.twikkerprofile.avatar %}
+                                                <img class="is-rounded" src="{{ tweeker.twikkerprofile.avatar.url}}">
+                                            {% endif %}
+                                        </p>
+                                    </figure>
+                                    <div class="media-content">
+                                        <h1 class="title is-8"><a href="{% url 'twikkerprofile' tweeker %}">{{ tweeker }}</a></h1>
+                                        <p><a href="{% url 'followers' tweeker.username %}">Followers: {{ tweeker.twikkerprofile.followed_by.count }}</a></p>
+                                        <p><a href="{% url 'follows' tweeker.username %}">Follows: {{ tweeker.twikkerprofile.follows.count }}</a></p>
+                                    <div class="content">
+                        </article>
                     </div>
                 {% endfor %}
             </div>
