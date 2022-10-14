@@ -14,8 +14,9 @@ def api_add_message(request):
 
     message = ConversationMessage.objects.create(conversation_id=conversation_id, content=content, created_by=request.user)
 
-    for user in message.conversation.users.all():
-        if user != request.user:
-            create_notification(request, user, 'message')
+    if conversation_id:
+        for user in message.conversation.users.all():
+            if user != request.user:
+                create_notification(request, user, 'message')
 
     return JsonResponse({'success': True})
