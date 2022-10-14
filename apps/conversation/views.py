@@ -30,4 +30,4 @@ def conversation(request, user_id):
         conversation.users.add(recipient)
         conversation.save()
 
-    return render(request, 'conversation/conversation.html', {'conversation': conversation})
+    return render(request, 'conversation/conversation.html', {'conversation': conversation, 'messages': conversation.messages.all()})

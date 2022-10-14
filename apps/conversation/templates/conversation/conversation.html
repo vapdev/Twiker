@@ -1,37 +1,8 @@
 {% extends 'core/base.html' %}
-{% load humanize %}
 {% block content %}
-    <div class="container" id="conversationapp">
-                <h1 class="title">Conversation</h1>
-                <div class="conversationbox" id="chatcontainer">
-                    {% for message in conversation.messages.all %}
-                        <div class="tweek">
-                            <article class="media box">
-                                <figure class="media-left">
-                                    <p class="image is-32x32">
-                                        {% if message.created_by.twikkerprofile.avatar %}
-                                            <img class="is-rounded" src="{{ message.created_by.twikkerprofile.avatar.url }}">
-                                        {% endif %}
-                                    </p>
-                                </figure>
-                                <div class="media-content">
-                                    <div class="content">
-                                        <p>
-                                            <strong><a href="{% url 'twikkerprofile' message.created_by %}">{{ message.created_by.username }}</a></strong>
-                                            <small>{{ message.created_at|naturaltime }} </small>
-                                            <br>
-                                            {{ message.content }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    {% endfor %}
-                    {% include 'conversation/new_message.html' %}
-                </div>
-        {% include 'conversation/submit_button.html' %}
-    </div>
+    <h1 class="title">Conversation</h1>
+    {% include "conversation/chat_box.html" %}
 {% endblock %}
 {% block script %}
-{% include "conversation/chat.html" %}
+{% include "conversation/chat_script.html" %}
 {% endblock %}
