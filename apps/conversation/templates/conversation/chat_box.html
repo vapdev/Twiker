@@ -1,6 +1,6 @@
 {% load humanize %}
 <div class="container is-fluid" id="conversationapp">
-    <div class="globalbox" id="chatcontainer">
+    <div class="chatbox" id="chatcontainer">
         {% for message in messages %}
             <div class="tweek">
                 <article class="media box">
@@ -50,7 +50,6 @@
             <textarea class="textarea" v-model="content" placeholder="Your message..."></textarea>
         </div>
     </div>
-
     <div class="field">
         <div class="control">
             <button class="button is-primary">Send</button>

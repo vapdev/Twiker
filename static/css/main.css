@@ -3,11 +3,6 @@ body, html{
     width: 100%;
     background-color: #0a0a0a;
 }
-
-.wrapper-tweeks{
-    margin-top: px;
-}
-
 .wrapper-tweeks .tweek,
 .notifications-wrapper .media{
     margin-bottom: 4px;
@@ -64,7 +59,7 @@ textarea{
 .freestyle{
     display: inline-block;
 }
-.globalbox{
+.chatbox{
     overflow: auto;
     height: 570px;
 }
@@ -75,10 +70,6 @@ textarea{
 .feedbox{
     overflow: auto;
     height: 700px;
-}
-.conversationbox{
-    overflow: auto;
-    height: 550px;
 }
 .white{
     color: #fff;
