@@ -24,7 +24,37 @@
                 </article>
             </div>
         {% endfor %}
-        {% include 'conversation/new_message.html' %}
+        <div class="tweek" v-for="message in messages">
+            <article class="media box">
+                <figure class="media-left">
+                    <p class="image is-3by4 is-32x32">
+                        <img class="is-rounded" :src="message.avatar">
+                    </p>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong><a :href="/u/ + message.tweeker">[[ message.tweeker ]]</a></strong>
+                            <small>[[ message.created_at ]]</small>
+                            <br>
+                            <span class="subtitle">[[ message.content ]]</span>
+                        </p>
+                    </div>
+                </div>
+            </article>
+        </div>
     </div>
-    {% include 'conversation/submit_button.html' %}
+    <form class="top_margin_text" v-on:submit.prevent="submitMessage()">
+    <div class="field">
+        <div class="control">
+            <textarea class="textarea" v-model="content" placeholder="Your message..."></textarea>
+        </div>
+    </div>
+
+    <div class="field">
+        <div class="control">
+            <button class="button is-primary">Send</button>
+        </div>
+    </div>
+    </form>
 </div>
