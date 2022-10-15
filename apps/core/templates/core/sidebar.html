@@ -93,14 +93,13 @@
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
         document.querySelector("#chatcontainer")
-        conversationapp.messages.push(data);
-        console.log("data.to_user_id: " + data.to_user_id)
-        setTimeout(() => {
-            scrollToBottom();
-        }, 0);
-        console.log("{{ request.user.id }}")
+        try{
+            conversationapp.messages.push(data);
+            setTimeout(() => {
+                scrollToBottom();
+            }, 0);
+        }catch{}
         if (data.to_user_id == {{ request.user.id }}) {
-            console.log("caio aqui....")
             notifications_el = document.querySelector('#notifications').innerHTML
             notification_count = parseInt(notifications_el.split('(')[1].split(')')[0])
             document.querySelector('#notifications').innerHTML = '<span class="white">Notifications (' + (notification_count + 1) + ')</span>'
