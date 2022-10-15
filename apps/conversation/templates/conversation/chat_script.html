@@ -9,27 +9,6 @@
         scrollToBottom();
     });
 
-    {% if conversation %}
-        {% get_chat_user_id conversation request.user.id as userid %}
-    {% endif %}
-
-    const chatSocket = new WebSocket(
-        'ws://'
-        + window.location.host
-        + '/ws/'
-        + 'chat/'
-        + '{% if conversation %}{{ userid }}{% else %}0{% endif %}'
-        + '/'
-    );
-
-    chatSocket.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        conversationapp.messages.push(data);
-        setTimeout(() => {
-            scrollToBottom();
-        }, 0);
-    };
-
     var conversationapp = new Vue({
         el: '#conversationapp',
         delimiters: ['[[', ']]'],
@@ -52,6 +31,8 @@
                         'avatar': this.avatar,
                         'conversation_id': {% if conversation %}{{ conversation.id }}{% else %}null{% endif %},
                     };
+                    this.messages.push(message);
+                    setTimeout(scrollToBottom, 100);
                     chatSocket.send(JSON.stringify(message));
                     this.content = '';
 

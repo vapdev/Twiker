@@ -5,6 +5,7 @@ from asgiref.sync import sync_to_async, async_to_sync
 from django.contrib.auth.models import User
 
 from .models import ConversationMessage, Conversation
+from ..notification.utilities import create_notification
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -27,9 +28,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         tweeker = data['tweeker']
         created_at = 'Now'
         avatar = data['avatar']
-        room = data['conversation_id']
+        conversation = data['conversation_id']
 
-        await self.save_message(tweeker, room, content)
+        to_user_id = await self.save_message(tweeker, conversation, content)
 
         # Send message to room group
         await self.channel_layer.group_send(
@@ -39,7 +40,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'content': content,
                 'tweeker': tweeker,
                 'created_at': created_at,
-                'avatar': avatar
+                'avatar': avatar,
+                'to_user_id': to_user_id,
             }
         )
 
@@ -49,19 +51,34 @@ class ChatConsumer(AsyncWebsocketConsumer):
         tweeker = event['tweeker']
         created_at = event['created_at']
         avatar = event['avatar']
+        to_user_id = event['to_user_id']
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'content': content,
             'tweeker': tweeker,
             'created_at': created_at,
-            'avatar': avatar
+            'avatar': avatar,
+            'to_user_id': to_user_id,
         }))
 
     @sync_to_async
     def save_message(self, tweeker_username, conversation_id, content):
         tweeker= User.objects.get(username=tweeker_username)
+
         try:
             conversation = Conversation.objects.get(id=conversation_id)
         except:
             conversation = None
+
         ConversationMessage.objects.create(created_by=tweeker, conversation=conversation, content=content)
+
+        if conversation:
+
+            users = conversation.users.all()
+
+            for user in users:
+                if user != tweeker:
+                    create_notification(created_by=tweeker, to_user=user, notification_type='message')
+                    return user.id
+
+
