@@ -3,6 +3,13 @@ Social network built with Django, Vue.js and Bulma
 
 Work in progress
 
+✅ Feed  <br>
+✅ DM <br>
+✅ Profile <br>
+✅ Global Chat <br>
+✅ Real Time Chat <br> 
+✅ Real Time Notifications <br>
+
 <h2> Setup </h2>
 
 - clone the repository  `git clone https://github.com/vapdev/Twikker.git`
