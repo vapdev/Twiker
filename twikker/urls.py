@@ -21,10 +21,10 @@ from django.contrib.auth import views
 
 from apps.conversation.views import conversations, conversation, global_chat
 from apps.core.views import frontpage, signup, users
-from apps.feed.api import api_add_tweek, api_add_like, api_remove_like, api_delete_tweek
+from apps.feed.api import api_remove_like, api_delete_tweek
 from apps.feed.views import feed, search
 from apps.notification.views import notifications
-from apps.twikkerprofile.views import twikkerprofile, edit_profile, follow_tweeker, unfollow_tweeker, followers, follows
+from apps.twikkerprofile.views import twikkerprofile, edit_profile, unfollow_tweeker, followers, follows
 from apps.conversation.api import api_add_message
 
 urlpatterns = [
@@ -49,7 +49,7 @@ urlpatterns = [
     path('global/', global_chat, name='global'),
     path('users/', users, name='users'),
     path('conversation/<int:user_id>', conversation, name='conversation'),
-    path('u/<str:username>/follow/', follow_tweeker, name='follow_tweeker'),
+    # path('u/<str:username>/follow/', follow_tweeker, name='follow_tweeker'),
     path('u/<str:username>/unfollow/', unfollow_tweeker, name='unfollow_tweeker'),
     path('u/<str:username>/followers/', followers, name='followers'),
     path('u/<str:username>/follows/', follows, name='follows'),
@@ -58,9 +58,9 @@ urlpatterns = [
     #
     # API
 
-    path('api/add_tweek/', api_add_tweek, name='api_add_tweek'),
+    # path('api/add_tweek/', api_add_tweek, name='api_add_tweek'),
     path('api/delete_tweek/', api_delete_tweek, name='api_delete_tweek'),
-    path('api/add_like/', api_add_like, name='api_add_like'),
+    # path('api/add_like/', api_add_like, name='api_add_like'),
     path('api/remove_like/', api_remove_like, name='remove_like'),
     path('api/add_message/', api_add_message, name='api_add_message'),
 

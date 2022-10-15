@@ -24,11 +24,13 @@
                         <p><a href="{% url 'follows' user.username %}">Follows: {{ user.twikkerprofile.follows.count }}</a></p>
                         {% if user != request.user %}
                             <a href="{% url 'conversation' user.id %}" class="button is-info">Send message</a>
+                            <span id="follow-button">
                             {% if request.user.twikkerprofile in user.twikkerprofile.followed_by.all %}
                                 <a href="{% url 'unfollow_tweeker' user.username %}" class="button is-danger">Unfollow</a>
                             {% else %}
-                                <a href="{% url 'follow_tweeker' user.username %}" class="button is-success">Follow</a>
+                                <a id="follow-button" @click="followUser({{ user.id }})"  class="button is-success">Follow</a>
                             {% endif %}
+                            </span>
                         {% endif %}
                     </div>
                 </div>
@@ -157,6 +159,15 @@
                     const el = document.getElementById('tweek-' + tweek_id);
                     el.remove();
             },
+            followUser(user_id){
+            let follow = {
+                'follower' :'{{ request.user.id }}',
+                'following': user_id,
+            };
+            document.querySelector('#follow-button').innerHTML = '<a href="{% url 'unfollow_tweeker' user.username %}" class="button is-danger">Unfollow</a>';
+            followSocket.send(JSON.stringify(follow));
+
+            }
         }
     })
 </script>

@@ -104,32 +104,17 @@
                     this.likeTweek(tweek_id);
                 }
             },
-            likeTweek(tweek_id){
+            async likeTweek(tweek_id){
                 this.liked_tweeks.push(parseInt(tweek_id));
-                var tweek = {
+
+                likeSocket.send(JSON.stringify({
                     'tweek_id': tweek_id,
-                };
+                    'liker': '{{ request.user.username }}',
+                }));
 
-                fetch('/api/add_like/',{
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}',
-                        },
-                        credentials: 'same-origin',
-                        body: JSON.stringify(tweek)
-                    })
-                    .then((response) => {
-                        console.log(response);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-
-                    const el = document.getElementById('likes-' + tweek_id);
-                    const likes = parseInt(el.innerHTML) + 1;
-                    console.log(likes);
-                    el.innerHTML = likes + ' likes';
+                const el = document.getElementById('likes-' + tweek_id);
+                const likes = parseInt(el.innerHTML) + 1;
+                el.innerHTML = likes + ' likes';
             },
             dislikeTweek(tweek_id){
                 this.liked_tweeks = this.liked_tweeks.filter(item => item !== tweek_id)
@@ -192,24 +177,7 @@
                     };
 
                     // Send to backend
-                    id = await fetch('/api/add_tweek/',{
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}',
-                        },
-                        credentials: 'same-origin',
-                        body: JSON.stringify(tweek)
-                    }).then(response => {
-                        return response.json();
-                    }).then(data => {
-                        console.log(data);
-                        tweek.id = data.id;
-                        return data.id;
-                    }).catch((error) => {
-                        console.log(error);
-                    });
-
+                    tweekSocket.send(JSON.stringify(tweek));
                     this.tweeks.unshift(tweek);
                 }
                 this.body = '';

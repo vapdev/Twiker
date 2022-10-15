@@ -2,7 +2,7 @@
 <div class="column sidebar is-2">
     <a href="{% url 'users' %}" class="navbar-item"><span class="white">All Users</span></a>
         <a href="{% url 'global' %}" class="navbar-item"><span class="white">Global Chat</span></a>
-        <a href="{% url 'notifications' %}" class="navbar-item"><span class="white">Notifications ({{ notifications.count }})</span></a>
+        <a id="notifications" href="{% url 'notifications' %}" class="navbar-item"><span class="white">Notifications ({{ notifications.count }})</span></a>
         <a href="{% url 'conversations' %}" class="navbar-item"><span class="white">Conversations</span></a>
         <a href="{% url 'twikkerprofile' request.user.username %}" class="navbar-item"><span class="white">Profile</span></a>
         <a href="{% url 'edit_profile' %}" class="navbar-item"><span class="white">Edit profile</span></a>
@@ -10,3 +10,50 @@
 {% else %}
 <div class="column sidebar is-2"></div>
 {% endif %}
+
+
+<script>
+    const followSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/'
+        + 'follow/'
+    );
+
+    const tweekSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/'
+        + 'tweek/'
+    );
+
+    const likeSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/'
+        + 'like/'
+    );
+
+    followSocket.onmessage = function(e) {
+        notifications_el = document.querySelector('#notifications').innerHTML
+        notification_count = parseInt(notifications_el.split('(')[1].split(')')[0])
+        document.querySelector('#notifications').innerHTML = '<span class="white">Notifications (' + (notification_count + 1) + ')</span>'
+    };
+
+    likeSocket.onmessage = function(e) {
+        notifications_el = document.querySelector('#notifications').innerHTML
+        notification_count = parseInt(notifications_el.split('(')[1].split(')')[0])
+        document.querySelector('#notifications').innerHTML = '<span class="white">Notifications (' + (notification_count + 1) + ')</span>'
+    };
+
+    tweekSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        body = data.body
+        //check if the user is tagged in the tweek
+        if (body.includes("@{{ request.user.username }}")){
+            notifications_el = document.querySelector('#notifications').innerHTML
+            notification_count = parseInt(notifications_el.split('(')[1].split(')')[0])
+            document.querySelector('#notifications').innerHTML = '<span class="white">Notifications (' + (notification_count + 1) + ')</span>'
+        }
+    };
+</script>
