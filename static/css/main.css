@@ -24,6 +24,17 @@ body, html{
     color: white;
 }
 
+.box{
+    background-color: palegreen;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 4px !important;
+    width: fit-content !important;
+    border-color: white !important;
+    border: 2px solid white !important;
+    box-shadow: none;
+}
+
 .messagebox{
     background-color: darkgray;
     padding: 10px;
