@@ -87,8 +87,15 @@ class LikeConsumer(AsyncWebsocketConsumer):
     async def like_message(self, event):
         tweek_id = event['tweek_id']
         liker = event['liker']
+        tweek_owner = await self.get_tweek_owner(tweek_id=tweek_id)
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'tweek_id': tweek_id,
             'liker': liker,
+            'tweek_owner': tweek_owner.username,
         }))
+
+    @sync_to_async
+    def get_tweek_owner(self, tweek_id):
+        tweek = Tweek.objects.get(pk=tweek_id)
+        return tweek.created_by

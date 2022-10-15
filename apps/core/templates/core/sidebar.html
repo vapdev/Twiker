@@ -51,13 +51,10 @@
 
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
-        console.log("datacpmn", data);
         conversationapp.messages.push(data);
         setTimeout(() => {
             scrollToBottom();
         }, 0);
-
-        console.log("to_user_idto_user_id", data.to_user_id, {{ request.user.id }});
 
         if (data.to_user_id == {{ request.user.id }}) {
             notifications_el = document.querySelector('#notifications').innerHTML
@@ -74,9 +71,12 @@
     };
 
     likeSocket.onmessage = function(e) {
-        notifications_el = document.querySelector('#notifications').innerHTML
-        notification_count = parseInt(notifications_el.split('(')[1].split(')')[0])
-        document.querySelector('#notifications').innerHTML = '<span class="white">Notifications (' + (notification_count + 1) + ')</span>'
+        const data = JSON.parse(e.data);
+        if (data.tweek_owner === '{{ request.user.username }}') {
+            notifications_el = document.querySelector('#notifications').innerHTML
+            notification_count = parseInt(notifications_el.split('(')[1].split(')')[0])
+            document.querySelector('#notifications').innerHTML = '<span class="white">Notifications (' + (notification_count + 1) + ')</span>'
+        }
     };
 
     tweekSocket.onmessage = function(e) {
