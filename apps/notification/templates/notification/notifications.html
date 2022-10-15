@@ -8,6 +8,10 @@
             <div class="column is-12">
                 <h1 class="title">Notifications</h1>
 
+                <div class="buttons">
+                    <a href="{% url 'clear_notifications' %}" class="button is-danger">Clear all</a>
+                </div>
+
                 {%  if not notifications %}
                     <p>You have no notifications</p>
                 {% endif %}

@@ -23,7 +23,7 @@ from apps.conversation.views import conversations, conversation, global_chat
 from apps.core.views import frontpage, signup, users
 from apps.feed.api import api_remove_like, api_delete_tweek
 from apps.feed.views import feed, search
-from apps.notification.views import notifications
+from apps.notification.views import notifications, clear_notifications
 from apps.twikkerprofile.views import twikkerprofile, edit_profile, unfollow_tweeker, followers, follows
 from apps.conversation.api import api_add_message
 
@@ -45,6 +45,7 @@ urlpatterns = [
     path('u/<str:username>', twikkerprofile, name='twikkerprofile'),
     path('editprofile/', edit_profile, name='edit_profile'),
     path('notifications/', notifications, name='notifications'),
+    path('clear_notifications/', clear_notifications, name='clear_notifications'),
     path('conversations/', conversations, name='conversations'),
     path('global/', global_chat, name='global'),
     path('users/', users, name='users'),
