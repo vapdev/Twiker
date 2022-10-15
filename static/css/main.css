@@ -82,7 +82,7 @@ textarea{
     display: flex;
     flex-direction: column;
     overflow: auto;
-    height: 650px;
+    height: 710px;
 }
 .profilebox{
     overflow: auto;
