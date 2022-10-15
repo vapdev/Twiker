@@ -22,7 +22,7 @@
                                         </p>
                                     </figure>
                                     <div class="media-content">
-                                        <h1 class="title is-8"><a href="{% url 'twikkerprofile' tweeker %}">{{ tweeker }}</a></h1>
+                                        <h1 class="title is-6"><a href="{% url 'twikkerprofile' tweeker %}">{{ tweeker }}</a></h1>
                                         <p><a href="{% url 'followers' tweeker.username %}">Followers: {{ tweeker.twikkerprofile.followed_by.count }}</a></p>
                                         <p><a href="{% url 'follows' tweeker.username %}">Follows: {{ tweeker.twikkerprofile.follows.count }}</a></p>
                                     <div class="content">

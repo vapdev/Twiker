@@ -23,8 +23,8 @@
                                                 </p>
                                             </figure>
                                              <div class="media-content">
-                                                 <p class="title is-8"><a href="{% url 'conversation' user.id %}">{{ user.username }}</a></p>
-                                                 <p class="subtitle is-4">{{ conversation.modified_at|naturaltime }}</p>
+                                                 <p class="title is-6"><a href="{% url 'conversation' user.id %}">{{ user.username }}</a></p>
+                                                 <p class="is-4">{{ conversation.modified_at|naturaltime }}</p>
                                              <div class="content">
                                         </article>
                                     </div>
