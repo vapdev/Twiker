@@ -1,11 +1,11 @@
 {% extends 'core/base.html' %}
-
+{% load static %}
 {% block content %}
-    <div class="container cornelios">
-        <div class="columns">
-            <div class="column is-12">
-                <h1 class="title">Toca Unificada Interplanetária Cornelios</h1>
-            </div>
-        </div>
-    </div>
+<img src="{% static 'img/cp.jpg' %}" style="
+    width: 880px;
+    height: 810px;
+    align-content: center;
+    margin-left: auto !important;
+    margin-right: auto  !important;
+    display: block !important;" >
 {% endblock %}

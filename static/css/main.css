@@ -114,3 +114,10 @@ textarea{
 .top_margin_text{
     margin-top: 4px;
 }
+
+.cornelios{
+    background-image: url("cp.jpg") !important;
+    margin-left: auto !important;
+    margin-right: auto  !important;
+    display: block !important;
+}
