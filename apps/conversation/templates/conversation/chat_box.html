@@ -1,9 +1,9 @@
 {% load humanize %}
 <div class="container is-fluid" id="conversationapp">
-    <div class="chatbox" id="chatcontainer">
+    <div class="chatbox " id="chatcontainer">
         {% for message in messages %}
-            <div class="tweek">
-                <article class="media box">
+            <div>
+                <article class="media messagebox {% if message.created_by == request.user %}palegreen is-pulled-right right-margin{% endif %}">
                     <figure class="media-left">
                         <p class="image is-3by4 is-32x32">
                             {% if message.created_by.twikkerprofile.avatar %}
@@ -24,8 +24,8 @@
                 </article>
             </div>
         {% endfor %}
-        <div class="tweek" v-for="message in messages">
-            <article class="media box">
+        <div v-for="message in messages">
+            <article class="media messagebox palegreen is-pulled-right right-margin">
                 <figure class="media-left">
                     <p class="image is-3by4 is-32x32">
                         <img class="is-rounded" :src="message.avatar">
@@ -47,7 +47,7 @@
     <form class="top_margin_text" v-on:submit.prevent="submitMessage()">
     <div class="field">
         <div class="control">
-            <textarea class="textarea" v-model="content" placeholder="Your message..."></textarea>
+            <input type="text" class="input" v-model="content" placeholder="Your message..."></input>
         </div>
     </div>
     <div class="field">

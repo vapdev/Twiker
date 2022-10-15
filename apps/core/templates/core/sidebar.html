@@ -1,12 +1,13 @@
 {% load chat %}
 {% if request.user.is_authenticated %}
 <div class="column sidebar is-2">
+    <a href="{% url 'feed' %}" class="navbar-item"><span class="white">Feed</span></a>
     <a href="{% url 'users' %}" class="navbar-item"><span class="white">All Users</span></a>
-        <a href="{% url 'global' %}" class="navbar-item"><span class="white">Global Chat</span></a>
-        <a id="notifications" href="{% url 'notifications' %}" class="navbar-item"><span class="white">Notifications ({{ notifications.count }})</span></a>
-        <a href="{% url 'conversations' %}" class="navbar-item"><span class="white">Conversations</span></a>
-        <a href="{% url 'twikkerprofile' request.user.username %}" class="navbar-item"><span class="white">Profile</span></a>
-        <a href="{% url 'edit_profile' %}" class="navbar-item"><span class="white">Edit profile</span></a>
+    <a href="{% url 'global' %}" class="navbar-item"><span class="white">Global Chat</span></a>
+    <a id="notifications" href="{% url 'notifications' %}" class="navbar-item"><span class="white">Notifications ({{ notifications.count }})</span></a>
+    <a href="{% url 'conversations' %}" class="navbar-item"><span class="white">Conversations</span></a>
+    <a href="{% url 'twikkerprofile' request.user.username %}" class="navbar-item"><span class="white">Profile</span></a>
+    <a href="{% url 'edit_profile' %}" class="navbar-item"><span class="white">Edit profile</span></a>
 </div>  
 {% else %}
 <div class="column sidebar is-2"></div>

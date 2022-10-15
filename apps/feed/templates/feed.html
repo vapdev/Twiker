@@ -14,7 +14,7 @@
                 </div>
                 <div class="field">
                     <div class="control">
-                        <button class="button submit-button" type="submit">Submit</button>
+                        <button id="submit-tweet" class="button submit-button" type="submit">Submit</button>
                     </div>
                 </div>
             </form>
@@ -83,6 +83,16 @@
 
 {% block script %}
 <script>
+
+    document.body.addEventListener('keydown', function(e) {
+	if(!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
+        var target = e.target;
+        submit_button = document.querySelector('#submit-tweet');
+        if(target.form) {
+            submit_button.click();
+        }
+    });
+
     new Vue({
         el: '#feedapp',
         delimiters: ['[[', ']]'],

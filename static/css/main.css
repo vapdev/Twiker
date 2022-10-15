@@ -11,6 +11,10 @@ body, html{
     background: #fff;
 }
 
+.right-margin{
+    margin-right: 10px;
+}
+
 .wrapper-tweeks .tweek .name{
     font-weight: bold;
 }
@@ -20,8 +24,8 @@ body, html{
     color: white;
 }
 
-.box{
-    background-color: palegreen;
+.messagebox{
+    background-color: gray;
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 4px !important;
@@ -29,6 +33,10 @@ body, html{
     border-color: white !important;
     border: 2px solid white !important;
     box-shadow: none;
+}
+
+.palegreen{
+    background-color: palegreen !important;
 }
 
 button{
@@ -60,8 +68,10 @@ textarea{
     display: inline-block;
 }
 .chatbox{
+    display: flex;
+    flex-direction: column;
     overflow: auto;
-    height: 570px;
+    height: 650px;
 }
 .profilebox{
     overflow: auto;
