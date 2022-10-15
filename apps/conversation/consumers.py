@@ -31,6 +31,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         conversation = data['conversation_id']
 
         to_user_id = await self.save_message(tweeker, conversation, content)
+        print("USERID", to_user_id)
 
         # Send message to room group
         await self.channel_layer.group_send(
