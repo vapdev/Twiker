@@ -31,11 +31,16 @@
                         'avatar': this.avatar,
                         'conversation_id': {% if conversation %}{{ conversation.id }}{% else %}null{% endif %},
                     };
-                    this.messages.push(message);
-                    setTimeout(scrollToBottom, 100);
                     chatSocket.send(JSON.stringify(message));
                     this.content = '';
 
+                }
+            },
+            getClass(tweeker) {
+                if (tweeker == '{{ request.user.username }}') {
+                    return 'is-pulled-right right-margin palegreen media messagebox';
+                } else {
+                    return 'message-left media messagebox';
                 }
             },
         }

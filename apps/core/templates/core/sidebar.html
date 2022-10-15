@@ -92,7 +92,12 @@
 
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
-        console.log("asdasdasdadsads", data);
+        document.querySelector("#chatcontainer")
+        console.log('dataaa', data)
+        conversationapp.messages.push(data);
+        setTimeout(() => {
+            scrollToBottom();
+        }, 0);
         if (data.to_user_id == {{ request.user.id }}) {
             notifications_el = document.querySelector('#notifications').innerHTML
             notification_count = parseInt(notifications_el.split('(')[1].split(')')[0])
