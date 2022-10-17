@@ -1,3 +1,6 @@
+html{
+    overflow-y: hidden;
+}
 body{
     min-height: 101.3vh;
     background-color: #0a0a0a;
