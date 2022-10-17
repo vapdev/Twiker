@@ -12,7 +12,7 @@
                             <figure class="media-left">
                                 <p class="image is-3by4 is-128x128" >
                                     {%  if user.twikkerprofile.avatar %}
-                                        <img src="{{ user.twikkerprofile.avatar.url}}" style="border-radius: 4px;">
+                                        <img src="{{ user.twikkerprofile.avatar.url}}" class="is-rounded">
                                     {% endif %}
                                 </p>
                             </figure>
@@ -34,7 +34,7 @@
                         {% endif %}
                     </div>
                 </div>
-            <div class="profilebox wrapper-tweeks">
+            <div class="wrapper-tweeks">
                 {% for tweek in tweeks %}
                     <div class="tweek" id="tweek-{{ tweek.id }}">
                         <article class="media">

@@ -12,64 +12,18 @@
 </head>
 <body>
     <!-- navbar -->
-    <nav class="navbar is-black" role="navigation" style="border-bottom: 5px solid gray;margin-bottom: 5px;padding: 10px;">
-        <div class="navbar-brand">
-            <a href="{% url 'frontpage' %}" class="navbar-item">
-                <p class="image is-32x32">
-                    <img src="{% static 'img/cp.jpg' %}">
-                </p>
-            </a>
-            <a role="button" data-target="navBar" class="navbar-burger">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-        <div class="navbar-menu" id="navBar">
-            <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-                <div class="navbar-item">
-                    <form method="get" action="{%  url 'search' %}">
-                        <div class="field has-addons">
-                            <div class="control">
-                                <input class="input" type="text" name="query" placeholder="Search">
-                            </div>
-                            <div class="control">
-                                <button class="button is-link">Search</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
 
-            <div class="navbar-end">
-
-                <div class="navbar-item">
-                    <div class="buttons">
-                        {% if request.user.is_authenticated %}
-                            <a href="{% url 'logout' %}" class="button is-danger">Log out</a>
-                        {% else %}
-                            <a href="{% url 'signup' %}" class="button is-success">Sign Up</a>
-                            <a href="{% url 'login' %}" class="button is-light">Log in</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
     <!-- end navbar -->
 
     <!-- main content -->
     <section>
         <div class="columns">
-        {% include "core/sidebar.html" %}
-        <div id="main-column" class="column main">
-            <div>
-            {% block content %}
-            {% endblock %}
+            {% include "core/sidebar.html" %}
+            <div id="main-column" class="column main">
+                {% block content %}
+                {% endblock %}
             </div>
-        </div>
-        <div class="column sidebar is-2"></div>
-        </div>
+            <div class="column sidebar is-1"></div>
     </section>
     <!-- end main content -->
     <!-- Scripts -->

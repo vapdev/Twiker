@@ -1,13 +1,58 @@
 {% load chat %}
+{% load static %}
 {% if request.user.is_authenticated %}
-<div class="column sidebar is-2">
-    <a href="{% url 'feed' %}" class="navbar-item"><span class="white">Feed</span></a>
-    <a href="{% url 'users' %}" class="navbar-item"><span class="white">All Users</span></a>
-    <a href="{% url 'global' %}" class="navbar-item"><span class="white">Global Chat</span></a>
-    <a id="notifications" href="{% url 'notifications' %}" class="navbar-item"><span class="white">Notifications ({{ notifications.count }})</span></a>
-    <a href="{% url 'conversations' %}" class="navbar-item"><span class="white">Conversations</span></a>
-    <a href="{% url 'twikkerprofile' request.user.username %}" class="navbar-item"><span class="white">Profile</span></a>
-    <a href="{% url 'edit_profile' %}" class="navbar-item"><span class="white">Edit profile</span></a>
+<div class="column sidebar is-3">
+    <nav class="navbar is-black" role="navigation" style="display: block;position: fixed;">
+        <div class="navbar-brand">
+            <a href="{% url 'frontpage' %}" class="navbar-item">
+                <p class="image is-32x32">
+                    <img src="{% static 'img/cp.jpg' %}">
+                </p>
+            </a>
+            <a role="button" data-target="navBar" class="navbar-burger">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navBar" style="background-color: #0a0a0a;">
+            <div style="display: block;">
+                <div style="display: block;">
+                    <div class="navbar-item">
+                        <form method="get" action="{%  url 'search' %}">
+                            <div class="field has-addons">
+                                <div class="control">
+                                    <input class="input" type="text" name="query" placeholder="Search">
+                                </div>
+                                <div class="control">
+                                    <button class="button is-link">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div>
+                    <a href="{% url 'feed' %}" class="navbar-item"><span>Feed</span></a>
+                    <a href="{% url 'users' %}" class="navbar-item"><span>All Users</span></a>
+                    <a href="{% url 'global' %}" class="navbar-item"><span>Global Chat</span></a>
+                    <a id="notifications" href="{% url 'notifications' %}" class="navbar-item"><span>Notifications ({{ notifications.count }})</span></a>
+                    <a href="{% url 'conversations' %}" class="navbar-item"><span>Conversations</span></a>
+                    <a href="{% url 'twikkerprofile' request.user.username %}" class="navbar-item"><span>Profile</span></a>
+                    <a href="{% url 'edit_profile' %}" class="navbar-item"><span>Edit profile</span></a>
+                </div>
+                <div class="navbar-item">
+                    <div class="buttons">
+                        {% if request.user.is_authenticated %}
+                            <a href="{% url 'logout' %}" class="button is-danger">Log out</a>
+                        {% else %}
+                            <a href="{% url 'signup' %}" class="button is-success">Sign Up</a>
+                            <a href="{% url 'login' %}" class="button is-light">Log in</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </nav>
 </div>  
 {% else %}
 <div class="column sidebar is-2"></div>

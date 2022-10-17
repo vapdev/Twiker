@@ -1,6 +1,6 @@
 {% load humanize %}
 <div class="container is-fluid" id="conversationapp">
-    <div class="chatbox " id="chatcontainer">
+    <div class="chatbox" id="chatcontainer">
         {% for message in messages %}
             <div>
                 <article class="media messagebox {% if message.created_by == request.user %}palegreen is-pulled-right right-margin{% endif %}">
