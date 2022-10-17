@@ -1,5 +1,5 @@
 html{
-    overflow-y: hidden;
+    overflow-y: auto;
 }
 body{
     min-height: 101.3vh;
@@ -115,4 +115,7 @@ textarea{
 }
 .columns{
     max-height: 100vh;
+}
+.container{
+    padding-top: 8px;
 }
