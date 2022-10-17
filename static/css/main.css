@@ -95,6 +95,7 @@ textarea{
     border-right: 5px  solid gray;
     background-color: lightgray;
     min-height: 101.3vh;
+    overflow: auto !important;
 }
 .submit-button{
     margin-bottom: 10px;
@@ -108,4 +109,7 @@ textarea{
     margin-left: auto !important;
     margin-right: auto  !important;
     display: block !important;
+}
+.columns{
+    max-height: 100vh;
 }
