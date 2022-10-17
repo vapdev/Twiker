@@ -58,12 +58,8 @@
 <div class="column sidebar is-3">
     <div class="navbar-item">
         <div class="buttons">
-            {% if request.user.is_authenticated %}
-                <a href="{% url 'logout' %}" class="button is-danger">Log out</a>
-            {% else %}
                 <a href="{% url 'signup' %}" class="button is-success">Sign Up</a>
                 <a href="{% url 'login' %}" class="button is-light">Log in</a>
-            {% endif %}
         </div>
     </div>
 </div>
