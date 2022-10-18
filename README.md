@@ -1,5 +1,5 @@
 # Twikker
-Social network built with Django, Vue.js and Bulma
+Social network built with Django and Vue.js
 
 Work in progress
 
