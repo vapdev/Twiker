@@ -3,17 +3,17 @@
 {% load humanize %}
 
 {% block content %}
-    <div class="container">
-        <div class="columns">
-            <div class="column is-12">
-                <h1 class="title">Follows - {{ user.username }}</h1>
+    <div>
+        <div>
+            <div>
+                <h1>Follows - {{ user.username }}</h1>
 
                 <p>Num: {{ user.twikkerprofile.follows.count }}</p>
             </div>
         </div>
 
-        <div class="columns">
-            <div class="column is-8">
+        <div>
+            <div>
                 {% for tweeker in user.twikkerprofile.follows.all %}
                     <p><a href="{% url 'twikkerprofile' tweeker.user.username %}">{{ tweeker.user.username }}</a></p>
                 {% empty %}

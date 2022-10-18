@@ -3,51 +3,51 @@
 {% load humanize %}
 
 {% block content %}
-    <div class="container" id="twikkerprofileapp">
-                <h1 class="title">{{ user.username }}</h1>
-                <div class="is-flex" style="margin-bottom: 4px;">
+    <div id="twikkerprofileapp">
+                <h1>{{ user.username }}</h1>
+                <div>
                     <div>
                         {% if user.twikkerprofile.avatar %}
-                        <article class="media">
-                            <figure class="media-left">
-                                <p class="image is-3by4 is-128x128" >
+                        <article>
+                            <figure>
+                                <p>
                                     {%  if user.twikkerprofile.avatar %}
-                                        <img src="{{ user.twikkerprofile.avatar.url}}" class="is-rounded">
+                                        <img src="{{ user.twikkerprofile.avatar.url}}">
                                     {% endif %}
                                 </p>
                             </figure>
                         </article> 
                         {% endif %}
                     </div>
-                    <div class="is-aligned-content-flex-end">
+                    <div>
                         <p><a href="{% url 'followers' user.username %}">Followers: {{ user.twikkerprofile.followed_by.count }}</a></p>
                         <p><a href="{% url 'follows' user.username %}">Follows: {{ user.twikkerprofile.follows.count }}</a></p>
                         {% if user != request.user %}
-                            <a href="{% url 'conversation' user.id %}" class="button is-info">Send message</a>
+                            <a href="{% url 'conversation' user.id %}">Send message</a>
                             <span id="follow-button">
                             {% if request.user.twikkerprofile in user.twikkerprofile.followed_by.all %}
-                                <a href="{% url 'unfollow_tweeker' user.username %}" class="button is-danger">Unfollow</a>
+                                <a href="{% url 'unfollow_tweeker' user.username %}">Unfollow</a>
                             {% else %}
-                                <a id="follow-button" @click="followUser({{ user.id }})"  class="button is-success">Follow</a>
+                                <a id="follow-button" @click="followUser({{ user.id }})">Follow</a>
                             {% endif %}
                             </span>
                         {% endif %}
                     </div>
                 </div>
-            <div class="wrapper-tweeks">
+            <div>
                 {% for tweek in tweeks %}
-                    <div class="tweek" id="tweek-{{ tweek.id }}">
-                        <article class="media">
-                            <figure class="media-left">
-                                <p class="image is-3by4 is-64x64">
+                    <div id="tweek-{{ tweek.id }}">
+                        <article>
+                            <figure>
+                                <p>
                                     {%  if tweek.created_by.twikkerprofile.avatar %}
-                                        <img class="is-rounded" src="{{ tweek.created_by.twikkerprofile.avatar.url}}">
+                                        <img src="{{ tweek.created_by.twikkerprofile.avatar.url}}">
                                     {% endif %}
                                 </p>
                             </figure>
 
-                            <div class="media-content">
-                                <div class="content">
+                            <div>
+                                <div>
                                     <p>
                                         <strong><a href="{% url 'twikkerprofile' tweek.created_by.username %}">{{ tweek.created_by.username }}</a></strong>
                                         <small>{{ tweek.created_at|naturaltime }}</small>

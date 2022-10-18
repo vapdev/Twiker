@@ -3,29 +3,29 @@
 {% load humanize %}
 
 {% block content %}
-    <div class="container">
-        <div class="columns">
-            <div class="column is-12">
-                <h1 class="title">Conversations</h1>
+    <div>
+        <div>
+            <div>
+                <h1>Conversations</h1>
 
-                <div class="conversations-list">
+                <div>
                     {% for conversation in conversations %}
-                        <div class="conversations-list-item freestyle">
+                        <div>
                             {% for user in conversation.users.all %}
                                 {% if user != request.user %}
-                                    <div class="box">
-                                        <article class="media">
-                                            <figure class="media-left">
-                                                <p class="image is-3by4 is-64x64">
+                                    <div>
+                                        <article>
+                                            <figure>
+                                                <p>
                                                     {%  if user.twikkerprofile.avatar %}
-                                                        <img class="is-rounded" src="{{ user.twikkerprofile.avatar.url}}">
+                                                        <img src="{{ user.twikkerprofile.avatar.url}}">
                                                     {% endif %}
                                                 </p>
                                             </figure>
-                                             <div class="media-content">
-                                                 <p class="title is-6"><a href="{% url 'conversation' user.id %}">{{ user.username }}</a></p>
-                                                 <p class="is-4">{{ conversation.modified_at|naturaltime }}</p>
-                                             <div class="content">
+                                             <div>
+                                                 <p><a href="{% url 'conversation' user.id %}">{{ user.username }}</a></p>
+                                                 <p>{{ conversation.modified_at|naturaltime }}</p>
+                                             <div>
                                         </article>
                                     </div>
                                 {% endif %}

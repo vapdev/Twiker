@@ -3,32 +3,32 @@
 {% load humanize %}
 
 {% block content %}
-    <div class="container">
-        <div class="columns">
-            <div class="column is-12">
-                <h1 class="title">Notifications</h1>
+    <div>
+        <div>
+            <div>
+                <h1>Notifications</h1>
 
-                <div class="buttons">
-                    <a href="{% url 'clear_notifications' %}" class="button is-danger">Clear all</a>
+                <div>
+                    <a href="{% url 'clear_notifications' %}">Clear all</a>
                 </div>
 
                 {%  if not notifications %}
                     <p>You have no notifications</p>
                 {% endif %}
 
-                <div class="wrapper-tweeks">
+                <div>
                     {% for notification in notifications %}
-                        <article class="media">
-                            <figure class="media-left">
-                                <p class="image is-64x64">
+                        <article>
+                            <figure>
+                                <p>
                                     {% if notification.created_by.twikkerprofile.avatar %}
                                         <img src="{{ notification.created_by.twikkerprofile.avatar.url }}">
                                     {% endif %}
                                 </p>
                             </figure>
 
-                            <div class="media-content">
-                                <div class="content">
+                            <div>
+                                <div>
                                     <p>
                                         {% if notification.notification_type == 'message' %}
                                             <a href="{% url 'notifications' %}?goto=conversation&notification={{ notification.id }}">

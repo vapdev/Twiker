@@ -1,17 +1,17 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-    <div class="container">
-        <div class="columns">
-            <div class="column is-12">
-                <h1 class="title">Sign Up</h1>
+    <div>
+        <div>
+            <div>
+                <h1>Sign Up</h1>
 
                 <form method="post" action=".">
                     {% csrf_token %}
 
                     {{ form.as_p }}
 
-                    <button class="button is-success" type="submit">Sign Up</button>
+                    <button type="submit">Sign Up</button>
                 </form>
             </div>
         </div>
