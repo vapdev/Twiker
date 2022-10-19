@@ -7,30 +7,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Twikker</title>
-    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
-    <!-- navbar -->
-
-    <!-- end navbar -->
-
-    <!-- main content -->
-    <section>
-        <div>
-            {% include "core/sidebar.html" %}
-            <div>
-                {% block content %}
-                {% endblock %}
-            </div>
-            <div>
-            </div>
-    </section>
-    <!-- end main content -->
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    {% block script %}
+    {% block content %}
     {% endblock %}
-    <!-- End Scripts -->
 </body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </html>
