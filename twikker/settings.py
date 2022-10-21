@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
-
     'apps.notification',
     'apps.conversation',
     'apps.core',
@@ -54,9 +53,8 @@ INSTALLED_APPS = [
     'apps.feed',
     'tailwind',
     'theme',
-    'django_browser_reload',
-
     'channels',
+    'livereload'
 ]
 TAILWIND_APP_NAME = 'theme'
 CHANNEL_LAYERS = {
@@ -72,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'livereload.middleware.LiveReloadScript',
 ]
 
 ROOT_URLCONF = 'twikker.urls'

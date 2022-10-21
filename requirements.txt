@@ -22,3 +22,5 @@ channels~=3.0.5
 idna~=3.4
 pycparser~=2.21
 setuptools~=58.1.0
+django-tailwind
+django-browser-reload
