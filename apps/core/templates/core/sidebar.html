@@ -2,47 +2,25 @@
 {% load static %}
 {% if request.user.is_authenticated %}
 
-<a href="{% url 'frontpage' %}">
-    <p>
-        <img src="{% static 'img/cp.jpg' %}">
-    </p>
-</a>
-<div id="navBar">
-    <div>
-        <div>
-            <div>
-                <form method="get" action="{%  url 'search' %}">
-                    <div>
-                        <div>
-                            <input type="text" name="query" placeholder="Search">
-                        </div>
-                        <div>
-                            <button>Search</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+<div class="sticky top-0 left-0 h-screen bg-white border-solid border-r-2 border-gray-100">
+    <div class="flex flex-col right-0 justify-between h-screen">
+        <div class="flex flex-col">
+            <a class="flex text-lime-900 text-2xl mx-4 p-3" href="{% url 'feed' %}"><i class="fa-solid fa-house"></i>Página Inicial</a>
+            <a class="flex text-lime-900 text-2xl mx-4 p-3" id="notifications" href="{% url 'notifications' %}"><span>({{notifications.count}})<i class="fa-solid fa-bell"></i>Notificações</span></a>
+            <a class="flex text-lime-900 text-2xl mx-4 p-3" href="{% url 'users' %}"><i class="fa-solid fa-users"></i> All users</a>
+            <a class="flex text-lime-900 text-2xl mx-4 p-3" href="{% url 'global' %}" ><span class="break-keep"><i class="fa-solid fa-earth-americas"></i> Global chat</span></a>
+            <a class="flex text-lime-900 text-2xl mx-4 p-3" href="{% url 'conversations' %}"><i class="fa-solid fa-comments"></i> Conversations</a>
+            <a class="flex text-lime-900 text-2xl mx-4 p-3" href="{% url 'twikkerprofile' request.user.username %}"><i class="fa-solid fa-user"></i>Perfil</a>
         </div>
-        <div>
-            <a href="{% url 'feed' %}"><span>Feed</span></a>
-            <a href="{% url 'users' %}"><span>All Users</span></a>
-            <a href="{% url 'global' %}"><span>Global Chat</span></a>
-            <a id="notifications" href="{% url 'notifications' %}"><span>Notifications ({{ notifications.count }})</span></a>
-            <a href="{% url 'conversations' %}"><span>Conversations</span></a>
-            <a href="{% url 'twikkerprofile' request.user.username %}"><span>Profile</span></a>
-            <a href="{% url 'edit_profile' %}"><span>Edit profile</span></a>
+        <div class="flex flex-row my-3">
+            <div class="bg-gray-500 rounded-full h-12 w-12"></div>
+            <h1 class="text-lime-900">{{ user.username }}</h1>
+            <a class="text-lime-900 text-2xl m-4" style="margin-left: auto;" href="{% url 'edit_profile' %}">
+                <svg class="fill-lime-900 text-2xl" width="32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) --><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h274.9c-2.4-6.8-3.4-14-2.6-21.3l6.8-60.9 1.2-11.1 7.9-7.9 77.3-77.3c-24.5-27.7-60-45.5-99.9-45.5zm45.3 145.3l-6.8 61c-1.1 10.2 7.5 18.8 17.6 17.6l60.9-6.8 137.9-137.9-71.7-71.7-137.9 137.8zM633 268.9L595.1 231c-9.3-9.3-24.5-9.3-33.8 0l-37.8 37.8-4.1 4.1 71.8 71.7 41.8-41.8c9.3-9.4 9.3-24.5 0-33.9z"/></svg>
+            </a>
         </div>
-        <div>
-            <div>
-                {% if request.user.is_authenticated %}
-                    <a href="{% url 'logout' %}">Log out</a>
-                {% else %}
-                    <a href="{% url 'signup' %}">Sign Up</a>
-                    <a href="{% url 'login' %}">Log in</a>
-                {% endif %}
-            </div>
-        </div>
-    </div>    
+    </div>
+</div>
 {% else %}
 <div>
     <div>

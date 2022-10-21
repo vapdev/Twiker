@@ -26,6 +26,9 @@ SECRET_KEY = 'django-insecure-m^j#u-gwb!(24-a1--w@yua99ui079w9c*)t+oxu&lsq$gp83z
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'a7bd-186-226-50-81.sa.ngrok.io']
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 CSRF_TRUSTED_ORIGINS = ['https://a7bd-186-226-50-81.sa.ngrok.io']
 
@@ -49,9 +52,13 @@ INSTALLED_APPS = [
     'apps.core',
     'apps.twikkerprofile',
     'apps.feed',
+    'tailwind',
+    'theme',
+    'django_browser_reload',
 
     'channels',
 ]
+TAILWIND_APP_NAME = 'theme'
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
@@ -146,3 +153,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
