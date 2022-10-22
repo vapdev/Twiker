@@ -1,5 +1,4 @@
 django
 channels
 Pillow
-django-tailwind
 django-livereload-server
