@@ -6,7 +6,7 @@
     <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="p-2 border-solid border-b-2 border-gray-100"> 
       <div class="flex">
         <div class="static flex w-fit mr-2">
-          <div class="bg-gray-500 rounded-full h-6 w-6"></div>
+          <img class="rounded-full h-6 w-6" :src="tweek.avatar_url" width="500">
         </div>
         <span class="inline-block align-top">
            [[ tweek.tweeker_name ]] 
