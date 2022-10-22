@@ -51,12 +51,9 @@ INSTALLED_APPS = [
     'apps.core',
     'apps.twikkerprofile',
     'apps.feed',
-    'tailwind',
-    'theme',
     'channels',
     'livereload'
 ]
-TAILWIND_APP_NAME = 'theme'
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
@@ -152,4 +149,3 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
