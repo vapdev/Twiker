@@ -77,8 +77,5 @@ def api_get_tweeks(request):
     paginator = PageNumberPagination()
     paginator.page_size = 20
     results = paginator.paginate_queryset(tweeks, request)
-
     serializer = TweekSerializer(results, many=True)
-    print("serializer data..", serializer.data)
-
     return paginator.get_paginated_response(serializer.data)
