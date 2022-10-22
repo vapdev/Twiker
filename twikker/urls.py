@@ -21,7 +21,7 @@ from django.contrib.auth import views
 
 from apps.conversation.views import conversations, conversation, global_chat
 from apps.core.views import frontpage, signup, users
-from apps.feed.api import api_remove_like, api_delete_tweek
+from apps.feed.api import api_remove_like, api_delete_tweek, api_get_tweeks
 from apps.feed.views import feed, search
 from apps.notification.views import notifications, clear_notifications
 from apps.twikkerprofile.views import twikkerprofile, edit_profile, unfollow_tweeker, followers, follows
@@ -64,6 +64,7 @@ urlpatterns = [
     # path('api/add_like/', api_add_like, name='api_add_like'),
     path('api/remove_like/', api_remove_like, name='remove_like'),
     path('api/add_message/', api_add_message, name='api_add_message'),
+    path('api/get_tweeks/', api_get_tweeks, name='get_tweeks'),
 
     #
     #

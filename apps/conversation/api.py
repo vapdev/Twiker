@@ -1,10 +1,11 @@
 import json
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from apps.feed.models import Tweek
 
 from apps.notification.utilities import create_notification
-
 from .models import Conversation, ConversationMessage
+
 
 @login_required
 def api_add_message(request):
@@ -20,3 +21,4 @@ def api_add_message(request):
                 create_notification(request, user, 'message')
 
     return JsonResponse({'success': True})
+

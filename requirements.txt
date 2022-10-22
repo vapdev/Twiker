@@ -2,3 +2,4 @@ django
 channels
 Pillow
 django-livereload-server
+djangorestframework

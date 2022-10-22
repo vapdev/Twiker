@@ -11,6 +11,10 @@ from django.contrib.auth.models import User
 from apps.notification.models import Notification
 from apps.notification.utilities import create_notification
 
+from rest_framework.decorators import api_view
+from rest_framework.pagination import PageNumberPagination
+
+from .serializers import TweekSerializer
 from apps.feed.models import Tweek, Like
 
 @sync_to_async
@@ -65,3 +69,16 @@ def api_delete_tweek(request):
         tweek.delete()
 
     return JsonResponse({'success': True})
+
+@login_required
+@api_view(['GET'])
+def api_get_tweeks(request):
+    tweeks = Tweek.objects.all()
+    paginator = PageNumberPagination()
+    paginator.page_size = 20
+    results = paginator.paginate_queryset(tweeks, request)
+
+    serializer = TweekSerializer(results, many=True)
+    print("serializer data..", serializer.data)
+
+    return paginator.get_paginated_response(serializer.data)

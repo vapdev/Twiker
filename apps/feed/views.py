@@ -2,8 +2,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from apps.notification.utilities import create_notification
-
 from .models import Tweek
 
 @login_required
@@ -43,3 +41,4 @@ def search(request):
     }
 
     return render(request, 'search.html', context)
+
