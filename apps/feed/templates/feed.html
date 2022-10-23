@@ -27,21 +27,49 @@
           </div>
         </div>
     </div>
-    <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex flex-col h-fit w-full p-2 border-solid border-b-2 border-gray-100"> 
-      <div class="flex">
-        <div class="flex mr-2">
-          <img class="rounded-full h-6 w-6" :src="tweek.avatar_url" width="500">
+    <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex flex-rol h-fit w-full p-2 border-solid border-b-2 hover:bg-gray-100 border-gray-100"> 
+          <div class="flex mr-2">
+            <img class="rounded-full h-12 w-12" :src="tweek.avatar_url" width="500">
+          </div>
+        <div class="flex flex-col w-full">
+          <span class="align-top">
+            [[ tweek.tweeker_name ]] 
+          </span>
+          <span class="flex text-xl break-all"> [[ tweek.body ]] </span>
+          <div class="flex flex-row justify-between w-2/3 mt-3">
+            <div class="flex">
+              <div class="w-8 h-8 p-1 text-center hover:bg-yellow-200 hover:rounded-full">
+                <i class="fa-regular fa-comment-dots"></i>
+              </div>
+              <span class="pt-1">250</span>
+            </div>
+            <div class="flex">
+              <div class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
+                <i class="fa-solid fa-retweet"></i>
+              </div>
+              <span class="pt-1">25</span>
+            </div>
+            <div class="flex">
+              <div class="flex mx-2">
+                <div class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
+                <i class="fa-regular fa-thumbs-up"></i>
+                </div>
+                <span class="pt-1">100</span>
+              </div>
+              <div class="flex mx-2">
+                <div class="w-8 h-8 p-1 text-center hover:bg-red-300 hover:rounded-full">
+                <i class="fa-regular fa-thumbs-down"></i>
+                </div>
+                <span class="pt-1">9</span>
+              </div>
+            </div>
+          </div>  
         </div>
-        <span class="align-top">
-           [[ tweek.tweeker_name ]] 
-        </span>
-      </div>
-      <span class="flex text-xl ml-8 break-all"> [[ tweek.body ]] </span>
     </div>
   </div>
 
-  <div class="h-full place-self-end">
-    <div class="place-content-end bg-gray-100 rounded w-72 h-72">Salves</div>
+  <div class="h-full place-self-end ml-4">
+    <div class="place-content-end bg-gray-100 rounded-xl w-72 h-72 shadow-sm">Salves</div>
   </div>
 </div>
 {% endblock %}

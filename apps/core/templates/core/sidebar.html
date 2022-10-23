@@ -5,12 +5,22 @@
 <div class="sticky top-0 left-0 px-4 h-screen bg-white border-solid border-r-2 border-gray-100">
     <div class="flex flex-col right-0 justify-between h-screen">
         <div class="flex flex-col">
-            <a class="flex text-lime-900 text-2xl p-3" href="{% url 'feed' %}"><i class="fa-solid fa-house"></i>Página Inicial</a>
-            <a class="flex text-lime-900 text-2xl p-3" id="notifications" href="{% url 'notifications' %}"><span>({{notifications.count}})<i class="fa-solid fa-bell"></i>Notificações</span></a>
-            <a class="flex text-lime-900 text-2xl p-3" href="{% url 'users' %}"><i class="fa-solid fa-users"></i> All users</a>
-            <a class="flex text-lime-900 text-2xl p-3" href="{% url 'global' %}" ><span class="break-keep"><i class="fa-solid fa-earth-americas"></i> Global chat</span></a>
-            <a class="flex text-lime-900 text-2xl p-3" href="{% url 'conversations' %}"><i class="fa-solid fa-comments"></i> Conversations</a>
-            <a class="flex text-lime-900 text-2xl p-3" href="{% url 'twikkerprofile' request.user.username %}"><i class="fa-solid fa-user"></i>Perfil</a>
+            <div class="flex">
+            <a class="flex text-lime-900 text-2xl p-3 hover:bg-gray-100 hover:rounded-full" href="{% url 'feed' %}"><div><i class="fa-solid fa-house"></div></i>Página Inicial</a>
+            </div>
+            <div class="flex">
+            <a class="flex text-lime-900 text-2xl p-3 hover:bg-gray-100 hover:rounded-full" id="notifications" href="{% url 'notifications' %}"><span><i class="fa-solid fa-bell"></i>Notificações({{notifications.count}})</span></a>
+            </div>
+            <div class="flex">
+            <a class="flex text-lime-900 text-2xl p-3 hover:bg-gray-100 hover:rounded-full" href="{% url 'users' %}"><div><i class="fa-solid fa-users"></div></i> All users</a>
+            </div>
+            <div class="flex">
+            <a class="flex text-lime-900 text-2xl p-3 hover:bg-gray-100 hover:rounded-full" href="{% url 'global' %}" ><span class="break-keep"><i class="fa-solid fa-earth-americas"></i>Global chat</span></a>
+            </div>
+            <a class="flex text-lime-900 text-2xl p-3 hover:bg-gray-100 hover:rounded-full" href="{% url 'conversations' %}"><div><i class="fa-solid fa-comments"></div></i> Conversations</a>
+            <div class="flex">
+            <a class="flex text-lime-900 text-2xl p-3 hover:bg-gray-100 hover:rounded-full" href="{% url 'twikkerprofile' request.user.username %}"><div><i class="fa-solid fa-user"></div></i>Perfil</a>
+            </div>
         </div>
         <div class="flex flex-row justify-between w-full my-3">
             <div class="flex pl-3">
