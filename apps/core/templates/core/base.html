@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load tailwind_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,12 +8,17 @@
     <title>Twikker</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="/static/css/css/all.css" rel="stylesheet">
+    {% tailwind_css %}
 </head>
 <body>
-    <div class="flex justify-center">
-        {% include "core/sidebar.html" %}
+    <div class="flex min-w-full min-h-full flex-rol">
+        <div class="flex w-full justify-end max-w-xl">
+            {% include "core/sidebar.html" %}
+        </div>
+        <div class="flex w-full">
         {% block content %}
         {% endblock %}
+        </div>
     </div>
 </body>
 {% block script %}

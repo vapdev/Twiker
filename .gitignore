@@ -10,4 +10,5 @@ venv/
 identifier.sqlite
 .vs/
 twikker/__pycache__/*
-static/css/css/*
+theme/*
+settings.py

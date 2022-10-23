@@ -3,16 +3,16 @@
 {% load humanize %}
 
 {% block content %}
-    <div class="bg-white w-screen" id="twikkerprofileapp">
+    <div class="flex flex-col bg-white" id="twikkerprofileapp">
                 <h1>{{ user.username }}</h1>
                 <div>
-                    <div>
+                    <div class="flex">
                         {% if user.twikkerprofile.avatar %}
                         <article>
                             <figure>
                                 <p>
                                     {%  if user.twikkerprofile.avatar %}
-                                        <img src="{{ user.twikkerprofile.avatar.url}}">
+                                        <img class="w-12 h-12" src="{{ user.twikkerprofile.avatar.url}}">
                                     {% endif %}
                                 </p>
                             </figure>
@@ -41,7 +41,7 @@
                             <figure>
                                 <p>
                                     {%  if tweek.created_by.twikkerprofile.avatar %}
-                                        <img src="{{ tweek.created_by.twikkerprofile.avatar.url}}">
+                                        <img class="w-6 h-6" src="{{ tweek.created_by.twikkerprofile.avatar.url}}">
                                     {% endif %}
                                 </p>
                             </figure>
