@@ -51,10 +51,10 @@
             </div>
             <div class="flex">
               <div class="flex mx-2">
-                <div @click="likeTweek(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
-                  <i class="fa-regular fa-thumbs-up"></i>
+                <div @click="toggleLike(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
+                  <i :class=" !liked_tweeks.includes(tweek.id) ? 'fa-regular fa-thumbs-up' : 'fa-solid fa-thumbs-up' "></i>
                 </div>
-                <span :id="'likes-'+tweek.id" class="pt-1">[[ tweek.likes_count ]]</span>
+                <span :id="'likes-'+tweek.id" class="pt-1">[[ tweek.likes_count ]] [[ tweek.liked_tweeks ]]</span>
               </div>
               <div class="flex mx-2">
                 <div class="w-8 h-8 p-1 text-center hover:bg-red-300 hover:rounded-full">
@@ -119,14 +119,11 @@
     },
     methods:{
       getTweeks() {
-      console.log('Get Posts')
       fetch(`/api/get_tweeks/?page=${this.currentPage}`)
           .then(response => {
               return response.json()
           })
           .then(data => {
-              console.log(data)
-
               this.hasNext = false
 
               if (data.next) {
@@ -142,25 +139,22 @@
       },
       toggleLike(tweek_id){
               if(this.liked_tweeks.includes(tweek_id)){
-                  this.dislikeTweek(tweek_id);
+                  this.unlikeTweek(tweek_id);
               }else{
                   this.likeTweek(tweek_id);
               }
           },
       async likeTweek(tweek_id){
-          console.log("vindo pro like chama", tweek_id)
           this.liked_tweeks.push(parseInt(tweek_id));
-          console.log("122");
           likeSocket.send(JSON.stringify({
               'tweek_id': tweek_id,
               'liker': '{{ request.user.username }}',
           }));
-          console.log("2")
           const el = document.getElementById('likes-' + tweek_id);
           const likes = parseInt(el.innerHTML) + 1;
           el.innerHTML = likes;
           },
-        dislikeTweek(tweek_id){
+        unlikeTweek(tweek_id){
             this.liked_tweeks = this.liked_tweeks.filter(item => item !== tweek_id)
             var tweek = {
                 'tweek_id': tweek_id,
@@ -184,8 +178,7 @@
 
                 const el = document.getElementById('likes-' + tweek_id);
                 const likes = parseInt(el.innerHTML) - 1;
-                console.log(likes);
-                el.innerHTML = likes + ' likes';
+                el.innerHTML = likes;
         },
         deleteTweek(tweek_id){
             var tweek = {
@@ -224,7 +217,6 @@
                   this.tweeks.unshift(tweek);
               }
               this.body = '';
-              console.log('twweeks' + this.tweeks);
           }
     }
   }).mount('#feedapp')

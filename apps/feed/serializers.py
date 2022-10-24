@@ -7,6 +7,7 @@ class TweekSerializer(serializers.ModelSerializer):
     likes_count = serializers.IntegerField(source='likes.count')
     avatar_url = serializers.CharField(source='created_by.twikkerprofile.avatar.url')
 
+
     class Meta:
         model = Tweek
         fields = ('id', 'body', 'created_by', 'tweeker_name', 'likes_count', 'avatar_url')
