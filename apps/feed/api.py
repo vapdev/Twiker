@@ -73,7 +73,10 @@ def api_delete_tweek(request):
 @login_required
 @api_view(['GET'])
 def api_get_tweeks(request):
-    tweeks = Tweek.objects.all()
+    userids = [request.user.id]
+    for tweeker in request.user.twikkerprofile.follows.all():
+        userids.append(tweeker.user.id)
+    tweeks = Tweek.objects.filter(created_by__id__in=userids)
     paginator = PageNumberPagination()
     paginator.page_size = 20
     results = paginator.paginate_queryset(tweeks, request)

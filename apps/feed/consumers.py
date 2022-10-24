@@ -12,6 +12,7 @@ from apps.notification.utilities import create_notification
 
 
 class TweekConsumer(AsyncWebsocketConsumer):
+
     async def connect(self):
         # Join room
         await self.channel_layer.group_add('tweek', self.channel_name)

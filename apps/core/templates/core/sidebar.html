@@ -45,6 +45,7 @@
     </div>
 </div>
 {% endif %}
+{% block script %}
 <script>
     const followSocket = new WebSocket(
         'ws://'
@@ -137,4 +138,5 @@
         }
 
     };
-</script>
+</script>   
+{% endblock %}

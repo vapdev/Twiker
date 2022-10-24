@@ -12,3 +12,4 @@ identifier.sqlite
 twikker/__pycache__/*
 theme/*
 twikker/settings.py
+tailwind.config.js
