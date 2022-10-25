@@ -9,14 +9,17 @@
     <link href="/static/css/css/all.css" rel="stylesheet">
 </head>
 <body>
-    <div class="flex min-w-full min-h-full flex-row">
-        <div class="flex w-full justify-end max-w-xl">
+    <div class="flex w-full min-h-full flex-row">
+        <aside class="flex w-full justify-end max-w-xl">
             {% include "core/sidebar.html" %}
-        </div>
-        <div class="flex w-full">
+        </aside>
+        <main class="flex max-w-2xl w-full shrink-0">
         {% block content %}
         {% endblock %}
-        </div>
+        </main>
+        <aside>
+            {% include "core/rsidebar.html" %}
+        </aside>
     </div>
 </body>
 {% block script %}

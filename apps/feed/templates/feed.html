@@ -1,17 +1,19 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<div class="flex flex-row w-full max-w-5xl justify-between">
+<div class="flex min-w-full">
 
-  <div id="feedapp" class="flex max-w-2xl flex-col bg-white border-solid border-r-2 border-gray-100">
+  <div id="feedapp" class="flex flex-col w-full bg-white border-solid border-r-2 border-gray-100">
     
-    <div class="sticky p-3 bg-white top-0 w-full h-fit text-2xl"><a href="{% url 'feed' %}">Pagina inicial</a></div>
-    <div class="flex h-30 w-full p-2 border-solid border-b-2 border-gray-100">
+    <div class="sticky p-3 bg-white top-0 w-full h-fit opacity-95 text-2xl"><a href="{% url 'feed' %}"><span class="opacity-100">Pagina inicial</span></a></div>
+
+    <div class="flex h-30 w-full p-2 pt-3 pl-3 border-solid border-b-2 border-gray-100">
       <div class="flex h-full pt-1 mr-3">
         <img class="rounded-full h-12 w-12" src="{% if request.user.twikkerprofile.avatar %}{{ request.user.twikkerprofile.avatar.url }}{% endif %}">
       </div>
-        <div class="flex flex-col w-full ">
+      <div class="flex flex-col w-full ">
+        <form v-on:submit.prevent="submitTweek()">
           <div class="flex w-full py-5">
-          <textarea placeholder="What you tweeking bro..." class="text-xl resize-none h-fit w-full  outline-none" type="text"></textarea>
+            <textarea placeholder="What you tweeking bro..." class="text-xl resize-none h-fit w-full  outline-none" type="text" v-model="body"></textarea>
           </div>
           <div class="flex border-solid border-t-2 border-gray-100 w-full">
             <div class="flex my-4 w-full">
@@ -20,16 +22,17 @@
                   <button class=""><i class="fa-regular fa-image"></i></button>
                 </div>
                 <div class="flex">
-                  <button class="bg-green-300 rounded-lg mx-3 px-10 shadow-md"><span class="">Enter</span></button>
+                  <button id="submit-tweet" class="bg-green-300 rounded-lg mx-3 px-10 shadow-md" type="submit">Enter</button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>  
+      </div>
     </div>
-    <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex flex-rol h-fit w-full p-2 border-solid border-b-2 hover:bg-gray-100 border-gray-100"> 
+    <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex flex-rol h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 border-gray-100"> 
           <div class="flex mr-2">
-            <img class="rounded-full h-12 w-12" :src="tweek.avatar_url" width="500">
+            <img class="rounded-full h-12 w-12" :src="tweek.avatar_url">
           </div>
         <div class="flex flex-col w-full">
           <span class="align-top">
@@ -66,10 +69,6 @@
           </div>  
         </div>
     </div>
-  </div>
-
-  <div class="h-full place-self-end ml-4">
-    <div class="place-content-end bg-gray-100 rounded-xl w-72 h-72 shadow-sm">Salves</div>
   </div>
 </div>
 {% endblock %}
@@ -119,23 +118,23 @@
     },
     methods:{
       getTweeks() {
-      fetch(`/api/get_tweeks/?page=${this.currentPage}`)
-          .then(response => {
-              return response.json()
-          })
-          .then(data => {
-              this.hasNext = false
+        fetch(`/api/get_tweeks/?page=${this.currentPage}`)
+        .then(response => {
+            return response.json()
+        })
+        .then(data => {
+            this.hasNext = false
 
-              if (data.next) {
-                  this.hasNext = true
-              }
-              for (let i = 0; i < data.results.length; i++) {
-                  this.tweeks.push(data.results[i])
-              }
-          })
-          .catch(error => {
-              console.log(error)
-          })
+            if (data.next) {
+                this.hasNext = true
+            }
+            for (let i = 0; i < data.results.length; i++) {
+                this.tweeks.push(data.results[i])
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
       },
       toggleLike(tweek_id){
               if(this.liked_tweeks.includes(tweek_id)){
@@ -143,7 +142,7 @@
               }else{
                   this.likeTweek(tweek_id);
               }
-          },
+      },
       async likeTweek(tweek_id){
           this.liked_tweeks.push(parseInt(tweek_id));
           likeSocket.send(JSON.stringify({
@@ -153,7 +152,7 @@
           const el = document.getElementById('likes-' + tweek_id);
           const likes = parseInt(el.innerHTML) + 1;
           el.innerHTML = likes;
-          },
+        },
         unlikeTweek(tweek_id){
             this.liked_tweeks = this.liked_tweeks.filter(item => item !== tweek_id)
             var tweek = {
@@ -202,22 +201,22 @@
 
                 const el = document.getElementById('tweek-' + tweek_id);
                 el.remove();
-          },
-          async submitTweek(){
-              if (this.body.length > 0){
-                  let tweek = {
-                      'body': this.body,
-                      'tweeker': this.tweeker,
-                      'created_at': this.created_at,
-                      'avatar': this.avatar
-                  };
+        },
+        async submitTweek(){
+            if (this.body.length > 0){
+                let tweek = {
+                    'body': this.body,
+                    'tweeker_name': this.tweeker,
+                    'created_at': this.created_at,
+                    'avatar_url': this.avatar
+                };
 
-                  // Send to backend
-                  tweekSocket.send(JSON.stringify(tweek));
-                  this.tweeks.unshift(tweek);
-              }
-              this.body = '';
-          }
+                // Send to backend
+                tweekSocket.send(JSON.stringify(tweek));
+                this.tweeks.unshift(tweek);
+            }
+            this.body = '';
+        }
     }
   }).mount('#feedapp')
 </script>
