@@ -4,49 +4,49 @@
     <div class="flex flex-col justify-between h-screen">
         <div class="flex flex-col justify-center">
             <div class="flex">
-                <a class="flex justify-center text-lime-900 text-2xl p-3 hover:bg-gray-100 hover:rounded-full " href="{% url 'feed' %} ">
+                <a class="flex justify-center text-lime-900 text-2xl p-2 hover:bg-gray-200 hover:rounded-full " href="{% url 'feed' %} ">
                     <div>
-                        <i class="w-10 py-3 fa-solid fa-house"></i>
+                        <i class="w-10 py-2 fa-solid fa-house"></i>
                     </div>
                     <span class="m-auto">Página Inicial</span>
                 </a>
             </div>
             <div class="flex">
-                <a class="flex text-lime-900 text-2xl p-3 hover:bg-gray-100 hover:rounded-full " href="{% url 'notifications' %} ">
+                <a class="flex text-lime-900 text-2xl p-2 hover:bg-gray-200 hover:rounded-full " href="{% url 'notifications' %} ">
                     <div>
-                        <i class="w-10 py-3 fa-solid fa-bell"></i>
+                        <i class="w-10 py-2 fa-solid fa-bell"></i>
                     </div>
-                    <span id="notifications" class="m-auto">Notificações({{notifications.count}})</span>
+                    <span id="notifications" class="m-auto">Notificações</span>
                 </a>
             </div>
             <div class="flex">
-                <a class="flex text-lime-900 text-2xl p-3 hover:bg-gray-100 hover:rounded-full " href="{% url 'users' %} ">
+                <a class="flex text-lime-900 text-2xl p-2 hover:bg-gray-200 hover:rounded-full " href="{% url 'users' %} ">
                     <div>
-                        <i class="w-10 py-3 fa-solid fa-users"></i>
+                        <i class="w-10 py-2 fa-solid fa-users"></i>
                     </div>
                     <span class="m-auto">All users</span>
                 </a>
             </div>
             <div class="flex">
-                <a class="flex text-lime-900 text-2xl p-3 hover:bg-gray-100 hover:rounded-full " href="{% url 'global' %} ">
+                <a class="flex text-lime-900 text-2xl p-2 hover:bg-gray-200 hover:rounded-full " href="{% url 'global' %} ">
                     <div>
-                        <i class="w-10 py-3 fa-solid fa-earth-americas"></i>
+                        <i class="w-10 py-2 fa-solid fa-earth-americas"></i>
                     </div>
                     <span class="break-keep m-auto">Global chat</span>
                 </a>
             </div>
             <div class="flex">
-                <a class="flex text-lime-900 text-2xl p-3 hover:bg-gray-100 hover:rounded-full " href="{% url 'conversations' %} ">
+                <a class="flex text-lime-900 text-2xl p-2 hover:bg-gray-200 hover:rounded-full " href="{% url 'conversations' %} ">
                     <div>
-                        <i class="w-10 py-3 fa-solid fa-comments"></i>
+                        <i class="w-10 py-2 fa-solid fa-comments"></i>
                     </div>
                     <span class="m-auto">Conversations</span>
                 </a>
             </div>
             <div class="flex">
-                <a class="flex text-lime-900 text-2xl p-3 hover:bg-gray-100 hover:rounded-full " href="{% url 'twikkerprofile' request.user.username %} ">
+                <a class="flex text-lime-900 text-2xl p-2 hover:bg-gray-200 hover:rounded-full " href="{% url 'twikkerprofile' request.user.username %} ">
                     <div>
-                        <i class="w-10 py-3 fa-solid fa-user"></i>
+                        <i class="w-10 py-2 fa-solid fa-user"></i>
                     </div>
                     <span class="m-auto">Perfil</span>
                 </a>
