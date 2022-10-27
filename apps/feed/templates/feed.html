@@ -71,7 +71,6 @@
     </div>
 </div>
 {% endblock %} 
-
 {% block script %}
 <script>
   document.body.addEventListener('keydown', function(e) {
@@ -87,39 +86,43 @@
 </script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script>
-  const { createApp } = Vue
-  createApp({
-    delimiters: ['[[', ']]'],
-    data() {
-      return {
-        count: 0,
-          tweeks: [],
-          body: '',
-          currentPage: 1,
-          tweeker: '{{ request.user.username }}',
-          created_at: 'Now',
-          avatar: '{% if request.user.twikkerprofile.avatar %}{{ request.user.twikkerprofile.avatar.url }}{% endif %}',
-          liked_tweeks: [{% for tweek in tweeks %}{% if tweek.liked %}{{ tweek.id }},{% endif %}{% endfor %}],
-      }
-    },
-    mounted(){
-    this.getTweeks()
-    window.onscroll = () => {
-        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
-        if (bottomOfWindow && this.hasNext) {
-            this.currentPage += 1
+    const {
+        createApp
+    } = Vue
+
+    createApp({
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                count: 0,
+                tweeks: [],
+                body: '',
+                currentPage: 1,
+                tweeker: '{{ request.user.username }}',
+                created_at: 'Now',
+                avatar: '{% if request.user.twikkerprofile.avatar %} {{ request.user.twikkerprofile.avatar.url }} {% endif %}',
+                liked_tweeks: [{% for tweek in tweeks %}{% if tweek.liked %}{{ tweek.id }},{% endif %}{% endfor %}],
+            }
+        },
+        mounted() {
             this.getTweeks()
-        }
-    }
-    },
-    methods:{
-      getTweeks() {
-      fetch(`/api/get_tweeks/?page=${this.currentPage}`)
-          .then(response => {
-              return response.json()
-          })
-          .then(data => {
-              this.hasNext = false
+            window.onscroll = () => {
+                let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
+
+                if (bottomOfWindow && this.hasNext) {
+                    this.currentPage += 1
+                    this.getTweeks()
+                }
+            }
+        },
+        methods: {
+            getTweeks() {
+                fetch(`/api/get_tweeks/?page=${this.currentPage}`)
+                    .then(response => {
+                        return response.json()
+                    })
+                    .then(data => {
+                        this.hasNext = false
 
               if (data.next) {
                   this.hasNext = true

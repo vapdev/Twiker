@@ -1,5 +1,6 @@
-{% load chat %} {% load static %} {% if request.user.is_authenticated %}
-
+{% load chat %} 
+{% load static %} 
+{% if request.user.is_authenticated %}
 <div class="sticky top-0 left-0 px-4 h-screen bg-white border-solid border-r-2 border-gray-100">
     <div class="flex flex-col justify-between h-screen">
         <div class="flex flex-col justify-center">
@@ -64,7 +65,8 @@
             </div>
         </div>
     </div>
-    {% else %}
+</div>
+{% else %}
     <div>
         <div>
             <div>
@@ -73,7 +75,8 @@
             </div>
         </div>
     </div>
-    {% endif %} {% block script %}
+{% endif %} 
+{% block script %}
     <script>
         const followSocket = new WebSocket(
             'ws://' +
@@ -96,11 +99,7 @@
             'like/'
         );
 
-        { %
-            if conversation %
-        } { % get_chat_user_id conversation request.user.id as userid %
-        } { % endif %
-        }
+        {% if conversation %} {% get_chat_user_id conversation request.user.id as userid %} {% endif %}
 
         const chatSocket = new WebSocket(
             'ws://' +
@@ -118,11 +117,7 @@
                 scrollToBottom();
             }, 0);
 
-            if (data.to_user_id == {
-                    {
-                        request.user.id
-                    }
-                }) {
+            if (data.to_user_id == {{ request.user.id }}) {
                 notifications_el = document.querySelector('#notifications').innerHTML
                 notification_count = parseInt(notifications_el.split('(')[1].split(')')[0])
                 document.querySelector('#notifications').innerHTML = '<span class="white ">Notifications (' + (notification_count + 1) + ')</span>'
@@ -165,11 +160,7 @@
                     scrollToBottom();
                 }, 0);
             } catch {}
-            if (data.to_user_id == {
-                    {
-                        request.user.id
-                    }
-                }) {
+            if (data.to_user_id == {{ request.user.id}}) {
                 notifications_el = document.querySelector('#notifications').innerHTML
                 notification_count = parseInt(notifications_el.split('(')[1].split(')')[0])
                 document.querySelector('#notifications').innerHTML = '<span class="white ">Notifications (' + (notification_count + 1) + ')</span>'
@@ -177,4 +168,4 @@
 
         };
     </script>
-    {% endblock %}
+{% endblock %}
