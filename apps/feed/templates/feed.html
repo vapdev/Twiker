@@ -1,4 +1,5 @@
-{% extends 'core/base.html' %} {% block content %}
+{% extends 'core/base.html' %} 
+{% block content %}
 <div class="flex min-w-full">
     <div id="feedapp" class="flex flex-col w-full bg-white border-solid border-r-2 border-gray-100">
         <div class="sticky p-3 bg-white top-0 w-full h-fit opacity-95 text-2xl">
@@ -69,7 +70,8 @@
         </div>
     </div>
 </div>
-{% endblock %} {% block script %}
+{% endblock %} 
+{% block script %}
 <script>
     document.body.addEventListener('keydown', function(e) {
         if (!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
@@ -99,18 +101,8 @@
                 currentPage: 1,
                 tweeker: '{{ request.user.username }}',
                 created_at: 'Now',
-                avatar: '{% if request.user.twikkerprofile.avatar %}{{ request.user.twikkerprofile.avatar.url }}{% endif %}',
-                liked_tweeks: [{ %
-                    for tweek in tweeks %
-                } { %
-                    if tweek.liked %
-                } {
-                    {
-                        tweek.id
-                    }
-                }, { % endif %
-                } { % endfor %
-                }],
+                avatar: '{% if request.user.twikkerprofile.avatar %} {{ request.user.twikkerprofile.avatar.url }} {% endif %}',
+                liked_tweeks: [{% for tweek in tweeks %}{% if tweek.liked %}{{ tweek.id }},{% endif %}{% endfor %}],
             }
         },
         mounted() {
