@@ -1,223 +1,231 @@
-{% extends 'core/base.html' %}
-{% block content %}
+{% extends 'core/base.html' %} {% block content %}
 <div class="flex min-w-full">
-
-  <div id="feedapp" class="flex flex-col w-full bg-white border-solid border-r-2 border-gray-100">
-    
-    <div class="sticky p-3 bg-white top-0 w-full h-fit opacity-95 text-2xl"><a href="{% url 'feed' %}"><span class="opacity-100">Pagina inicial</span></a></div>
-
-    <div class="flex h-30 w-full p-2 pt-3 pl-3 border-solid border-b-2 border-gray-100">
-      <div class="flex h-full pt-1 mr-3">
-        <img class="rounded-full h-12 w-12" src="{% if request.user.twikkerprofile.avatar %}{{ request.user.twikkerprofile.avatar.url }}{% endif %}">
-      </div>
-      <div class="flex flex-col w-full ">
-        <form v-on:submit.prevent="submitTweek()">
-          <div class="flex w-full py-5">
-            <textarea placeholder="What you tweeking bro..." class="text-xl resize-none h-fit w-full  outline-none" type="text" v-model="body"></textarea>
-          </div>
-          <div class="flex border-solid border-t-2 border-gray-100 w-full">
-            <div class="flex my-4 w-full">
-              <div class="flex justify-between w-full">
-                <div class="flex">
-                  <button class=""><i class="fa-regular fa-image"></i></button>
-                </div>
-                <div class="flex">
-                  <button id="submit-tweet" class="bg-green-300 rounded-lg mx-3 px-10 shadow-md" type="submit">Enter</button>
-                </div>
-              </div>
+    <div id="feedapp" class="flex flex-col w-full bg-white border-solid border-r-2 border-gray-100">
+        <div class="sticky p-3 bg-white top-0 w-full h-fit opacity-95 text-2xl">
+            <a href="{% url 'feed' %}">
+                <span class="opacity-100">Pagina inicial</span>
+            </a>
+        </div>
+        <div class="flex h-30 w-full p-2 pt-3 pl-3 border-solid border-b-2 border-gray-100">
+            <div class="flex h-full pt-1 mr-3">
+                <img class="rounded-full h-12 w-12" src="{% if request.user.twikkerprofile.avatar %}{{ request.user.twikkerprofile.avatar.url }}{% endif %}">
             </div>
-          </div>
-        </form>  
-      </div>
-    </div>
-    <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex flex-rol h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 border-gray-100"> 
-          <div class="flex mr-2">
-            <img class="rounded-full h-12 w-12" :src="tweek.avatar_url">
-          </div>
-        <div class="flex flex-col w-full">
-          <span class="align-top">
-            [[ tweek.tweeker_name ]] 
-          </span>
-          <span class="flex text-xl break-all"> [[ tweek.body ]] </span>
-          <div class="flex flex-row justify-between w-2/3 mt-3">
-            <div class="flex">
-              <div class="w-8 h-8 p-1 text-center hover:bg-yellow-200 hover:rounded-full">
-                <i class="fa-regular fa-comment-dots"></i>
-              </div>
-              <span class="pt-1"></span>
+            <div class="flex flex-col w-full ">
+                <form v-on:submit.prevent="submitTweek()">
+                    <div class="flex w-full py-5">
+                        <textarea placeholder="What you tweeking bro..." class="text-xl resize-none h-fit w-full  outline-none" type="text" v-model="body"></textarea>
+                    </div>
+                    <div class="flex border-solid border-t-2 border-gray-100 w-full">
+                        <div class="flex my-4 w-full">
+                            <div class="flex justify-between w-full">
+                                <div class="flex">
+                                    <button class=""><i class="fa-regular fa-image"></i></button>
+                                </div>
+                                <div class="flex">
+                                    <button id="submit-tweet" class="bg-green-300 rounded-lg mx-3 px-10 shadow-md" type="submit">Enter</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="flex">
-              <div class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
-                <i class="fa-solid fa-retweet"></i>
-              </div>
-              <span class="pt-1">25</span>
+        </div>
+        <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex flex-rol h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 border-gray-100">
+            <div class="flex mr-2">
+                <img class="rounded-full h-12 w-12" :src="tweek.avatar_url">
             </div>
-            <div class="flex">
-              <div class="flex mx-2">
-                <div @click="toggleLike(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
-                  <i :class=" !liked_tweeks.includes(tweek.id) ? 'fa-regular fa-thumbs-up' : 'fa-solid fa-thumbs-up' "></i>
+            <div class="flex flex-col w-full">
+                <span class="align-top">[[ tweek.tweeker_name ]]</span>
+                <span class="flex text-xl break-all">[[ tweek.body ]]</span>
+                <div class="flex flex-row justify-between w-2/3 mt-3">
+                    <div class="flex">
+                        <div class="w-8 h-8 p-1 text-center hover:bg-yellow-200 hover:rounded-full">
+                            <i class="fa-regular fa-comment-dots"></i>
+                        </div>
+                        <span class="pt-1"></span>
+                    </div>
+                    <div class="flex">
+                        <div class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
+                            <i class="fa-solid fa-retweet"></i>
+                        </div>
+                        <span class="pt-1">25</span>
+                    </div>
+                    <div class="flex">
+                        <div class="flex mx-2">
+                            <div @click="toggleLike(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
+                                <i :class=" !liked_tweeks.includes(tweek.id) ? 'fa-regular fa-thumbs-up' : 'fa-solid fa-thumbs-up' "></i>
+                            </div>
+                            <span :id="'likes-'+tweek.id" class="pt-1">[[ tweek.likes_count ]] [[ tweek.liked_tweeks ]]</span>
+                        </div>
+                        <div class="flex mx-2">
+                            <div class="w-8 h-8 p-1 text-center hover:bg-red-300 hover:rounded-full">
+                                <i class="fa-regular fa-thumbs-down"></i>
+                            </div>
+                            <span class="pt-1">9</span>
+                        </div>
+                    </div>
                 </div>
-                <span :id="'likes-'+tweek.id" class="pt-1">[[ tweek.likes_count ]] [[ tweek.liked_tweeks ]]</span>
-              </div>
-              <div class="flex mx-2">
-                <div class="w-8 h-8 p-1 text-center hover:bg-red-300 hover:rounded-full">
-                  <i class="fa-regular fa-thumbs-down"></i>
-                </div>
-                <span class="pt-1">9</span>
-              </div>
             </div>
-          </div>  
         </div>
     </div>
-  </div>
 </div>
-{% endblock %}
-
-{% block script %}
+{% endblock %} {% block script %}
 <script>
-  document.body.addEventListener('keydown', function(e) {
-      if(!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
-            var target = e.target;
-            submit_button = document.querySelector('#submit-tweet');
-            if(target.form) {
-                submit_button.click();
-          }
-      });
+    document.body.addEventListener('keydown', function(e) {
+        if (!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
+        var target = e.target;
+        submit_button = document.querySelector('#submit-tweet');
+        if (target.form) {
+            submit_button.click();
+        }
+    });
 </script>
 <script>
 </script>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script>
-  const { createApp } = Vue
+    const {
+        createApp
+    } = Vue
 
-  createApp({
-    delimiters: ['[[', ']]'],
-    data() {
-      return {
-        count: 0,
-          tweeks: [],
-          body: '',
-          currentPage: 1,
-          tweeker: '{{ request.user.username }}',
-          created_at: 'Now',
-          avatar: '{% if request.user.twikkerprofile.avatar %}{{ request.user.twikkerprofile.avatar.url }}{% endif %}',
-          liked_tweeks: [{% for tweek in tweeks %}{% if tweek.liked %}{{ tweek.id }},{% endif %}{% endfor %}],
-      }
-    },
-    mounted(){
-    this.getTweeks()
-    window.onscroll = () => {
-        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
-
-        if (bottomOfWindow && this.hasNext) {
-            this.currentPage += 1
-            this.getTweeks()
-        }
-    }
-    },
-    methods:{
-      getTweeks() {
-        fetch(`/api/get_tweeks/?page=${this.currentPage}`)
-        .then(response => {
-            return response.json()
-        })
-        .then(data => {
-            this.hasNext = false
-
-            if (data.next) {
-                this.hasNext = true
+    createApp({
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                count: 0,
+                tweeks: [],
+                body: '',
+                currentPage: 1,
+                tweeker: '{{ request.user.username }}',
+                created_at: 'Now',
+                avatar: '{% if request.user.twikkerprofile.avatar %}{{ request.user.twikkerprofile.avatar.url }}{% endif %}',
+                liked_tweeks: [{ %
+                    for tweek in tweeks %
+                } { %
+                    if tweek.liked %
+                } {
+                    {
+                        tweek.id
+                    }
+                }, { % endif %
+                } { % endfor %
+                }],
             }
-            for (let i = 0; i < data.results.length; i++) {
-                this.tweeks.push(data.results[i])
-            }
-        })
-        .catch(error => {
-            console.log(error)
-        })
-      },
-      toggleLike(tweek_id){
-              if(this.liked_tweeks.includes(tweek_id)){
-                  this.unlikeTweek(tweek_id);
-              }else{
-                  this.likeTweek(tweek_id);
-              }
-      },
-      async likeTweek(tweek_id){
-          this.liked_tweeks.push(parseInt(tweek_id));
-          likeSocket.send(JSON.stringify({
-              'tweek_id': tweek_id,
-              'liker': '{{ request.user.username }}',
-          }));
-          const el = document.getElementById('likes-' + tweek_id);
-          const likes = parseInt(el.innerHTML) + 1;
-          el.innerHTML = likes;
         },
-        unlikeTweek(tweek_id){
-            this.liked_tweeks = this.liked_tweeks.filter(item => item !== tweek_id)
-            var tweek = {
-                'tweek_id': tweek_id,
-            };
+        mounted() {
+            this.getTweeks()
+            window.onscroll = () => {
+                let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
 
-            fetch('/api/remove_like/',{
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}',
-                    },
-                    credentials: 'same-origin',
-                    body: JSON.stringify(tweek)
-                })
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+                if (bottomOfWindow && this.hasNext) {
+                    this.currentPage += 1
+                    this.getTweeks()
+                }
+            }
+        },
+        methods: {
+            getTweeks() {
+                fetch(`/api/get_tweeks/?page=${this.currentPage}`)
+                    .then(response => {
+                        return response.json()
+                    })
+                    .then(data => {
+                        this.hasNext = false
+
+                        if (data.next) {
+                            this.hasNext = true
+                        }
+                        for (let i = 0; i < data.results.length; i++) {
+                            this.tweeks.push(data.results[i])
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
+            toggleLike(tweek_id) {
+                if (this.liked_tweeks.includes(tweek_id)) {
+                    this.unlikeTweek(tweek_id);
+                } else {
+                    this.likeTweek(tweek_id);
+                }
+            },
+            async likeTweek(tweek_id) {
+                this.liked_tweeks.push(parseInt(tweek_id));
+                likeSocket.send(JSON.stringify({
+                    'tweek_id': tweek_id,
+                    'liker': '{{ request.user.username }}',
+                }));
+                const el = document.getElementById('likes-' + tweek_id);
+                const likes = parseInt(el.innerHTML) + 1;
+                el.innerHTML = likes;
+            },
+            unlikeTweek(tweek_id) {
+                this.liked_tweeks = this.liked_tweeks.filter(item => item !== tweek_id)
+                var tweek = {
+                    'tweek_id': tweek_id,
+                };
+
+                fetch('/api/remove_like/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        credentials: 'same-origin',
+                        body: JSON.stringify(tweek)
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
 
                 const el = document.getElementById('likes-' + tweek_id);
                 const likes = parseInt(el.innerHTML) - 1;
                 el.innerHTML = likes;
-        },
-        deleteTweek(tweek_id){
-            var tweek = {
-                'tweek_id': tweek_id,
-            };
-            fetch('/api/delete_tweek/',{
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}',
-                    },
-                    credentials: 'same-origin',
-                    body: JSON.stringify(tweek)
-                })
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            },
+            deleteTweek(tweek_id) {
+                var tweek = {
+                    'tweek_id': tweek_id,
+                };
+                fetch('/api/delete_tweek/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        credentials: 'same-origin',
+                        body: JSON.stringify(tweek)
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
 
                 const el = document.getElementById('tweek-' + tweek_id);
                 el.remove();
-        },
-        async submitTweek(){
-            if (this.body.length > 0){
-                let tweek = {
-                    'body': this.body,
-                    'tweeker_name': this.tweeker,
-                    'created_at': this.created_at,
-                    'avatar_url': this.avatar
-                };
+            },
+            async submitTweek() {
+                if (this.body.length > 0) {
+                    let tweek = {
+                        'body': this.body,
+                        'tweeker_name': this.tweeker,
+                        'created_at': this.created_at,
+                        'avatar_url': this.avatar
+                    };
 
-                // Send to backend
-                tweekSocket.send(JSON.stringify(tweek));
-                this.tweeks.unshift(tweek);
+                    // Send to backend
+                    tweekSocket.send(JSON.stringify(tweek));
+                    this.tweeks.unshift(tweek);
+                }
+                this.body = '';
             }
-            this.body = '';
         }
-    }
-  }).mount('#feedapp')
+    }).mount('#feedapp')
 </script>
 {% endblock %}

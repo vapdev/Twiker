@@ -1,4 +1,6 @@
 django
+channels
 channels["daphne"]
-djangorestframework
 Pillow
+django-livereload-server
+djangorestframework
