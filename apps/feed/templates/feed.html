@@ -2,7 +2,7 @@
 {% block content %}
 <div class="flex min-w-full">
     <div id="feedapp" class="flex flex-col w-full bg-white border-solid border-r-2 border-gray-100">
-        <div class="sticky p-3 bg-white top-0 w-full h-fit opacity-95 text-2xl">
+        <div class="sticky p-3 bg-white top-0 w-full h-fit opacity-90 text-2xl">
             <a href="{% url 'feed' %}">
                 <span class="opacity-100">Página inicial</span>
             </a>
@@ -137,11 +137,15 @@
           })
       },
       toggleLike(tweek_id){
-              if(this.liked_tweeks.includes(tweek_id)){
-                  this.unlikeTweek(tweek_id);
-              }else{
-                  this.likeTweek(tweek_id);
-              }
+            if(this.disliked_tweeks.includes(tweek_id)){
+                console.log("to caindo aqui");
+                this.undislikeTweek(tweek_id);
+            }
+            if(this.liked_tweeks.includes(tweek_id)){
+                this.unlikeTweek(tweek_id);
+            }else{
+                this.likeTweek(tweek_id);
+            }
           },
       async likeTweek(tweek_id){
           this.liked_tweeks.push(parseInt(tweek_id));
@@ -180,6 +184,9 @@
                 el.innerHTML = likes;
         },
         toggleDislike(tweek_id){
+              if(this.liked_tweeks.includes(tweek_id)){
+                  this.unlikeTweek(tweek_id);
+              }
               if(this.disliked_tweeks.includes(tweek_id)){
                   this.undislikeTweek(tweek_id);
               }else{
