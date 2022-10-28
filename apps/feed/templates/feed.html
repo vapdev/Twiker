@@ -59,7 +59,7 @@
                             <span :id="'likes-'+tweek.id" class="pt-1">[[ tweek.likes_count ]] [[ tweek.liked_tweeks ]]</span>
                         </div>
                         <div class="flex mx-2">
-                            <div @click="toggleDislike(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
+                            <div @click="toggleDislike(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-red-200 hover:rounded-full">
                                 <i :class=" !disliked_tweeks.includes(tweek.id) ? 'fa-regular fa-thumbs-down' : 'fa-solid fa-thumbs-down' "></i>
                             </div>
                             <span :id="'dislikes-'+tweek.id" class="pt-1">[[ tweek.dislikes_count ]] [[ tweek.disliked_tweeks ]]</span>
