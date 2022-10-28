@@ -132,7 +132,7 @@
 
         likeSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            if (data.tweek_owner === '{{ request.user.username }}') {
+            if (data.tweek_owner !== '{{ request.user.username }}') {
                 notifications_el = document.querySelector('#notifications').innerHTML
                 notification_count = parseInt(notifications_el.split('(')[1].split(')')[0])
                 document.querySelector('#notifications').innerHTML = '<span class="white ">Notifications (' + (notification_count + 1) + ')</span>'

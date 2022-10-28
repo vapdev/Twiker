@@ -212,7 +212,7 @@
 
                   // Send to backend
                   tweekSocket.send(JSON.stringify(tweek));
-                  this.tweeks.unshift(tweek);
+                  window.location.reload()
               }
               this.body = '';
           }
