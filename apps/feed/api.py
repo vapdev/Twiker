@@ -15,7 +15,8 @@ from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 
 from .serializers import TweekSerializer
-from apps.feed.models import Tweek, Like
+from apps.feed.models import Tweek, Like, Dislike
+
 
 @sync_to_async
 def save_tweek(body, tweeker):
@@ -48,6 +49,19 @@ def save_like(tweek_id, liker):
     if tweek.created_by != liker:
         create_notification(created_by=liker, notification_type=Notification.LIKE, to_user=tweek.created_by)
 
+
+@sync_to_async
+def save_dislike(tweek_id, disliker):
+    tweek = Tweek.objects.get(id=tweek_id)
+    disliker = User.objects.get(username=disliker)
+    Dislike.objects.create(tweek_id=tweek_id, created_by=disliker)
+    tweek.save()
+
+    if tweek.created_by != disliker:
+        create_notification(created_by=disliker, notification_type=Notification.LIKE, to_user=tweek.created_by)
+
+
+
 @login_required
 def api_remove_like(request):
     data = json.loads(request.body)
@@ -55,6 +69,16 @@ def api_remove_like(request):
     if Like.objects.filter(tweek_id=tweek_id).filter(created_by=request.user).exists():
         like = Like.objects.get(tweek_id=tweek_id, created_by=request.user)
         like.delete()
+
+    return JsonResponse({'success': True})
+
+@login_required
+def api_remove_dislike(request):
+    data = json.loads(request.body)
+    tweek_id = data['tweek_id']
+    if Dislike.objects.filter(tweek_id=tweek_id).filter(created_by=request.user).exists():
+        dislike = Dislike.objects.get(tweek_id=tweek_id, created_by=request.user)
+        dislike.delete()
 
     return JsonResponse({'success': True})
 

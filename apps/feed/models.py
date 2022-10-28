@@ -16,3 +16,9 @@ class Like(models.Model):
     tweek = models.ForeignKey(Tweek, related_name='likes', on_delete=models.CASCADE)
     created_by = models.ForeignKey(User, related_name='likes', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+class Dislike(models.Model):
+    tweek = models.ForeignKey(Tweek, related_name='dislikes', on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, related_name='dislikes', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)

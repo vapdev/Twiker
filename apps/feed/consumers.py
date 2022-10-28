@@ -5,7 +5,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
 from django.contrib.auth.models import User
 
-from apps.feed.api import save_like, save_tweek
+from apps.feed.api import save_like, save_tweek, save_dislike
 from apps.feed.models import Tweek
 from apps.notification.models import Notification
 from apps.notification.utilities import create_notification
@@ -93,6 +93,54 @@ class LikeConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'tweek_id': tweek_id,
             'liker': liker,
+            'tweek_owner': tweek_owner.username,
+        }))
+
+    @sync_to_async
+    def get_tweek_owner(self, tweek_id):
+        tweek = Tweek.objects.get(pk=tweek_id)
+        return tweek.created_by
+
+
+class DislikeConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        # Join room
+        await self.channel_layer.group_add('dislike', self.channel_name)
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        # Leave room
+        await self.channel_layer.group_discard(
+            'dislike',
+            self.channel_name
+        )
+
+    # Receive message from web socket
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        tweek_id = data['tweek_id']
+        disliker = data['disliker']
+
+        await save_dislike(tweek_id=tweek_id, disliker=disliker)
+
+        await self.channel_layer.group_send(
+            'dislike',
+            {
+                'type': 'dislike_message',
+                'tweek_id': tweek_id,
+                'disliker': disliker,
+            }
+        )
+
+    # Receive message from room group
+    async def dislike_message(self, event):
+        tweek_id = event['tweek_id']
+        disliker = event['disliker']
+        tweek_owner = await self.get_tweek_owner(tweek_id=tweek_id)
+        # Send message to WebSocket
+        await self.send(text_data=json.dumps({
+            'tweek_id': tweek_id,
+            'disliker': disliker,
             'tweek_owner': tweek_owner.username,
         }))
 

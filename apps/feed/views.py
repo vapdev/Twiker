@@ -21,6 +21,13 @@ def feed(request):
         else:
             tweek.liked = False
 
+        dislikes = tweek.dislikes.filter(created_by__id=request.user.id)
+
+        if dislikes.count() > 0:
+            tweek.disliked = True
+        else:
+            tweek.disliked = False
+
     return render(request, 'feed.html', {'tweeks': tweeks})
 
 @login_required

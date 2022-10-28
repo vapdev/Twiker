@@ -1,4 +1,5 @@
 {% load chat %}
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script>
     function scrollToBottom(new_message=false) {
         let objDiv = document.getElementById("chatcontainer");
@@ -9,8 +10,11 @@
         scrollToBottom();
     });
 
-    var conversationapp = new Vue({
-        el: '#conversationapp',
+    const {
+        createApp
+    } = Vue
+
+    createApp({
         delimiters: ['[[', ']]'],
         data () {
             return {
@@ -44,5 +48,5 @@
                 }
             },
         }
-    })
+    }).mount("#conversationapp")
 </script>

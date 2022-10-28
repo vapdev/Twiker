@@ -5,12 +5,14 @@ class Notification(models.Model):
     MESSAGE = 'message'
     FOLLOWER = 'follower'
     LIKE = 'like'
+    DISLIKE = 'dislike'
     MENTION = 'mention'
 
     CHOICES = (
         (MESSAGE, 'Message'),
         (FOLLOWER, 'Follower'),
         (LIKE, 'Like'),
+        (DISLIKE, 'Dislike'),
         (MENTION, 'Mention'),
     )
 
