@@ -3,61 +3,45 @@
 {% load humanize %}
 
 {% block content %}
-    <div>
-        <div>
-            <div>
-                <h1>Notifications</h1>
-
-                <div>
-                    <a href="{% url 'clear_notifications' %}">Clear all</a>
-                </div>
-
-                {%  if not notifications %}
-                    <p>You have no notifications</p>
-                {% endif %}
-
-                <div>
-                    {% for notification in notifications %}
-                        <article>
-                            <figure>
-                                <p>
-                                    {% if notification.created_by.twikkerprofile.avatar %}
-                                        <img src="{{ notification.created_by.twikkerprofile.avatar.url }}">
-                                    {% endif %}
-                                </p>
-                            </figure>
-
-                            <div>
-                                <div>
-                                    <p>
-                                        {% if notification.notification_type == 'message' %}
-                                            <a href="{% url 'notifications' %}?goto=conversation&notification={{ notification.id }}">
-                                                <strong>{{ notification.created_by.username }}</strong> sent you a message
-                                                <small>{{ notification.created_at|naturaltime }}</small>
-                                            </a>
-                                        {% elif notification.notification_type == 'follower' %}
-                                            <a href="{% url 'notifications' %}?goto=twikkerprofile&notification={{ notification.id }}">
-                                                <strong>{{ notification.created_by.username }}</strong> started following you
-                                                <small>{{ notification.created_at|naturaltime }}</small>
-                                            </a>
-                                        {% elif notification.notification_type == 'like' %}
-                                            <a href="{% url 'notifications' %}?goto=twikkerprofile&notification={{ notification.id }}">
-                                                <strong>{{ notification.created_by.username }}</strong> liked a tweek you made
-                                                <small>{{ notification.created_at|naturaltime }}</small>
-                                            </a>
-                                        {% elif notification.notification_type == 'mention' %}
-                                            <a href="{% url 'notifications' %}?goto=twikkerprofile&notification={{ notification.id }}">
-                                                <strong>{{ notification.created_by.username }}</strong> mentioned you in a tweek
-                                                <small>{{ notification.created_at|naturaltime }}</small>
-                                            </a>
-                                        {% endif %}
-                                    </p>
-                                </div>
-                            </div>
-                        </article>
-                    {% endfor %}
-                </div>
-            </div>
+    <div class="flex flex-col w-full border-solid border-r-2 border-gray-100">
+        <div class="sticky p-3 bg-white top-0 w-full h-fit opacity-95 text-2xl border-solid border-b-2 border-gray-100">
+            <a href="{% url 'notifications' %}">
+                <span class="opacity-100">Notificação</span>
+            </a>
         </div>
+        <div class="flex">
+            {% for notification in notifications %}
+                <div class="flex flex-rol h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 border-gray-100" >
+                    <div class="flex mr-2">  
+                    {% if notification.created_by.twikkerprofile.avatar %}
+                        <img class="rounded-full h-12 w-12" src="{{ notification.created_by.twikkerprofile.avatar.url }}">
+                    {% endif %}
+                    </div>   
+                    <div>
+                        {% if notification.notification_type == 'message' %}
+                            <a href="{% url 'notifications' %}?goto=conversation&notification={{ notification.id }}">
+                                <strong>{{ notification.created_by.username }}</strong> sent you a message
+                                <small>{{ notification.created_at|naturaltime }}</small>
+                            </a>
+                        {% elif notification.notification_type == 'follower' %}
+                            <a href="{% url 'notifications' %}?goto=twikkerprofile&notification={{ notification.id }}">
+                                <strong>{{ notification.created_by.username }}</strong> started following you
+                                <small>{{ notification.created_at|naturaltime }}</small>
+                            </a>
+                        {% elif notification.notification_type == 'like' %}
+                            <a href="{% url 'notifications' %}?goto=twikkerprofile&notification={{ notification.id }}">
+                                <strong>{{ notification.created_by.username }}</strong> liked a tweek you made
+                                <small>{{ notification.created_at|naturaltime }}</small>
+                            </a>
+                        {% elif notification.notification_type == 'mention' %}
+                            <a href="{% url 'notifications' %}?goto=twikkerprofile&notification={{ notification.id }}">
+                                <strong>{{ notification.created_by.username }}</strong> mentioned you in a tweek
+                                <small>{{ notification.created_at|naturaltime }}</small>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>  
     </div>
 {% endblock %}

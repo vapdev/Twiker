@@ -1,26 +1,36 @@
 {% extends 'core/base.html' %}
 {% load humanize %}
-{% block content %}   
-    <h1 class="title">All Users</h1>
-    <p>Total users: {{ users.count }}</p>
-    <div>
-        {% for tweeker in users %}
-            <div>
-                <article>
-                    <figure>
-                        <p>
-                            {% if tweeker.twikkerprofile.avatar %}
-                                <img class="w-12 h-12" src="{{ tweeker.twikkerprofile.avatar.url}}">
-                            {% endif %}
-                        </p>
-                    </figure>
-                    <div>
-                        <h1><a href="{% url 'twikkerprofile' tweeker %}">{{ tweeker }}</a></h1>
-                        <p><a href="{% url 'followers' tweeker.username %}">Followers: {{ tweeker.twikkerprofile.followed_by.count }}</a></p>
-                        <p><a href="{% url 'follows' tweeker.username %}">Follows: {{ tweeker.twikkerprofile.follows.count }}</a></p>
-                    </div>
-                </article>
-            </div>
-        {% endfor %}
+{% block content %} 
+<div class="flex flex-col w-full border-solid border-r-2 border-gray-100">
+    <div class="p-3 bg-white top-0 w-full h-fit opacity-95 text-2xl border-solid border-b-2 border-gray-100">  
+        <div class="flex justify-between">
+            <h1 class="title">All Users</h1>
+            <p>Total users: {{ users.count }}</p>
+        </div>
     </div>
+    
+    {% for tweeker in users %}
+        <div class="flex flex-rol">
+            <div class="flex">
+                {% if tweeker.twikkerprofile.avatar %}
+                    <img class="rounded-full w-12 h-12" src="{{ tweeker.twikkerprofile.avatar.url}}">
+                {% endif %}
+            </div>
+            <div class="flex flex-col">
+                <div class="flex">
+                    <h1>
+                        <a href="{% url 'twikkerprofile' tweeker %}">{{ tweeker }}</a>
+                    </h1>
+                </div>
+                <div class="flex">
+                    <a href="{% url 'followers' tweeker.username %}">Followers: {{ tweeker.twikkerprofile.followed_by.count }}</a>
+                </div>
+                <div class="flex">
+                    <a href="{% url 'follows' tweeker.username %}">Follows: {{ tweeker.twikkerprofile.follows.count }}</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+        
+</div>
 {% endblock %}
