@@ -12,14 +12,14 @@
 </head>
 <body>
     <div class="flex w-full min-h-full flex-row">
-        <aside class="flex w-full justify-end max-w-lg">
+        <aside class="flex justify-end ml-auto">
             {% include "core/sidebar.html" %}
         </aside>
         <main class="flex max-w-2xl w-full shrink-0">
         {% block content %}
         {% endblock %}
         </main>
-        <aside>
+        <aside class="mx-auto">
             {% include "core/rsidebar.html" %}
         </aside>
     </div>
