@@ -10,7 +10,7 @@
     </div>
     
     {% for tweeker in users %}
-        <div class="flex flex-rol">
+        <div class="flex flex-rol h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 border-gray-100">
             <div class="flex">
                 {% if tweeker.twikkerprofile.avatar %}
                     <img class="rounded-full w-12 h-12" src="{{ tweeker.twikkerprofile.avatar.url}}">

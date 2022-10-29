@@ -7,7 +7,7 @@
                     <figure>
                         <p>
                             {% if message.created_by.twikkerprofile.avatar %}
-                                <img src="{{ message.created_by.twikkerprofile.avatar.url }}">
+                                <img class="rounded-full h-12 w-12" src="{{ message.created_by.twikkerprofile.avatar.url }}">
                             {% endif %}
                         </p>
                     </figure>

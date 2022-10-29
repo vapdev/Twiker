@@ -106,3 +106,13 @@ def api_get_tweeks(request):
     results = paginator.paginate_queryset(tweeks, request)
     serializer = TweekSerializer(results, many=True)
     return paginator.get_paginated_response(serializer.data)
+
+@login_required
+@api_view(['GET'])
+def api_get_profile_tweeks(request, user_id):
+    tweeks = Tweek.objects.filter(created_by=user_id)
+    paginator = PageNumberPagination()
+    paginator.page_size = 20
+    results = paginator.paginate_queryset(tweeks, request)
+    serializer = TweekSerializer(results, many=True)
+    return paginator.get_paginated_response(serializer.data)
