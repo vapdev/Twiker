@@ -2,6 +2,7 @@ from django.db import models
 
 from django.contrib.auth.models import User
 
+from django.contrib.humanize.templatetags.humanize import naturaltime
 
 class Tweek(models.Model):
     body = models.CharField(max_length=255)
@@ -11,6 +12,8 @@ class Tweek(models.Model):
     class Meta:
         ordering = ('-created_at',)
 
+    def formatted_time(self):
+        return naturaltime(self.created_at)
 
 class Like(models.Model):
     tweek = models.ForeignKey(Tweek, related_name='likes', on_delete=models.CASCADE)
