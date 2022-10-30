@@ -12,4 +12,4 @@ class TweekSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Tweek
-        fields = ('id', 'body', 'created_by', 'tweeker_name', 'likes_count', 'dislikes_count', 'avatar_url', 'created_at')
+        fields = ('id', 'body', 'created_by', 'tweeker_name', 'likes_count', 'dislikes_count', 'avatar_url', 'formatted_time')
