@@ -1,5 +1,5 @@
 from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
+from .forms import CustomUserForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -21,11 +21,13 @@ def users(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('frontpage')
+        else:
+            return render(request, 'core/signup.html', {'form':form})
     else:
-        form = UserCreationForm()
+        form = CustomUserForm()
     return render(request, 'core/signup.html', {'form': form})
