@@ -3,6 +3,7 @@ Social network built with Django and Vue.js
 
 Work in progress
 
+✅ Likes and Dislikes  <br>
 ✅ Feed  <br>
 ✅ DM <br>
 ✅ Profile <br>
