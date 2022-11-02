@@ -30,8 +30,12 @@ class TweekConsumer(AsyncWebsocketConsumer):
         data = json.loads(text_data)
         body = data['body']
         tweeker = data['tweeker']
+        try:
+            retweek = data['retweek']
+        except KeyError:
+            retweek = None
 
-        await save_tweek(body=body, tweeker=tweeker)
+        await save_tweek(body=body, tweeker=tweeker, retweek_id=retweek)
 
         await self.channel_layer.group_send(
             'tweek',
@@ -39,6 +43,7 @@ class TweekConsumer(AsyncWebsocketConsumer):
                 'type': 'tweek_message',
                 'body': body,
                 'tweeker': tweeker,
+                'retweek': retweek,
             }
         )
 
@@ -47,10 +52,12 @@ class TweekConsumer(AsyncWebsocketConsumer):
     async def tweek_message(self, event):
         body = event['body']
         tweeker = event['tweeker']
+        retweek = event['retweek']
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'body': body,
             'tweeker': tweeker,
+            'retweek': retweek,
         }))
 
 

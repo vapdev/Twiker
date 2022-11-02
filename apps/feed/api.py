@@ -19,9 +19,10 @@ from apps.feed.models import Tweek, Like, Dislike
 
 
 @sync_to_async
-def save_tweek(body, tweeker):
+def save_tweek(body, tweeker, retweek_id):
     tweeker = User.objects.get(username=tweeker)
-    Tweek.objects.create(body=body, created_by=tweeker)
+    print("seloko tio")
+    Tweek.objects.create(body=body, created_by=tweeker, retweek_id=retweek_id)
 
     results = re.findall("(^|[^@\w])@(\w{1,20})", body)
     results = [result[1] for result in results]
@@ -79,6 +80,16 @@ def api_remove_dislike(request):
     if Dislike.objects.filter(tweek_id=tweek_id).filter(created_by=request.user).exists():
         dislike = Dislike.objects.get(tweek_id=tweek_id, created_by=request.user)
         dislike.delete()
+
+    return JsonResponse({'success': True})
+
+@login_required
+def api_remove_retweek(request):
+    data = json.loads(request.body)
+    tweek_id = data['tweek_id']
+    if Tweek.objects.filter(retweek_id=tweek_id).filter(created_by=request.user).exists():
+        tweek = Tweek.objects.get(retweek_id=tweek_id, created_by=request.user)
+        tweek.delete()
 
     return JsonResponse({'success': True})
 

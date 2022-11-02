@@ -8,12 +8,14 @@ class Tweek(models.Model):
     body = models.CharField(max_length=255)
     created_by = models.ForeignKey(User, related_name='tweeks', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    retweek = models.ForeignKey('self', null=True, blank=True, default=None, on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ('-created_at',)
 
     def formatted_time(self):
         return naturaltime(self.created_at)
+
 
 class Like(models.Model):
     tweek = models.ForeignKey(Tweek, related_name='likes', on_delete=models.CASCADE)

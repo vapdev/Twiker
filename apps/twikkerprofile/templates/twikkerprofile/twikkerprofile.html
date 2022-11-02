@@ -25,11 +25,11 @@
                 <p><a href="{% url 'follows' user.username %}">Follows: {{ user.twikkerprofile.follows.count }}</a></p>
                 {% if user != request.user %}
                 <a href="{% url 'conversation' user.id %}">Send message</a>
-                <span id="follow-button">
+                <span>
                     {% if request.user.twikkerprofile in user.twikkerprofile.followed_by.all %}
                         <a href="{% url 'unfollow_tweeker' user.username %}">Unfollow</a>
                         {% else %}
-                            <a id="follow-button" @click="followUser({{ user.id }})">Follow</a>
+                            <a href="{% url 'follow_tweeker' user.username %}">Follow</a>
                         {% endif %}
                 </span>
                 {% endif %}

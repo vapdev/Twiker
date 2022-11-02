@@ -69,6 +69,15 @@ def unfollow_tweeker(request, username):
 
     return redirect('twikkerprofile', username=username)
 
+@login_required
+def follow_tweeker(request, username):
+    user = get_object_or_404(User, username=username)
+
+    request.user.twikkerprofile.follows.add(user.twikkerprofile)
+
+    return redirect('twikkerprofile', username=username)
+
+
 def followers(request, username):
     user = get_object_or_404(User, username=username)
 

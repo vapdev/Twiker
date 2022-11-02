@@ -31,43 +31,50 @@
                 </form>
             </div>
         </div>
-        <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex flex-rol h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 border-gray-100">
-            <div class="flex mr-2">
-                <img class="rounded-full h-12 w-12" :src="tweek.avatar_url">
-            </div>
-            <div class="flex flex-col w-full">
-                <div>
-                <span class="font-semibold text-lg">[[ tweek.tweeker_name ]]</span><span class="ml-2">[[ tweek.formatted_time ]]</span></div>
-                <span class="flex text-xl break-all">[[ tweek.body ]]</span>
-                <div class="flex flex-row justify-between w-2/3 mt-3">
-                    <div class="flex">
-                        <div class="w-8 h-8 p-1 text-center hover:bg-yellow-200 hover:rounded-full">
-                            <i class="fa-regular fa-comment-dots"></i>
-                        </div>
-                        <span class="pt-1"></span>
+        <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 border-gray-100">
+                <div class="flex flex-col w-full">
+                    <div v-if="tweek.retweek" class="flex mb-2">
+                        <span class="flex font-semibold">[[ tweek.tweeker_name + ' retuikou']]</span>
                     </div>
                     <div class="flex">
-                        <div class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
-                            <i class="fa-solid fa-retweet"></i>
+                        <div class="flex mr-2">
+                            <img class="rounded-full h-12 w-12" :src="tweek.retweek ? tweek.retweek_avatar_url : tweek.avatar_url">
                         </div>
-                        <span class="pt-1">25</span>
-                    </div>
-                    <div class="flex">
-                        <div class="flex mx-2">
-                            <div @click="toggleLike(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
-                                <i :class=" !liked_tweeks.includes(tweek.id) ? 'fa-regular fa-thumbs-up' : 'fa-solid fa-thumbs-up' "></i>
+                        <div class="flex flex-col w-full">
+                            <div>
+                            <span class="font-semibold text-lg">[[ tweek.retweek ? tweek.retweek_tweeker_name : tweek.tweeker_name ]]</span><span class="ml-2">[[ tweek.retweek ? tweek.retweek_formatted_time : tweek.formatted_time ]]</span></div>
+                            <span class="flex text-xl break-all">[[ tweek.retweek ? tweek.retweek_body : tweek.body ]]</span>
+                            <div class="flex flex-row justify-between w-2/3 mt-3">
+                                <div class="flex">
+                                    <div class="w-8 h-8 p-1 text-center hover:bg-yellow-200 hover:rounded-full">
+                                        <i class="fa-regular fa-comment-dots"></i>
+                                    </div>
+                                    <span class="pt-1"></span>
+                                </div>
+                                <div class="flex">
+                                    <div @click="toggleRetweek(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
+                                        <i class="fa-solid fa-retweet"></i>
+                                    </div>
+                                    <span class="pt-1">25</span>
+                                </div>
+                                <div class="flex">
+                                    <div class="flex mx-2">
+                                        <div @click="toggleLike(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
+                                            <i :class=" !liked_tweeks.includes(tweek.id) ? 'fa-regular fa-thumbs-up' : 'fa-solid fa-thumbs-up' "></i>
+                                        </div>
+                                        <span :id="'likes-'+tweek.id" class="pt-1">[[ tweek.likes_count ]] [[ tweek.liked_tweeks ]]</span>
+                                    </div>
+                                    <div class="flex mx-2">
+                                        <div @click="toggleDislike(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-red-200 hover:rounded-full">
+                                            <i :class=" !disliked_tweeks.includes(tweek.id) ? 'fa-regular fa-thumbs-down' : 'fa-solid fa-thumbs-down' "></i>
+                                        </div>
+                                        <span :id="'dislikes-'+tweek.id" class="pt-1">[[ tweek.dislikes_count ]] [[ tweek.disliked_tweeks ]]</span>
+                                    </div>
+                                </div>
                             </div>
-                            <span :id="'likes-'+tweek.id" class="pt-1">[[ tweek.likes_count ]] [[ tweek.liked_tweeks ]]</span>
-                        </div>
-                        <div class="flex mx-2">
-                            <div @click="toggleDislike(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-red-200 hover:rounded-full">
-                                <i :class=" !disliked_tweeks.includes(tweek.id) ? 'fa-regular fa-thumbs-down' : 'fa-solid fa-thumbs-down' "></i>
-                            </div>
-                            <span :id="'dislikes-'+tweek.id" class="pt-1">[[ tweek.dislikes_count ]] [[ tweek.disliked_tweeks ]]</span>
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
@@ -101,6 +108,7 @@
                 avatar: '{% if request.user.twikkerprofile.avatar %} {{ request.user.twikkerprofile.avatar.url }} {% endif %}',
                 liked_tweeks: [{% for tweek in tweeks %}{% if tweek.liked %}{{ tweek.id }},{% endif %}{% endfor %}],
                 disliked_tweeks: [{% for tweek in tweeks %}{% if tweek.disliked %}{{ tweek.id }},{% endif %}{% endfor %}],
+                retweeked_tweeks: [{% for tweek in tweeks %}{% if tweek.retweeked %}{{ tweek.id }},{% endif %}{% endfor %}],
             }
         },
         mounted() {
@@ -121,47 +129,44 @@
                         return response.json()
                     })
                     .then(data => {
-                        this.hasNext = false
-
-              if (data.next) {
-                  this.hasNext = true
-              }
-              for (let i = 0; i < data.results.length; i++) {
-                  this.tweeks.push(data.results[i])
-              }
-          })
-          .catch(error => {
-              console.log(error)
-          })
-      },
-      toggleLike(tweek_id){
-            if(this.disliked_tweeks.includes(tweek_id)){
-                console.log("to caindo aqui");
-                this.undislikeTweek(tweek_id);
-            }
-            if(this.liked_tweeks.includes(tweek_id)){
-                this.unlikeTweek(tweek_id);
-            }else{
-                this.likeTweek(tweek_id);
-            }
-          },
-      async likeTweek(tweek_id){
-          this.liked_tweeks.push(parseInt(tweek_id));
-          likeSocket.send(JSON.stringify({
-              'tweek_id': tweek_id,
-              'liker': '{{ request.user.username }}',
-          }));
-          const el = document.getElementById('likes-' + tweek_id);
-          const likes = parseInt(el.innerHTML) + 1;
-          el.innerHTML = likes;
-          },
-        unlikeTweek(tweek_id){
-            this.liked_tweeks = this.liked_tweeks.filter(item => item !== tweek_id)
-            var tweek = {
+                            this.hasNext = false
+                            if (data.next) {
+                                this.hasNext = true
+                            }
+                            for (let i = 0; i < data.results.length; i++) {
+                                this.tweeks.push(data.results[i])
+                            }
+                    }).catch(error => {
+                        console.log(error)
+                    })
+            },
+            toggleLike(tweek_id){
+                if(this.disliked_tweeks.includes(tweek_id)){
+                    console.log("to caindo aqui");
+                    this.undislikeTweek(tweek_id);
+                }
+                if(this.liked_tweeks.includes(tweek_id)){
+                    this.unlikeTweek(tweek_id);
+                }else{
+                    this.likeTweek(tweek_id);
+                }
+            },
+            async likeTweek(tweek_id){
+                this.liked_tweeks.push(parseInt(tweek_id));
+                likeSocket.send(JSON.stringify({
                 'tweek_id': tweek_id,
-            };
-
-            fetch('/api/remove_like/',{
+                'liker': '{{ request.user.username }}',
+                }));
+                const el = document.getElementById('likes-' + tweek_id);
+                const likes = parseInt(el.innerHTML) + 1;
+                el.innerHTML = likes;
+            },
+            unlikeTweek(tweek_id){
+                this.liked_tweeks = this.liked_tweeks.filter(item => item !== tweek_id)
+                var tweek = {
+                    'tweek_id': tweek_id,
+                };
+                fetch('/api/remove_like/',{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -169,45 +174,33 @@
                     },
                     credentials: 'same-origin',
                     body: JSON.stringify(tweek)
-                })
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
 
                 const el = document.getElementById('likes-' + tweek_id);
                 const likes = parseInt(el.innerHTML) - 1;
                 el.innerHTML = likes;
-        },
-        toggleDislike(tweek_id){
-              if(this.liked_tweeks.includes(tweek_id)){
-                  this.unlikeTweek(tweek_id);
-              }
-              if(this.disliked_tweeks.includes(tweek_id)){
-                  this.undislikeTweek(tweek_id);
-              }else{
-                  this.dislikeTweek(tweek_id);
-              }
-          },
-      async dislikeTweek(tweek_id){
-          this.disliked_tweeks.push(parseInt(tweek_id));
-          dislikeSocket.send(JSON.stringify({
-              'tweek_id': tweek_id,
-              'disliker': '{{ request.user.username }}',
-          }));
-          const el = document.getElementById('dislikes-' + tweek_id);
-          const dislikes = parseInt(el.innerHTML) + 1;
-          el.innerHTML = dislikes;
-          },
-        undislikeTweek(tweek_id){
-            this.disliked_tweeks = this.disliked_tweeks.filter(item => item !== tweek_id)
-            var tweek = {
-                'tweek_id': tweek_id,
-            };
-
-            fetch('/api/remove_dislike/',{
+            },
+            toggleRetweek(tweek_id){
+                if(this.retweeked_tweeks.includes(tweek_id)){
+                    console.log("merda")
+                    this.unretweekTweek(tweek_id);
+                }else{
+                    console.log("cu")
+                    this.submitTweek(tweek_id);
+                }
+            },
+            unretweekTweek(tweek_id){
+                this.retweeked_tweeks = this.retweeked_tweeks.filter(item => item !== tweek_id)
+                var tweek = {
+                    'tweek_id': tweek_id,
+                };
+                fetch('/api/remove_retweek/',{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -215,23 +208,63 @@
                     },
                     credentials: 'same-origin',
                     body: JSON.stringify(tweek)
-                })
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error);
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            },
+            toggleDislike(tweek_id){
+                if(this.liked_tweeks.includes(tweek_id)){
+                  this.unlikeTweek(tweek_id);
+                }
+                if(this.disliked_tweeks.includes(tweek_id)){
+                  this.undislikeTweek(tweek_id);
+                }else{
+                  this.dislikeTweek(tweek_id);
+                }
+            },
+            async dislikeTweek(tweek_id){
+                this.disliked_tweeks.push(parseInt(tweek_id));
+                dislikeSocket.send(JSON.stringify({
+                  'tweek_id': tweek_id,
+                  'disliker': '{{ request.user.username }}',
+                }));
+                const el = document.getElementById('dislikes-' + tweek_id);
+                const dislikes = parseInt(el.innerHTML) + 1;
+                el.innerHTML = dislikes;
+            },
+            undislikeTweek(tweek_id){
+                this.disliked_tweeks = this.disliked_tweeks.filter(item => item !== tweek_id)
+                var tweek = {
+                    'tweek_id': tweek_id,
+                };
+                fetch('/api/remove_dislike/',{
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        credentials: 'same-origin',
+                        body: JSON.stringify(tweek)
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
                 });
-
                 const el = document.getElementById('dislikes-' + tweek_id);
                 const dislikes = parseInt(el.innerHTML) - 1;
                 el.innerHTML = dislikes;
-        },
-        deleteTweek(tweek_id){
-            var tweek = {
-                'tweek_id': tweek_id,
-            };
-            fetch('/api/delete_tweek/',{
+            },
+            deleteTweek(tweek_id){
+                var tweek = {
+                    'tweek_id': tweek_id,
+                };
+                fetch('/api/delete_tweek/',{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -239,32 +272,43 @@
                     },
                     credentials: 'same-origin',
                     body: JSON.stringify(tweek)
-                })
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
 
                 const el = document.getElementById('tweek-' + tweek_id);
                 el.remove();
-          },
-          async submitTweek(){
-              if (this.body.length > 0){
-                  let tweek = {
-                      'body': this.body,
-                      'tweeker': this.tweeker,
-                      'created_at': this.created_at,
-                      'avatar': this.avatar
-                  };
-
-                  // Send to backend
-                  tweekSocket.send(JSON.stringify(tweek));
-                  window.location.reload()
-              }
-              this.body = '';
-          }
+            },
+            async submitTweek(tweek_id=null){
+                console.log("twwek_id: " + tweek_id);
+                if (tweek_id){
+                    let tweek = {
+                        'body': this.body,
+                        'tweeker': this.tweeker,
+                        'created_at': this.created_at,
+                        'avatar': this.avatar,
+                        'retweek': tweek_id,
+                    };
+                    tweekSocket.send(JSON.stringify(tweek));
+                    window.location.reload();
+                }
+                if (this.body.length > 0){
+                    let tweek = {
+                        'body': this.body,
+                        'tweeker': this.tweeker,
+                        'created_at': this.created_at,
+                        'avatar': this.avatar,
+                    };
+                    // Send to backend
+                    tweekSocket.send(JSON.stringify(tweek));
+                    window.location.reload();
+                }
+                this.body = '';
+            },
     }
   }).mount('#feedapp')
 </script>
