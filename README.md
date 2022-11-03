@@ -10,7 +10,7 @@ Work in progress.
 ✅ Global Chat <br>
 ✅ Real Time Chat <br> 
 ✅ Real Time Notifications <br>
-⏳ Real Time Feed (Likes and dislikes count) (Will be implemented with Server Sent Events)
+⏳ Real Time Feed (Likes and dislikes count) (Will be implemented with Server Sent Events) <br>
 ⏳ I may change some websockets to server sent events, only chat will remain with web sockets
 
 <h2> Setup </h2>
