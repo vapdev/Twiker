@@ -6,9 +6,6 @@ register = template.Library()
 
 @register.inclusion_tag('includes/json_script.html')
 def json_script(script_id, content):
-    print("json_script")
-    print("script_id: " + script_id)
-    print("content: " + content)
     return {'script_id': script_id, 'content': content}
 
 

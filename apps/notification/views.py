@@ -28,6 +28,5 @@ def notifications(request):
 
 @login_required
 def clear_notifications(request):
-    print("passando aki..")
     Notification.objects.filter(to_user=request.user).update(is_read=True)
     return redirect('notifications')

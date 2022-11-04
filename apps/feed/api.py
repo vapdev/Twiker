@@ -25,7 +25,6 @@ def api_add_tweek(request):
     data = json.loads(request.body)
     body = data['body']
     retweek_id = data['retweek_id']
-    print("RETWEET", retweek_id)
     tweek = Tweek.objects.create(body=body, created_by=request.user, retweek_id=retweek_id)
     results = re.findall("(^|[^@\w])@(\w{1,20})", body)
     for result in results:

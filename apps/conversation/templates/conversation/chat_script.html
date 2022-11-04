@@ -1,5 +1,4 @@
 {% load chat %}
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script>
     function scrollToBottom(new_message=false) {
         let objDiv = document.getElementById("chatcontainer");
@@ -12,7 +11,7 @@
 
     const {createApp} = Vue
 
-    createApp({
+    const conversationapp = createApp({
         delimiters: ['[[', ']]'],
         data () {
             return {
@@ -23,7 +22,25 @@
                 avatar: '{% if request.user.twikkerprofile.avatar %}{{ request.user.twikkerprofile.avatar.url }}{% endif %}'
             }
         },
+        mounted() {
+            this.getMessages()
+            window.onscroll = () => {
+                scrollToBottom();
+            }
+        },
         methods: {
+            getMessages(){
+                fetch('/api/messages/')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('data', data)
+                    for (let i = 0; i < data.messages.length; i++) {
+                        console.log("data.messages[i].content", data.messages[i])
+                        this.messages.push(data.messages[i])
+                    }
+                    scrollToBottom()
+                })
+            },
             submitMessage() {
                 if (this.content.length > 0) {
                     var message = {

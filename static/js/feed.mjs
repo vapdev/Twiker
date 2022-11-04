@@ -123,12 +123,9 @@ createApp({
             el.innerHTML = likes;
         },
         toggleRetweek(tweek_id){
-            console.log("tweek_id", tweek_id);
             if(this.retweeked_tweeks.includes(tweek_id)){
-                console.log("merda")
                 this.unretweekTweek(tweek_id);
             }else{
-                console.log("cu")
                 this.submitTweek(tweek_id);
             }
         },
@@ -236,7 +233,6 @@ createApp({
             el.remove();
         },
         submitTweek(tweek_id=null){
-            console.log("mss")
             if (this.body.length > 0 || tweek_id != null){
                 let tweek = {
                     'body': this.body,

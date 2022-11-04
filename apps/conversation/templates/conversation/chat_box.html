@@ -1,43 +1,20 @@
 {% load humanize %}
 <div id="conversationapp" class="flex flex-col h-full">
-    <div id="chatcontainer" class="flex flex-col h-full justify-end">
-        {% for message in messages %}
-            <div class="flex w-full {% if message.created_by == request.user %} justify-end {% endif %}">
-                <article class="flex h-fit w-fit p-2 pt-3 pl-3 border-solid border-2 border-gray-100 ">
-                    <figure class="flex">
-                        {% if message.created_by.twikkerprofile.avatar %}
-                            <img class="rounded-full h-12 w-12" src="{{ message.created_by.twikkerprofile.avatar.url }}">
-                        {% endif %}
-                    </figure>
-                    <div class="flex-col">
-                        <div>
-                            <strong>
-                                <a href="{% url 'twikkerprofile' message.created_by %}">{{ message.created_by.username }}</a>
-                            </strong>
-                            <small> {{ message.created_at|naturaltime }}</small>
-                        </div>
-                        <div>
-                            <span>{{ message.content }}</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        {% endfor %}
-        <div v-for="message in messages">
-            <article :class="getClass(message.tweeker)">
-                <figure>
-                    <p>
-                        <img :src="message.avatar">
-                    </p>
+    <div id="chatcontainer" class="flex flex-col h-full">
+        <div v-for="message in messages" :class="message.avatar_url == '{{ request.user.twikkerprofile.avatar.url }}' ? 'justify-end flex w-full' : 'flex w-full'  ">
+            <article class="flex h-fit w-fit p-2 pt-3 pl-3 border-solid border-2 border-gray-100 ">
+                <figure class="flex">
+                    <img class="rounded-full h-12 w-12" :src="message.avatar_url">
                 </figure>
-                <div>
+                <div class="flex-col">
                     <div>
-                        <p>
-                            <strong><a :href="/u/ + message.tweeker">[[ message.tweeker ]]</a></strong>
-                            <small>[[ message.created_at ]]</small>
-                            <br>
-                            <span>[[ message.content ]]</span>
-                        </p>
+                        <strong>
+                            <a href="">[[ message.created_by ]]</a>
+                        </strong>
+                        <small>[[ message.created_at ]]</small>
+                    </div>
+                    <div>
+                        <span>[[ message.content ]]</span>
                     </div>
                 </div>
             </article>
