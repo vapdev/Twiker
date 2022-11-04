@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'a7bd-186-226-50-81.sa.ngrok.io']
 
+
 CSRF_TRUSTED_ORIGINS = ['https://a7bd-186-226-50-81.sa.ngrok.io']
 
 LOGIN_URL = 'login'

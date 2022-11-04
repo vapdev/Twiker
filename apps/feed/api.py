@@ -7,6 +7,7 @@ from django.dispatch import receiver
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
 
 from apps.notification.models import Notification
 from apps.notification.utilities import create_notification
@@ -19,6 +20,7 @@ from apps.feed.models import Tweek, Like, Dislike
 
 
 @login_required
+@csrf_exempt
 def api_add_tweek(request):
     data = json.loads(request.body)
     body = data['body']
@@ -43,6 +45,7 @@ def check_user_exists(username):
 
 
 @login_required
+@csrf_exempt
 def api_add_like(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
@@ -57,6 +60,7 @@ def api_add_like(request):
 
 
 @login_required
+@csrf_exempt
 def api_remove_like(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
@@ -68,6 +72,7 @@ def api_remove_like(request):
 
 
 @login_required
+@csrf_exempt
 def api_add_dislike(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
@@ -82,6 +87,7 @@ def api_add_dislike(request):
 
 
 @login_required
+@csrf_exempt
 def api_remove_dislike(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
@@ -92,6 +98,7 @@ def api_remove_dislike(request):
     return JsonResponse({'success': True})
 
 @login_required
+@csrf_exempt
 def api_remove_retweek(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
@@ -102,6 +109,7 @@ def api_remove_retweek(request):
     return JsonResponse({'success': True})
 
 @login_required
+@csrf_exempt
 def api_delete_tweek(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
@@ -114,6 +122,7 @@ def api_delete_tweek(request):
     return JsonResponse({'success': True})
 
 @login_required
+@csrf_exempt
 @api_view(['GET'])
 def api_get_tweeks(request):
     userids = [request.user.id]
@@ -127,6 +136,7 @@ def api_get_tweeks(request):
     return paginator.get_paginated_response(serializer.data)
 
 @login_required
+@csrf_exempt
 @api_view(['GET'])
 def api_get_profile_tweeks(request, user_id):
     tweeks = Tweek.objects.filter(created_by=user_id)

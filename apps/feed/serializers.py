@@ -2,7 +2,9 @@ from datetime import datetime
 from rest_framework import serializers
 from django.contrib.humanize.templatetags.humanize import naturaltime
 
-from .models import Tweek
+from .models import Tweek, Like
+
+
 
 class TweekSerializer(serializers.ModelSerializer):
     tweeker_name = serializers.CharField(source='created_by')
@@ -16,6 +18,7 @@ class TweekSerializer(serializers.ModelSerializer):
     retweek_dislikes_count = serializers.IntegerField(source='retweek.dislikes.count', allow_null=True)
     retweek_avatar_url = serializers.CharField(source='retweek.created_by.twikkerprofile.avatar.url', allow_null=True)
     retweek_formatted_time = serializers.CharField(source='retweek.formatted_time', allow_null=True)
+
 
     class Meta:
         model = Tweek

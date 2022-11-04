@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
@@ -28,7 +30,10 @@ def feed(request):
         else:
             tweek.disliked = False
 
-    return render(request, 'feed.html', {'tweeks': tweeks})
+    liked_tweeks_ids = [tweek.id for tweek in tweeks if tweek.liked]
+    disliked_tweeks_ids = [tweek.id for tweek in tweeks if tweek.disliked]
+
+    return render(request, 'feed.html', {'tweeks': tweeks, 'liked_tweeks': liked_tweeks_ids, 'disliked_tweeks': disliked_tweeks_ids})
 
 @login_required
 def search(request):
