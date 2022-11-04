@@ -4,6 +4,7 @@ const tweeker_username = getVariableFromDjango('tweeker_username');
 const tweeker_avatar = getVariableFromDjango('tweeker_avatar');
 const liked_tweeks = JSON.parse(getVariableFromDjango('liked_tweeks'));
 const disliked_tweeks = JSON.parse(getVariableFromDjango('disliked_tweeks'));
+const retweeked_tweeks = JSON.parse(getVariableFromDjango('retweeked_tweeks'));
 
 const {createApp} = Vue
 
@@ -29,7 +30,7 @@ createApp({
             avatar: tweeker_avatar,
             liked_tweeks: liked_tweeks,
             disliked_tweeks: disliked_tweeks,
-            // retweeked_tweeks: [{% for tweek in tweeks %}{% if tweek.retweeked %}{{ tweek.id }},{% endif %}{% endfor %}],
+            retweeked_tweeks: retweeked_tweeks,
         }
     },
     mounted() {
@@ -122,6 +123,7 @@ createApp({
             el.innerHTML = likes;
         },
         toggleRetweek(tweek_id){
+            console.log("tweek_id", tweek_id);
             if(this.retweeked_tweeks.includes(tweek_id)){
                 console.log("merda")
                 this.unretweekTweek(tweek_id);

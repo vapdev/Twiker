@@ -32,8 +32,9 @@ def feed(request):
 
     liked_tweeks_ids = [tweek.id for tweek in tweeks if tweek.liked]
     disliked_tweeks_ids = [tweek.id for tweek in tweeks if tweek.disliked]
+    retweeked_tweeks_ids = [tweek.retweek.id for tweek in tweeks if tweek.retweek]
 
-    return render(request, 'feed.html', {'tweeks': tweeks, 'liked_tweeks': liked_tweeks_ids, 'disliked_tweeks': disliked_tweeks_ids})
+    return render(request, 'feed.html', {'tweeks': tweeks, 'liked_tweeks': liked_tweeks_ids, 'disliked_tweeks': disliked_tweeks_ids, 'retweeked_tweeks': retweeked_tweeks_ids})
 
 @login_required
 def search(request):

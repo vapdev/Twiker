@@ -86,6 +86,8 @@
 {% json_script "tweeker_username" request.user.username %}
 {% json_script "liked_tweeks" liked_tweeks|safe %}
 {% json_script "disliked_tweeks" disliked_tweeks|safe %}
+{% json_script "retweeked_tweeks" retweeked_tweeks|safe %}
+
 
 {% if request.user.twikkerprofile.avatar %}
     {% json_script "tweeker_avatar" request.user.twikkerprofile.avatar.url %}
