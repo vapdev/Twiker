@@ -18,21 +18,21 @@ from .serializers import TweekSerializer
 from apps.feed.models import Tweek, Like, Dislike
 
 
-@sync_to_async
-def save_tweek(body, tweeker, retweek_id):
-    tweeker = User.objects.get(username=tweeker)
-    print("seloko tio")
-    Tweek.objects.create(body=body, created_by=tweeker, retweek_id=retweek_id)
-
+@login_required
+def api_add_tweek(request):
+    data = json.loads(request.body)
+    body = data['body']
+    retweek_id = data['retweek_id']
+    print("RETWEET", retweek_id)
+    tweek = Tweek.objects.create(body=body, created_by=request.user, retweek_id=retweek_id)
     results = re.findall("(^|[^@\w])@(\w{1,20})", body)
-    results = [result[1] for result in results]
-
     for result in results:
-        if check_user_exists(username=result):
-            if result != tweeker:
-                user = User.objects.get(username=result)
-                tweeker = User.objects.get(username=tweeker)
-                create_notification(created_by=tweeker, notification_type=Notification.MENTION, to_user=user)
+        result = result[1]
+        if User.objects.filter(username=result).exists() and result != request.user.username:
+            user = User.objects.get(username=result)
+            create_notification(request, user, 'mention')
+    return JsonResponse({'success': True})
+
 
 def check_user_exists(username):
     try:
@@ -40,27 +40,20 @@ def check_user_exists(username):
         return True
     except User.DoesNotExist:
         return False
-@sync_to_async
-def save_like(tweek_id, liker):
-    tweek = Tweek.objects.get(id=tweek_id)
-    liker = User.objects.get(username=liker)
-    Like.objects.create(tweek_id=tweek_id, created_by=liker)
-    tweek.save()
-
-    if tweek.created_by != liker:
-        create_notification(created_by=liker, notification_type=Notification.LIKE, to_user=tweek.created_by)
 
 
-@sync_to_async
-def save_dislike(tweek_id, disliker):
-    tweek = Tweek.objects.get(id=tweek_id)
-    disliker = User.objects.get(username=disliker)
-    Dislike.objects.create(tweek_id=tweek_id, created_by=disliker)
-    tweek.save()
+@login_required
+def api_add_like(request):
+    data = json.loads(request.body)
+    tweek_id = data['tweek_id']
 
-    if tweek.created_by != disliker:
-        create_notification(created_by=disliker, notification_type=Notification.LIKE, to_user=tweek.created_by)
+    if not Like.objects.filter(tweek_id=tweek_id).filter(created_by=request.user).exists():
+        like = Like.objects.create(tweek_id=tweek_id, created_by=request.user)
+        tweek = Tweek.objects.get(pk=tweek_id)
+        if request.user != tweek.created_by:
+            create_notification(request, tweek.created_by, 'like')
 
+    return JsonResponse({'success': True})
 
 
 @login_required
@@ -72,6 +65,21 @@ def api_remove_like(request):
         like.delete()
 
     return JsonResponse({'success': True})
+
+
+@login_required
+def api_add_dislike(request):
+    data = json.loads(request.body)
+    tweek_id = data['tweek_id']
+
+    if not Dislike.objects.filter(tweek_id=tweek_id).filter(created_by=request.user).exists():
+        dislike = Dislike.objects.create(tweek_id=tweek_id, created_by=request.user)
+        tweek = Tweek.objects.get(pk=tweek_id)
+        if request.user != tweek.created_by:
+            create_notification(request, tweek.created_by, 'dislike')
+
+    return JsonResponse({'success': True})
+
 
 @login_required
 def api_remove_dislike(request):

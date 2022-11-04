@@ -151,13 +151,28 @@
                     this.likeTweek(tweek_id);
                 }
             },
-            async likeTweek(tweek_id){
+            likeTweek(tweek_id){
                 this.liked_tweeks.push(parseInt(tweek_id));
-                likeSocket.send(JSON.stringify({
-                'tweek_id': tweek_id,
-                'liker': '{{ request.user.username }}',
-                }));
-                const el = document.getElementById('likes-' + tweek_id);
+                let tweek = {
+                    'tweek_id': tweek_id,
+                };
+                fetch('/api/add_like/',{
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        credentials: 'same-origin',
+                        body: JSON.stringify(tweek)
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+
+                    const el = document.getElementById('likes-' + tweek_id);
                 const likes = parseInt(el.innerHTML) + 1;
                 el.innerHTML = likes;
             },
@@ -226,13 +241,28 @@
                   this.dislikeTweek(tweek_id);
                 }
             },
-            async dislikeTweek(tweek_id){
+            dislikeTweek(tweek_id){
                 this.disliked_tweeks.push(parseInt(tweek_id));
-                dislikeSocket.send(JSON.stringify({
-                  'tweek_id': tweek_id,
-                  'disliker': '{{ request.user.username }}',
-                }));
-                const el = document.getElementById('dislikes-' + tweek_id);
+                let tweek = {
+                    'tweek_id': tweek_id,
+                };
+                fetch('/api/add_dislike/',{
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        credentials: 'same-origin',
+                        body: JSON.stringify(tweek)
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+
+                    const el = document.getElementById('dislikes-' + tweek_id);
                 const dislikes = parseInt(el.innerHTML) + 1;
                 el.innerHTML = dislikes;
             },
@@ -283,32 +313,36 @@
                 const el = document.getElementById('tweek-' + tweek_id);
                 el.remove();
             },
-            async submitTweek(tweek_id=null){
-                console.log("twwek_id: " + tweek_id);
-                if (tweek_id){
+            submitTweek(tweek_id=null){
+                console.log("mss")
+                if (this.body.length > 0 || tweek_id != null){
                     let tweek = {
                         'body': this.body,
                         'tweeker': this.tweeker,
                         'created_at': this.created_at,
                         'avatar': this.avatar,
-                        'retweek': tweek_id,
-                    };
-                    tweekSocket.send(JSON.stringify(tweek));
-                    window.location.reload();
-                }
-                if (this.body.length > 0){
-                    let tweek = {
-                        'body': this.body,
-                        'tweeker': this.tweeker,
-                        'created_at': this.created_at,
-                        'avatar': this.avatar,
+                        'retweek_id': tweek_id,
                     };
                     // Send to backend
-                    tweekSocket.send(JSON.stringify(tweek));
+                    fetch('/api/add_tweek/',{
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        credentials: 'same-origin',
+                        body: JSON.stringify(tweek)
+                    })
+                    .then((response) => {
+                        console.log(response)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
                     window.location.reload();
                 }
                 this.body = '';
-            },
+            }
     }
   }).mount('#feedapp')
 </script>
