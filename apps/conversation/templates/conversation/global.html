@@ -1,7 +1,15 @@
 {% extends 'core/base.html' %}
 {% block content %}
-    <h1>Global Chat</h1>
-    {% include "conversation/chat_box.html" %}
+    <div class="flex flex-col w-full">
+        <div class="sticky p-3 bg-white top-0 w-full h-fit opacity-90 text-2xl">
+            <a href="{% url 'feed' %}">
+                <span class="opacity-100 font-semibold">Global chat</span>
+            </a>
+        </div>
+        <div class="flex flex-col h-full w-full border-solid border-r-2 border-gray-100">
+            {% include "conversation/chat_box.html" %}
+        </div>
+    </div>
 {% endblock %}
 {% block script %}
 {% include "conversation/chat_script.html" %}

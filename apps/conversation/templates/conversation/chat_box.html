@@ -1,24 +1,23 @@
 {% load humanize %}
-<div id="conversationapp">
-    <div id="chatcontainer">
+<div id="conversationapp" class="flex flex-col h-full">
+    <div id="chatcontainer" class="flex flex-col h-full justify-end">
         {% for message in messages %}
-            <div>
-                <article class="{% if message.created_by == request.user %}{% endif %}">
-                    <figure>
-                        <p>
-                            {% if message.created_by.twikkerprofile.avatar %}
-                                <img class="rounded-full h-12 w-12" src="{{ message.created_by.twikkerprofile.avatar.url }}">
-                            {% endif %}
-                        </p>
+            <div class="flex w-full {% if message.created_by == request.user %} justify-end {% endif %}">
+                <article class="flex h-fit w-fit p-2 pt-3 pl-3 border-solid border-2 border-gray-100 ">
+                    <figure class="flex">
+                        {% if message.created_by.twikkerprofile.avatar %}
+                            <img class="rounded-full h-12 w-12" src="{{ message.created_by.twikkerprofile.avatar.url }}">
+                        {% endif %}
                     </figure>
-                    <div>
+                    <div class="flex-col">
                         <div>
-                            <p>
-                                <strong><a href="{% url 'twikkerprofile' message.created_by %}">{{ message.created_by.username }}</a></strong>
-                                <small>{{ message.created_at|naturaltime }} </small>
-                                <br>
-                                <span>{{ message.content }}</span>
-                            </p>
+                            <strong>
+                                <a href="{% url 'twikkerprofile' message.created_by %}">{{ message.created_by.username }}</a>
+                            </strong>
+                            <small> {{ message.created_at|naturaltime }}</small>
+                        </div>
+                        <div>
+                            <span>{{ message.content }}</span>
                         </div>
                     </div>
                 </article>
@@ -44,14 +43,16 @@
             </article>
         </div>
     </div>
-    <form v-on:submit.prevent="submitMessage()">
-    <div>
-        <div>
-            <input type="text" v-model="content" placeholder="Your message..."></input>
-        </div>
-        <div>
-            <button>Send</button>
-        </div>
+    <div class="sticky bg-white bottom-0 w-full border">
+        <form v-on:submit.prevent="submitMessage()" class="w-full p-2">
+            <div class="flex">
+                <div class="w-full">
+                    <input type="text" class="w-full" v-model="content" placeholder="Your message..."></input>
+                </div>
+                <div class="bg-green-200 rounded-full px-2 mx-1">
+                    <button>Send</button>
+                </div>
+            </div>
+        </form>
     </div>
-    </form>
 </div>
