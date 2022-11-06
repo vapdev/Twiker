@@ -128,6 +128,7 @@ createApp({
             }else{
                 this.submitTweek(tweek_id);
             }
+            window.location.reload();
         },
         unretweekTweek(tweek_id){
             this.retweeked_tweeks = this.retweeked_tweeks.filter(item => item !== tweek_id)

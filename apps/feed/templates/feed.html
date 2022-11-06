@@ -54,10 +54,13 @@
                                     <span class="pt-1"></span>
                                 </div>
                                 <div class="flex">
-                                    <div @click="toggleRetweek(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
-                                        <i class="fa-solid fa-retweet"></i>
+                                    <div v-if="!tweek.retweek" @click="toggleRetweek(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
+                                        <i :class=" retweeked_tweeks.includes(tweek.id) ? 'text-blue-600 fa-solid fa-retweet' : 'fa-solid fa-retweet'"></i>
                                     </div>
-                                    <span class="pt-1">25</span>
+                                    <div v-if="tweek.retweek" @click="toggleRetweek(tweek.retweek_id)" class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
+                                        <i :class=" retweeked_tweeks.includes(tweek.retweek_id) ? 'text-blue-600 fa-solid fa-retweet' : 'fa-solid fa-retweet'"></i>
+                                    </div>
+                                    <span class="pt-1">[[ tweek.retweek ? tweek.retweek_retweek_count : tweek.retweek_count ]]</span>
                                 </div>
                                 <div class="flex">
                                     <div class="flex mx-2">
