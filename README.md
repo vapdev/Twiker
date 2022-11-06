@@ -30,4 +30,5 @@ OLD VERSION PRINTS
 
 NEW VERSION
 
-![image](https://user-images.githubusercontent.com/88452580/198595978-fc31da70-b5ad-44cc-816c-9be0ce32d440.png)
+![image](https://user-images.githubusercontent.com/88452580/200156701-8b07dcbf-86cd-4084-9ea5-0ef81df9abc6.png)
+
