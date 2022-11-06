@@ -6,13 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Twikker</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
     <link href="/static/css/main.css" rel="stylesheet">
     <link href="/static/css/css/all.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.41/dist/vue.global.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
 </head>
 <body>
-    <div class="flex flex-row w-full">
+    <div class="flex flex-row w-full bg-white dark:bg-slate-800">
         <aside class="flex justify-end ml-auto">
             {% include "core/sidebar.html" %}
         </aside>

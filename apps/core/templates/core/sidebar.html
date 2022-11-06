@@ -1,7 +1,7 @@
 {% load chat %} 
 {% load static %} 
 {% if request.user.is_authenticated %}
-<div class="sticky top-0 left-0 px-2 h-screen bg-white border-solid border-r-2 border-gray-100">
+<div class="sticky top-0 left-0 px-2 h-screen bg-white dark:bg-slate-800  border-solid border-r-2 border-gray-100 dark:border-gray-700">
     <div class="flex flex-col justify-between h-screen">
         <div class="flex flex-col justify-center">
             <div class="flex py-1">
@@ -59,6 +59,13 @@
                     <span class="m-auto mx-3">Perfil</span>
                 </a>
             </div>
+            <div class="flex py-1">
+                <a class="flex text-black font-semibold text-2xl p-2 hover:bg-gray-200 hover:rounded-full" onclick="darkMode()">
+                    <div>
+                        <i class="text-xl py-2 fa-solid fa-moon"></i>
+                    </div>
+                </a>
+            </div>
         </div>
         <div class="flex flex-row justify-between w-full my-3 p-1 hover:bg-gray-200 hover:rounded-full">
             <div class="flex p-3">
@@ -84,6 +91,12 @@
     </div>
 {% endif %} 
 {% block script %}
+    <script>
+    function darkMode() {
+        var element = document.body;
+        element.classList.toggle("dark");
+    }
+    </script>
     <script>
         {#const notificationSocket = new WebSocket(#}
         {#    'ws://' +#}

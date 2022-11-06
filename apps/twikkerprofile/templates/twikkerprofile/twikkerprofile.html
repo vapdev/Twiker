@@ -3,8 +3,8 @@
 {% load humanize %}
 
 {% block content %}
-    <div class="flex-col w-full bg-white border-solid border-r-2 border-gray-100" id="twikkerprofileapp">
-        <div class="flex flex-col p-4 border-solid border-b-2 border-gray-100">
+    <div class="flex-col w-full bg-white dark:bg-slate-800  border-solid border-r-2 border-gray-100 dark:border-gray-700" id="twikkerprofileapp">
+        <div class="flex flex-col p-4 border-solid border-b-2 border-gray-100 dark:border-gray-700">
             <div class="flex">
                 <div class="flex flex-col">
                     {% if user.twikkerprofile.avatar %}
@@ -39,7 +39,7 @@
         </div>
         
             <div id="twikkerprofileapp" class="flex-col">
-                <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex flex-row h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 border-gray-100">
+                <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex flex-row h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
                     <div class="flex mr-2">
                         <img class="rounded-full h-12 w-12" :src="tweek.avatar_url">
                     </div>
