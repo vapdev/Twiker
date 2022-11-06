@@ -12,7 +12,7 @@
                 </a>
             </div>
             <div class="flex py-1">
-                <a class="flex justify-center  font-semibold text-2xl p-2 hover:bg-gray-200 hover:rounded-full " href="{% url 'feed' %} ">
+                <a class="flex justify-center  font-semibold text-2xl p-2 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'feed' %} ">
                     <div>
                         <i class="w-10 text-3xl py-2 fa-solid  fa-house"></i>
                     </div>
@@ -20,7 +20,7 @@
                 </a>
             </div>
             <div class="flex py-1">
-                <a class="flex  font-semibold text-2xl p-2 hover:bg-gray-200 hover:rounded-full " href="{% url 'notifications' %} ">
+                <a class="flex  font-semibold text-2xl p-2 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'notifications' %} ">
                     <div>
                         <i class="w-10 text-3xl py-2 fa-solid fa-bell"></i>
                     </div>
@@ -28,7 +28,7 @@
                 </a>
             </div>
             <div class="flex py-1">
-                <a class="flex  font-semibold text-2xl p-2 hover:bg-gray-200 hover:rounded-full " href="{% url 'users' %} ">
+                <a class="flex  font-semibold text-2xl p-2 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'users' %} ">
                     <div>
                         <i class="w-10 text-3xl py-2 fa-solid fa-users"></i>
                     </div>
@@ -36,7 +36,7 @@
                 </a>
             </div>
             <div class="flex py-1">
-                <a class="flex  font-semibold text-2xl p-2 hover:bg-gray-200 hover:rounded-full " href="{% url 'global' %} ">
+                <a class="flex  font-semibold text-2xl p-2 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'global' %} ">
                     <div>
                         <i class="w-10 text-3xl py-2 fa-solid fa-earth-americas"></i>
                     </div>
@@ -44,7 +44,7 @@
                 </a>
             </div>
             <div class="flex py-1">
-                <a class="flex  font-semibold text-2xl p-2 hover:bg-gray-200 hover:rounded-full " href="{% url 'conversations' %} ">
+                <a class="flex  font-semibold text-2xl p-2 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'conversations' %} ">
                     <div>
                         <i class="w-10 text-3xl py-2 fa-solid fa-comments"></i>
                     </div>
@@ -52,7 +52,7 @@
                 </a>
             </div>
             <div class="flex py-1">
-                <a class="flex  font-semibold text-2xl p-2 hover:bg-gray-200 hover:rounded-full " href="{% url 'twikkerprofile' request.user.username %} ">
+                <a class="flex  font-semibold text-2xl p-2 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'twikkerprofile' request.user.username %} ">
                     <div>
                         <i class="w-10 text-3xl py-2 fa-solid fa-user"></i>
                     </div>
@@ -60,14 +60,14 @@
                 </a>
             </div>
             <div class="flex py-1">
-                <a class="flex  font-semibold text-2xl p-2 hover:bg-gray-200 hover:rounded-full" onclick="darkMode()">
+                <a class="flex  font-semibold text-2xl p-2 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full" onclick="darkMode()">
                     <div>
                         <i class="text-xl py-2 fa-solid fa-moon"></i>
                     </div>
                 </a>
             </div>
         </div>
-        <div class="flex flex-row justify-between w-full my-3 p-1 hover:bg-gray-200 hover:rounded-full">
+        <div class="flex flex-row justify-between w-full my-3 p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full">
             <div class="flex p-3">
                 <img class="rounded-full h-12 w-12 m-auto" src="{% if request.user.twikkerprofile.avatar %}{{ request.user.twikkerprofile.avatar.url }}{% endif %} ">
                 <h1 class="ml-1  font-semibold ">{{ user.username }}</h1>
