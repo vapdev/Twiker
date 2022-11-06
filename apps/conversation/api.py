@@ -1,4 +1,6 @@
 import json
+
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view
@@ -29,7 +31,14 @@ def api_add_message(request):
 @api_view(['GET'])
 def api_get_global_messages(request):
     messages = ConversationMessage.objects.filter(conversation_id=None).order_by('created_at')
-    # messages = messages[::-1]
+    serializer = ChatSerializer(messages, many=True)
+    return JsonResponse({'success': True, 'messages': serializer.data})
+
+@login_required
+@api_view(['GET'])
+def api_get_dm_messages(request, conversation_id):
+    conversation = Conversation.objects.get(pk=conversation_id)
+    messages = conversation.messages.all().order_by('created_at')
     print("messages", messages)
     serializer = ChatSerializer(messages, many=True)
     return JsonResponse({'success': True, 'messages': serializer.data})

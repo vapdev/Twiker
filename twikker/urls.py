@@ -26,7 +26,7 @@ from apps.feed.api import api_get_profile_tweeks, api_remove_like, api_delete_tw
 from apps.feed.views import feed, search
 from apps.notification.views import notifications, clear_notifications
 from apps.twikkerprofile.views import twikkerprofile, edit_profile, unfollow_tweeker, followers, follows, follow_tweeker
-from apps.conversation.api import api_add_message, api_get_global_messages
+from apps.conversation.api import api_add_message, api_get_global_messages, api_get_dm_messages
 
 urlpatterns = [
     #
@@ -69,7 +69,8 @@ urlpatterns = [
     path('api/add_message/', api_add_message, name='api_add_message'),
     path('api/get_tweeks/', api_get_tweeks, name='get_tweeks'),
     path('api/get_profile_tweeks/<int:user_id>/', api_get_profile_tweeks, name='get_profile_tweeks'),
-    path('api/messages/', api_get_global_messages, name='api_get_global_messages'),
+    path('api/messages/global/', api_get_global_messages, name='api_get_global_messages'),
+    path('api/messages/<int:conversation_id>/', api_get_dm_messages, name='api_get_dm_messages'),
 
     #
     #

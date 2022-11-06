@@ -9,6 +9,7 @@ class Tweek(models.Model):
     created_by = models.ForeignKey(User, related_name='tweeks', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     retweek = models.ForeignKey('self', null=True, blank=True, default=None, on_delete=models.SET_NULL)
+    retweeks = models.ManyToManyField('self', blank=True, related_name='retweeks')
 
     class Meta:
         ordering = ('-created_at',)
@@ -22,6 +23,8 @@ class Like(models.Model):
     created_by = models.ForeignKey(User, related_name='likes', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = 'created_by', 'tweek'
 
 class Dislike(models.Model):
     tweek = models.ForeignKey(Tweek, related_name='dislikes', on_delete=models.CASCADE)

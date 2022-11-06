@@ -48,12 +48,15 @@ def check_user_exists(username):
 def api_add_like(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
-
-    if not Like.objects.filter(tweek_id=tweek_id).filter(created_by=request.user).exists():
+    tweek = Tweek.objects.get(id=tweek_id)
+    if tweek.retweek:
+        tweek = tweek.retweek
+    if not Like.objects.filter(tweek_id=tweek.id).filter(created_by=request.user).exists():
+        like = Like.objects.create(tweek_id=tweek.id, created_by=request.user)
+    else:
         like = Like.objects.create(tweek_id=tweek_id, created_by=request.user)
-        tweek = Tweek.objects.get(pk=tweek_id)
-        if request.user != tweek.created_by:
-            create_notification(request, tweek.created_by, 'like')
+    if request.user != tweek.created_by:
+        create_notification(request, tweek.created_by, 'like')
 
     return JsonResponse({'success': True})
 
@@ -63,8 +66,11 @@ def api_add_like(request):
 def api_remove_like(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
-    if Like.objects.filter(tweek_id=tweek_id).filter(created_by=request.user).exists():
-        like = Like.objects.get(tweek_id=tweek_id, created_by=request.user)
+    tweek = Tweek.objects.get(id=tweek_id)
+    if tweek.retweek:
+        tweek = tweek.retweek
+    if Like.objects.filter(tweek_id=tweek.id).filter(created_by=request.user).exists():
+        like = Like.objects.get(tweek_id=tweek.id, created_by=request.user)
         like.delete()
 
     return JsonResponse({'success': True})
