@@ -1,4 +1,3 @@
-from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
 
 from django.contrib.auth.models import User
@@ -28,4 +27,4 @@ class ConversationMessage(models.Model):
         super(ConversationMessage, self).save(*args, **kwargs)
 
     def formatted_time(self):
-        return naturaltime(self.created_at)
+        return self.created_at.strftime(' %d/%m %H:%M:%S')

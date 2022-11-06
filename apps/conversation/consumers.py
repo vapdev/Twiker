@@ -3,6 +3,7 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async, async_to_sync
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 from .models import ConversationMessage, Conversation
 from ..notification.utilities import create_notification
@@ -53,7 +54,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'content': content,
             'tweeker_name': tweeker_name,
-            'formatted_time': 'Agora',
+            'formatted_time': timezone.now().strftime(' %d/%m %H:%M:%S'),
             'avatar_url': avatar_url,
             'to_user_id': to_user_id,
         }))
