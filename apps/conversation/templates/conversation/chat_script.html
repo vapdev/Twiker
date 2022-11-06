@@ -1,13 +1,8 @@
 {% load chat %}
 <script>
-    function scrollToBottom(new_message=false) {
-        let objDiv = document.getElementById("chatcontainer");
-        objDiv.scrollTop= objDiv.scrollHeight;
+    function scrollToBottom() {
+        window.scrollTo(0, document.body.scrollHeight);
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        scrollToBottom();
-    });
 
     const {createApp} = Vue
 
@@ -18,36 +13,33 @@
                 messages: [],
                 content: '',
                 tweeker: '{{ request.user.username }}',
-                created_at: 'Now',
+                formatted_time: 'Now',
                 avatar: '{% if request.user.twikkerprofile.avatar %}{{ request.user.twikkerprofile.avatar.url }}{% endif %}'
             }
         },
         mounted() {
-            this.getMessages()
-            window.onscroll = () => {
-                scrollToBottom();
-            }
+            this.getMessages();
         },
         methods: {
             getMessages(){
                 fetch('/api/messages/')
                 .then(response => response.json())
                 .then(data => {
-                    console.log('data', data)
                     for (let i = 0; i < data.messages.length; i++) {
-                        console.log("data.messages[i].content", data.messages[i])
                         this.messages.push(data.messages[i])
                     }
-                    scrollToBottom()
+                })
+                .then(() => {
+                    scrollToBottom();
                 })
             },
             submitMessage() {
                 if (this.content.length > 0) {
-                    var message = {
+                    let message = {
                         'content': this.content,
-                        'tweeker': this.tweeker,
-                        'created_at': this.created_at,
-                        'avatar': this.avatar,
+                        'tweeker_name': this.tweeker,
+                        'formatted_time': this.formatted_time,
+                        'avatar_url': this.avatar,
                         'conversation_id': {% if conversation %}{{ conversation.id }}{% else %}null{% endif %},
                     };
                     chatSocket.send(JSON.stringify(message));

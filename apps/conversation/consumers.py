@@ -25,12 +25,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         data = json.loads(text_data)
         content = data['content']
-        tweeker = data['tweeker']
-        created_at = 'Now'
-        avatar = data['avatar']
+        tweeker_name = data['tweeker_name']
+        avatar_url = data['avatar_url']
         conversation = data['conversation_id']
 
-        to_user_id = await self.save_message(tweeker, conversation, content)
+        to_user_id = await self.save_message(tweeker_name, conversation, content)
 
         # Send message to room group
         await self.channel_layer.group_send(
@@ -38,9 +37,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             {
                 'type': 'chat_message',
                 'content': content,
-                'tweeker': tweeker,
-                'created_at': created_at,
-                'avatar': avatar,
+                'tweeker_name': tweeker_name,
+                'avatar_url': avatar_url,
                 'to_user_id': to_user_id,
             }
         )
@@ -48,16 +46,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # Receive message from room group
     async def chat_message(self, event):
         content = event['content']
-        tweeker = event['tweeker']
-        created_at = event['created_at']
-        avatar = event['avatar']
+        tweeker_name = event['tweeker_name']
+        avatar_url = event['avatar_url']
         to_user_id = event['to_user_id']
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'content': content,
-            'tweeker': tweeker,
-            'created_at': created_at,
-            'avatar': avatar,
+            'tweeker_name': tweeker_name,
+            'formatted_time': 'Agora',
+            'avatar_url': avatar_url,
             'to_user_id': to_user_id,
         }))
 

@@ -28,7 +28,7 @@ def api_add_message(request):
 @login_required
 @api_view(['GET'])
 def api_get_global_messages(request):
-    messages = ConversationMessage.objects.filter(conversation_id=None).order_by('-created_at')
+    messages = ConversationMessage.objects.filter(conversation_id=None).order_by('created_at')
     # messages = messages[::-1]
     print("messages", messages)
     serializer = ChatSerializer(messages, many=True)
