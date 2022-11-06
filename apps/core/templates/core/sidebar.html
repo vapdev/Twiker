@@ -1,11 +1,11 @@
 {% load chat %} 
 {% load static %} 
 {% if request.user.is_authenticated %}
-<div class="sticky top-0 left-0 px-2 h-screen bg-white dark:bg-slate-800 border-solid border-r-2 border-gray-100 dark:border-gray-700">
+<div class="sticky top-0 left-0 px-2 h-screen border-solid border-r-2 border-gray-100 dark:border-gray-700">
     <div class="flex flex-col justify-between h-screen">
         <div class="flex flex-col justify-center">
             <div class="flex py-1">
-                <a class="flex justify-center  font-semibold text-2xl p-2 hover:bg-green-200 hover:rounded-full " href="{% url 'feed' %} ">
+                <a class="flex justify-center font-semibold text-2xl p-2 hover:bg-green-200 hover:rounded-full " href="{% url 'feed' %} ">
                     <div>
                         <i class="text-5xl fa-solid fa-ankh"></i>
                     </div>
