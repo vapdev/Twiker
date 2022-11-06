@@ -4,36 +4,40 @@
 
 {% block content %}
     <div class="flex-col w-full bg-white border-solid border-r-2 border-gray-100" id="twikkerprofileapp">
-        <h1>{{ user.username }}</h1>
-        <div class="flex-col">
+        <div class="flex flex-col p-4 border-solid border-b-2 border-gray-100">
             <div class="flex">
-                {% if user.twikkerprofile.avatar %}
-                <article>
-                    <figure>
-                        <p>
-                            {%  if user.twikkerprofile.avatar %}
-                                <img class="rounded-full w-12 h-12" src="{{ user.twikkerprofile.avatar.url}}">
-                            {% endif %}
-                        </p>
-                    </figure>
-                </article> 
-                {% endif %}
+                <div class="flex flex-col">
+                    {% if user.twikkerprofile.avatar %}
+                        <article>
+                            <figure>
+                                <p>
+                                    {%  if user.twikkerprofile.avatar %}
+                                        <img class="rounded-full w-36 h-36 border-solid border-4 border-gray-300" src="{{ user.twikkerprofile.avatar.url}}">
+                                    {% endif %}
+                                </p>
+                            </figure>
+                        </article> 
+                    {% endif %}
+                    <h1>{{ user.username }}</h1>
+                </div>
+
+                <div class="flex flex-col">
+                    <a href="{% url 'followers' user.username %}">Followers: {{ user.twikkerprofile.followed_by.count }}</a>
+                    <a href="{% url 'follows' user.username %}">Follows: {{ user.twikkerprofile.follows.count }}</a>
+                    {% if user != request.user %}
+                        <a href="{% url 'conversation' user.id %}">Send message</a>
+                        <span>
+                            {% if request.user.twikkerprofile in user.twikkerprofile.followed_by.all %}
+                                <a href="{% url 'unfollow_tweeker' user.username %}">Unfollow</a>
+                                {% else %}
+                                    <a href="{% url 'follow_tweeker' user.username %}">Follow</a>
+                                {% endif %}
+                        </span>
+                    {% endif %}
+                </div>
             </div>
-            <div>
-                <p><a href="{% url 'followers' user.username %}">Followers: {{ user.twikkerprofile.followed_by.count }}</a></p>
-                <p><a href="{% url 'follows' user.username %}">Follows: {{ user.twikkerprofile.follows.count }}</a></p>
-                {% if user != request.user %}
-                <a href="{% url 'conversation' user.id %}">Send message</a>
-                <span>
-                    {% if request.user.twikkerprofile in user.twikkerprofile.followed_by.all %}
-                        <a href="{% url 'unfollow_tweeker' user.username %}">Unfollow</a>
-                        {% else %}
-                            <a href="{% url 'follow_tweeker' user.username %}">Follow</a>
-                        {% endif %}
-                </span>
-                {% endif %}
-                    </div>
-            </div>
+        </div>
+        
             <div id="twikkerprofileapp" class="flex-col">
                 <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex flex-row h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 border-gray-100">
                     <div class="flex mr-2">
