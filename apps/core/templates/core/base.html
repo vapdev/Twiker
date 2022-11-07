@@ -18,14 +18,14 @@
 </head>
 <body class="dark">
     <div class="flex flex-row w-full justify-center bg-white dark:bg-slate-900 dark:text-gray-300 text-black dark:text-gray-300">
-        <aside class="flex">
+        <aside class="flex w-full justify-end">
             {% include "core/sidebar.html" %}
         </aside>
         <main class="flex max-w-2xl w-full shrink-0">
         {% block content %}
         {% endblock %}
         </main>
-        <aside class="flex">
+        <aside class="flex w-full">
             {% include "core/rsidebar.html" %}
         </aside>
     </div>
