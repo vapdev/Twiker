@@ -121,13 +121,12 @@ createApp({
                     console.log(error);
                 });
         },
-        toggleRetweek(tweek_id){
+        async toggleRetweek(tweek_id){
             if(this.retweeked_tweeks.includes(tweek_id)){
                 let el = document.getElementById(`retweek-${tweek_id}`);
-                el.classList.remove('blue');
-                this.unretweekTweek(tweek_id);
+                await this.unretweekTweek(tweek_id);
             }else{
-                this.submitTweek(tweek_id);
+                await this.submitTweek(tweek_id);
             }
             window.location.reload();
         },
