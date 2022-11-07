@@ -131,12 +131,12 @@ createApp({
             }
             window.location.reload();
         },
-        unretweekTweek(tweek_id){
+        async unretweekTweek(tweek_id){
             this.retweeked_tweeks = this.retweeked_tweeks.filter(item => item !== tweek_id)
             var tweek = {
                 'tweek_id': tweek_id,
             };
-            fetch('/api/remove_retweek/',{
+            await fetch('/api/remove_retweek/',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -238,7 +238,7 @@ createApp({
             const el = document.getElementById('tweek-' + tweek_id);
             el.remove();
         },
-        submitTweek(tweek_id=null){
+        async submitTweek(tweek_id=null){
             if (this.body.length > 0 || tweek_id != null){
                 let tweek = {
                     'body': this.body,
@@ -248,7 +248,7 @@ createApp({
                     'retweek_id': tweek_id,
                 };
                 // Send to backend
-                fetch('/api/add_tweek/',{
+                await fetch('/api/add_tweek/',{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
