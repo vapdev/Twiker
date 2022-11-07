@@ -36,7 +36,7 @@
         <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
                 <div class="flex flex-col w-full">
                     <div v-if="tweek.retweek" class="flex mb-2">
-                        <span class="flex font-semibold">[[ tweek.tweeker_name + ' deu um retweek']]</span>
+                        <span class="flex font-semibold">[[ tweek.tweeker_name + ' compartilhou']]</span>
                     </div>
                     <div class="flex">
                         <div class="mr-2">
@@ -46,7 +46,7 @@
                             <div>
                             <span class="font-semibold text-lg">[[ tweek.retweek ? tweek.retweek_tweeker_name : tweek.tweeker_name ]]</span><span class="ml-2">[[ tweek.retweek ? tweek.retweek_formatted_time : tweek.formatted_time ]]</span></div>
                             <span class="flex text-xl break-all">[[ tweek.retweek ? tweek.retweek_body : tweek.body ]]</span>
-                            <div class="flex flex-row justify-between w-2/3 mt-3">
+                            <div v-if="!tweek.retweek" class="flex flex-row justify-between w-2/3 mt-3">
                                 <div class="flex">
                                     <div class="w-8 h-8 p-1 text-center hover:bg-yellow-200 hover:rounded-full">
                                         <i class="fa-regular fa-comment-dots"></i>
@@ -54,30 +54,28 @@
                                     <span class="pt-1"></span>
                                 </div>
                                 <div class="flex">
-                                    <div v-if="!tweek.retweek" @click="toggleRetweek(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
-                                        <i :class=" retweeked_tweeks.includes(tweek.id) ? 'text-blue-600 fa-solid fa-retweet' : 'fa-solid fa-retweet'"></i>
+                                    <div @click="toggleRetweek(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
+                                        <i :id="'retweek-'+tweek.id" :class=" this.retweeked_tweeks.includes(tweek.id) ? 'text-blue-600 fa-solid fa-retweet' : 'fa-solid fa-retweet'"></i>
                                     </div>
-                                    <div v-if="tweek.retweek" @click="toggleRetweek(tweek.retweek_id)" class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
-                                        <i :class=" retweeked_tweeks.includes(tweek.retweek_id) ? 'text-blue-600 fa-solid fa-retweet' : 'fa-solid fa-retweet'"></i>
-                                    </div>
-                                    <span class="pt-1">[[ tweek.retweek ? tweek.retweek_retweek_count : tweek.retweek_count ]]</span>
+                                    <span class="pt-1">[[ tweek.retweek_count ]]</span>
                                 </div>
                                 <div class="flex">
                                     <div class="flex mx-2">
-                                        <div @click="toggleLike(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
-                                            <i v-if="!tweek.retweek" :class=" !liked_tweeks.includes(tweek.id) ? 'fa-regular fa-thumbs-up' : 'fa-solid fa-thumbs-up' "></i>
-                                            <i v-if="tweek.retweek" :class=" !liked_tweeks.includes(tweek.retweek_id) ? 'fa-regular fa-thumbs-up' : 'fa-solid fa-thumbs-up' "></i>
+                                        <div @click="toggleLike(tweek)" class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
+                                            <i :id="'like-'+tweek.id" :class=" !tweek.is_liked ? 'fa-regular fa-thumbs-up' : 'fa-solid fa-thumbs-up' "></i>
                                         </div>
-                                        <span :id="'likes-'+tweek.id" class="pt-1">[[ tweek.retweek ? tweek.retweek_likes_count : tweek.likes_count ]]</span>
+                                        <span :id="'likes-'+tweek.id" class="pt-1">[[ tweek.likes_count ]]</span>
                                     </div>
                                     <div class="flex mx-2">
-                                        <div @click="toggleDislike(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-red-200 hover:rounded-full">
-                                            <i v-if="!tweek.retweek" :class=" !disliked_tweeks.includes(tweek.id) ? 'fa-regular fa-thumbs-down' : 'fa-solid fa-thumbs-down' "></i>
-                                            <i v-if="tweek.retweek" :class=" !disliked_tweeks.includes(tweek.retweek_id) ? 'fa-regular fa-thumbs-down' : 'fa-solid fa-thumbs-down' "></i>
+                                        <div @click="toggleDislike(tweek)" class="w-8 h-8 p-1 text-center hover:bg-red-200 hover:rounded-full">
+                                            <i :id="'dislike-'+tweek.id" :class=" !tweek.is_disliked ? 'fa-regular fa-thumbs-down' : 'fa-solid fa-thumbs-down' "></i>
                                         </div>
-                                        <span :id="'dislikes-'+tweek.id" class="pt-1">[[ tweek.retweek ? tweek.retweek_dislikes_count : tweek.dislikes_count ]]</span>
+                                        <span :id="'dislikes-'+tweek.id" class="pt-1">[[ tweek.dislikes_count ]]</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div v-if="tweek.retweek">
+                                <a href="#"><p class="text-md mt-2 text-blue-300">Ver tweek original</p></a>
                             </div>
                         </div>
                     </div>

@@ -42,3 +42,4 @@ def api_get_dm_messages(request, conversation_id):
     print("messages", messages)
     serializer = ChatSerializer(messages, many=True)
     return JsonResponse({'success': True, 'messages': serializer.data})
+

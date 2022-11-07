@@ -49,12 +49,12 @@ def api_add_like(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
     tweek = Tweek.objects.get(id=tweek_id)
+
     if tweek.retweek:
-        tweek = tweek.retweek
-    if not Like.objects.filter(tweek_id=tweek.id).filter(created_by=request.user).exists():
-        like = Like.objects.create(tweek_id=tweek.id, created_by=request.user)
+        Like.objects.create(tweek_id=tweek.retweek.id, created_by=request.user)
     else:
-        like = Like.objects.create(tweek_id=tweek_id, created_by=request.user)
+        Like.objects.create(tweek_id=tweek.id, created_by=request.user)
+
     if request.user != tweek.created_by:
         create_notification(request, tweek.created_by, 'like')
 
@@ -67,11 +67,12 @@ def api_remove_like(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
     tweek = Tweek.objects.get(id=tweek_id)
+
     if tweek.retweek:
-        tweek = tweek.retweek
-    if Like.objects.filter(tweek_id=tweek.id).filter(created_by=request.user).exists():
-        like = Like.objects.get(tweek_id=tweek.id, created_by=request.user)
-        like.delete()
+        if Like.objects.filter(tweek_id=tweek.retweek.id).filter(created_by=request.user).exists():
+            Like.objects.get(tweek_id=tweek.retweek.id, created_by=request.user).delete()
+    elif Like.objects.filter(tweek_id=tweek.id).filter(created_by=request.user).exists():
+        Like.objects.get(tweek_id=tweek.id, created_by=request.user).delete()
 
     return JsonResponse({'success': True})
 
@@ -81,12 +82,15 @@ def api_remove_like(request):
 def api_add_dislike(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
+    tweek = Tweek.objects.get(id=tweek_id)
 
-    if not Dislike.objects.filter(tweek_id=tweek_id).filter(created_by=request.user).exists():
-        dislike = Dislike.objects.create(tweek_id=tweek_id, created_by=request.user)
-        tweek = Tweek.objects.get(pk=tweek_id)
-        if request.user != tweek.created_by:
-            create_notification(request, tweek.created_by, 'dislike')
+    if tweek.retweek:
+        Dislike.objects.create(tweek_id=tweek.retweek.id, created_by=request.user)
+    else:
+        Dislike.objects.create(tweek_id=tweek.id, created_by=request.user)
+
+    if request.user != tweek.created_by:
+        create_notification(request, tweek.created_by, 'dislike')
 
     return JsonResponse({'success': True})
 
@@ -96,9 +100,13 @@ def api_add_dislike(request):
 def api_remove_dislike(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
-    if Dislike.objects.filter(tweek_id=tweek_id).filter(created_by=request.user).exists():
-        dislike = Dislike.objects.get(tweek_id=tweek_id, created_by=request.user)
-        dislike.delete()
+    tweek = Tweek.objects.get(id=tweek_id)
+
+    if tweek.retweek:
+        if Dislike.objects.filter(tweek_id=tweek.retweek.id).filter(created_by=request.user).exists():
+            Dislike.objects.get(tweek_id=tweek.retweek.id, created_by=request.user).delete()
+    elif Dislike.objects.filter(tweek_id=tweek_id).filter(created_by=request.user).exists():
+        Dislike.objects.get(tweek_id=tweek_id, created_by=request.user).delete()
 
     return JsonResponse({'success': True})
 
@@ -137,7 +145,7 @@ def api_get_tweeks(request):
     paginator = PageNumberPagination()
     paginator.page_size = 20
     results = paginator.paginate_queryset(tweeks, request)
-    serializer = TweekSerializer(results, many=True)
+    serializer = TweekSerializer(results, many=True, context={'request': request})
     return paginator.get_paginated_response(serializer.data)
 
 @login_required
@@ -148,5 +156,13 @@ def api_get_profile_tweeks(request, user_id):
     paginator = PageNumberPagination()
     paginator.page_size = 20
     results = paginator.paginate_queryset(tweeks, request)
-    serializer = TweekSerializer(results, many=True)
+    serializer = TweekSerializer(results, many=True, context={'request': request})
     return paginator.get_paginated_response(serializer.data)
+
+@login_required
+@csrf_exempt
+@api_view(['GET'])
+def api_get_tweek(request, tweek_id):
+    tweek = Tweek.objects.get(id=tweek_id)
+    serializer = TweekSerializer(tweek, many=False, context={'request': request})
+    return JsonResponse({'success': True, 'tweek': serializer.data})

@@ -17,6 +17,7 @@ class Tweek(models.Model):
     def formatted_time(self):
         return naturaltime(self.created_at)
 
+
 class Like(models.Model):
     tweek = models.ForeignKey(Tweek, related_name='likes', on_delete=models.CASCADE)
     created_by = models.ForeignKey(User, related_name='likes', on_delete=models.CASCADE)
@@ -29,3 +30,6 @@ class Dislike(models.Model):
     tweek = models.ForeignKey(Tweek, related_name='dislikes', on_delete=models.CASCADE)
     created_by = models.ForeignKey(User, related_name='dislikes', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = 'created_by', 'tweek'
