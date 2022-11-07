@@ -60,7 +60,7 @@
                 </a>
             </div>
             <div class="flex py-1">
-                <a class="flex  font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full" onclick="darkMode()">
+                <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full" onclick="toggleDarkMode()">
                     <div>
                         <i class="text-xl py-2 fa-solid fa-moon"></i>
                     </div>
@@ -92,9 +92,19 @@
 {% endif %} 
 {% block script %}
     <script>
-    function darkMode() {
+    function toggleDarkMode() {
         var element = document.body;
         element.classList.toggle("dark");
+        fetch("{% url 'darkmode' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'user_id': '{{ request.user.id }}',
+            })
+        })
     }
     </script>
     <script>

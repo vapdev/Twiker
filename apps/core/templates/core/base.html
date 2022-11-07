@@ -16,7 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.41/dist/vue.global.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
 </head>
-<body class="dark">
+<body class="{% if request.user.twikkerprofile.dark_mode %}dark{% endif %}">
     <div class="flex flex-row w-full justify-center bg-white dark:bg-slate-900 dark:text-gray-300 text-black dark:text-gray-300">
         <aside class="flex w-full justify-end">
             {% include "core/sidebar.html" %}

@@ -1,7 +1,11 @@
+import json
+
 from asgiref.sync import sync_to_async
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
+from rest_framework.decorators import api_view
 
 from apps.notification.utilities import create_notification
 
@@ -97,3 +101,15 @@ def follows(request, username):
     }
 
     return render(request, 'twikkerprofile/follows.html', context)
+
+
+@login_required
+@api_view(['POST'])
+def toggle_dark_mode(request):
+    data = request.data
+    user_id = data['user_id']
+    user = User.objects.get(id=user_id)
+    user.twikkerprofile.dark_mode = not user.twikkerprofile.dark_mode
+    print("Dark mode: ", user.twikkerprofile.dark_mode)
+    user.twikkerprofile.save()
+    return JsonResponse({'dark_mode': user.twikkerprofile.dark_mode})

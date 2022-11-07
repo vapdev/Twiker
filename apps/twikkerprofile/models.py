@@ -7,6 +7,7 @@ class TwikkerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     follows = models.ManyToManyField('self', related_name='followed_by', symmetrical=False)
     avatar = models.ImageField(upload_to='uploads/', blank=True, null=True, default='uploads/default.png')
+    dark_mode = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user.username

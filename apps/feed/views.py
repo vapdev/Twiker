@@ -34,6 +34,13 @@ def feed(request):
 
     return render(request, 'feed.html', {'tweeks': tweeks, 'retweeked_tweeks': retweeked_tweeks_ids})
 
+
+@login_required
+def view_tweek(request, tweek_id):
+    tweek = Tweek.objects.get(id=tweek_id)
+    return render(request, 'tweek.html', {'tweek': tweek})
+
+
 @login_required
 def search(request):
     query = request.GET.get('query', '')

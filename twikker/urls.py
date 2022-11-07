@@ -23,9 +23,10 @@ from apps.conversation.views import conversations, conversation, global_chat
 from apps.core.views import frontpage, signup, users
 from apps.feed.api import api_get_profile_tweeks, api_remove_like, api_delete_tweek, api_get_tweeks, api_remove_dislike, \
     api_remove_retweek, api_add_like, api_add_dislike, api_add_tweek, api_get_tweek
-from apps.feed.views import feed, search
+from apps.feed.views import feed, search, view_tweek
 from apps.notification.views import notifications, clear_notifications
-from apps.twikkerprofile.views import twikkerprofile, edit_profile, unfollow_tweeker, followers, follows, follow_tweeker
+from apps.twikkerprofile.views import twikkerprofile, edit_profile, unfollow_tweeker, followers, follows, \
+    follow_tweeker, toggle_dark_mode
 from apps.conversation.api import api_add_message, api_get_global_messages, api_get_dm_messages
 
 urlpatterns = [
@@ -42,6 +43,7 @@ urlpatterns = [
 
 
     path('', feed, name='feed'),
+    path('tweek/<int:tweek_id>/', view_tweek, name='view_tweek'),
     path('search/', search, name='search'),
     path('u/<str:username>', twikkerprofile, name='twikkerprofile'),
     path('editprofile/', edit_profile, name='edit_profile'),
@@ -72,6 +74,9 @@ urlpatterns = [
     path('api/messages/global/', api_get_global_messages, name='api_get_global_messages'),
     path('api/messages/<int:conversation_id>/', api_get_dm_messages, name='api_get_dm_messages'),
     path('api/tweek/<int:tweek_id>/', api_get_tweek, name='api_get_tweek'),
+
+
+    path('settings/darkmode/', toggle_dark_mode, name='darkmode'),
 
     #
     #

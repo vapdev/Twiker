@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+{% load json_script %}
+{% load static %}
+{% block content %}
+<div class="flex min-w-full">
+    <div id="feedapp" class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700">
+        <div class="sticky p-3 bg-white dark:bg-slate-900 top-0 w-full h-fit opacity-90 text-2xl">
+            <a href="{% url 'feed' %}">
+                <span class="opacity-100 font-semibold">Página inicial</span>
+            </a>
+        </div>
+        <a href="#" onclick="window.location.href ='/'"><span>Voltar</span></a>
+    </div>
+</div>
+{% endblock %} 
+{% block script %}
+
+{% json_script "tweeker_username" request.user.username %}
+{% json_script "liked_tweeks" liked_tweeks|safe %}
+{% json_script "disliked_tweeks" disliked_tweeks|safe %}
+{% json_script "retweeked_tweeks" retweeked_tweeks|safe %}
+
+{% if request.user.twikkerprofile.avatar %}
+    {% json_script "tweeker_avatar" request.user.twikkerprofile.avatar.url %}
+{% endif %}
+
+<script type="module" src="{% static 'js/feed.mjs' %}"></script>
+
+{% endblock %}

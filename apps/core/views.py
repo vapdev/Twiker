@@ -1,4 +1,8 @@
+import json
+
 from django.contrib.auth import login
+from django.http import JsonResponse
+
 from .forms import CustomUserForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
@@ -31,3 +35,4 @@ def signup(request):
     else:
         form = CustomUserForm()
     return render(request, 'core/signup.html', {'form': form})
+

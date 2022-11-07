@@ -58,6 +58,9 @@ createApp({
                     console.log(error)
                 })
         },
+        viewTweek(tweek_id) {
+            window.location.href = `/tweek/${tweek_id}`
+        },
         async toggleLike(tweek){
             if(tweek.retweek_id){
                 await fetch(`/api/tweek/${tweek.retweek_id}/`)

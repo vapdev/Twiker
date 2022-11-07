@@ -33,7 +33,7 @@
                 </form>
             </div>
         </div>
-        <div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
+        <a href="#" @click="viewTweek(tweek.id)"><div v-for="tweek in tweeks" v-bind:key="tweek.id" class="flex h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
                 <div class="flex flex-col w-full">
                     <div v-if="tweek.retweek" class="flex mb-2">
                         <span class="flex font-semibold">[[ tweek.tweeker_name + ' compartilhou']]</span>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-        </div>
+        </div></a>
     </div>
 </div>
 {% endblock %} 

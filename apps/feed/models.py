@@ -9,6 +9,7 @@ class Tweek(models.Model):
     created_by = models.ForeignKey(User, related_name='tweeks', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     retweek = models.ForeignKey('self', null=True, blank=True, default=None, on_delete=models.SET_NULL, related_name='retweeks')
+    comment_from = models.ForeignKey('self', null=True, blank=True, default=None, related_name='comments', on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ('-created_at',)
