@@ -13,56 +13,56 @@
             </div>
             <div class="flex py-1">
                 <a class="flex justify-center  font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'feed' %} ">
-                    <div>
-                        <i class="w-10 text-lg py-2 fa-solid  fa-house"></i>
+                    <div class="flex w-11 h-11">
+                        <i class="text-lg m-auto fa-solid fa-house"></i>
                     </div>
-                    <span class="m-auto mx-3">Página Inicial</span>
+                    <span class="m-auto mx-3 max-[850px]:hidden">Página Inicial</span>
                 </a>
             </div>
             <div class="flex py-1">
-                <a class="flex  font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'notifications' %} ">
-                    <div>
-                        <i class="w-10 text-lg py-2 fa-solid fa-bell"></i>
+                <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'notifications' %} ">
+                    <div class="flex w-11 h-11">
+                        <i class="text-lg m-auto fa-solid fa-bell"></i>
                     </div>
-                    <span id="notifications" class="m-auto mx-3">Notificações</span>
+                    <span id="notifications" class="m-auto mx-3 max-[850px]:hidden">Notificações</span>
                 </a>
             </div>
             <div class="flex py-1">
-                <a class="flex  font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'users' %} ">
-                    <div>
-                        <i class="w-10 text-lg py-2 fa-solid fa-users"></i>
+                <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'users' %} ">
+                    <div class="flex w-11 h-11">
+                        <i class="text-lg m-auto fa-solid fa-users"></i>
                     </div>
-                    <span class="m-auto mx-3">All users</span>
+                    <span class="m-auto mx-3 max-[850px]:hidden">All users</span>
                 </a>
             </div>
             <div class="flex py-1">
-                <a class="flex  font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'global' %} ">
-                    <div>
-                        <i class="w-10 text-lg py-2 fa-solid fa-earth-americas"></i>
+                <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'global' %} ">
+                    <div class="flex w-11 h-11">
+                        <i class="text-lg m-auto fa-solid fa-earth-americas"></i>
                     </div>
-                    <span class="break-keep m-auto mx-3">Global chat</span>
+                    <span class="break-keep m-auto mx-3 max-[850px]:hidden">Global chat</span>
                 </a>
             </div>
             <div class="flex py-1">
-                <a class="flex  font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'conversations' %} ">
-                    <div>
-                        <i class="w-10 text-lg py-2 fa-solid fa-comments"></i>
+                <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'conversations' %} ">
+                    <div class="flex w-11 h-11">
+                        <i class="text-lg m-auto fa-solid fa-comments"></i>
                     </div>
-                    <span class="m-auto mx-3">Conversations</span>
+                    <span class="m-auto mx-3 max-[850px]:hidden">Conversations</span>
                 </a>
             </div>
             <div class="flex py-1">
-                <a class="flex  font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'twikkerprofile' request.user.username %} ">
-                    <div>
-                        <i class="w-10 text-lg py-2 fa-solid fa-user"></i>
+                <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'twikkerprofile' request.user.username %} ">
+                    <div class="flex w-11 h-11">
+                        <i class="text-lg m-auto fa-solid fa-user"></i>
                     </div>
-                    <span class="m-auto mx-3">Perfil</span>
+                    <span class="m-auto mx-3 max-[850px]:hidden">Perfil</span>
                 </a>
             </div>
             <div class="flex py-1">
                 <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full" onclick="toggleDarkMode()">
-                    <div>
-                        <i class="text-xl py-2 fa-solid fa-moon"></i>
+                    <div class="flex w-11 h-11">
+                        <i class="text-xl m-auto fa-solid fa-moon"></i>
                     </div>
                 </a>
             </div>
