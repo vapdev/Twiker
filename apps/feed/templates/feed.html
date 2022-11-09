@@ -68,13 +68,13 @@
                                     <span class="pt-1">[[ tweek.retweek_count ]]</span>
                                 </div>
                                 <div class="flex">
-                                    <div href="" class="flex mx-2">
+                                    <div class="flex mx-2">
                                         <div @click="toggleLike(tweek)" class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
                                             <i :id="'like-'+tweek.id" :class=" !tweek.is_liked ? 'fa-regular fa-thumbs-up' : 'fa-solid fa-thumbs-up' "></i>
                                         </div>
                                         <span :id="'likes-'+tweek.id" class="pt-1">[[ tweek.likes_count ]]</span>
                                     </div>
-                                    <div href="" class="flex mx-2">
+                                    <div class="flex mx-2">
                                         <div @click="toggleDislike(tweek)" class="w-8 h-8 p-1 text-center hover:bg-red-200 hover:rounded-full">
                                             <i :id="'dislike-'+tweek.id" :class=" !tweek.is_disliked ? 'fa-regular fa-thumbs-down' : 'fa-solid fa-thumbs-down' "></i>
                                         </div>
