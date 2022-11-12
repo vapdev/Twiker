@@ -115,7 +115,6 @@
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            console.log("datza", data);
             conversationapp.messages.push(data);
             setTimeout(() => {
                 scrollToBottom();

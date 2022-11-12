@@ -1,7 +1,7 @@
 {% load humanize %}
 <div id="conversationapp" class="flex flex-col h-full">
     <div id="chatcontainer" class="flex flex-col h-full">
-        <div v-for="message in messages" :class="message.avatar_url == '{{ request.user.twikkerprofile.avatar.url }}' ? 'justify-end flex w-full' : 'flex w-full'  ">
+        <div v-for="message in messages" :class="message.tweeker_name == '{{ request.user.username }}' ? 'justify-end flex w-full' : 'flex w-full'  ">
             <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-100 dark:border-gray-700 ">
                 <figure class="shrink-0">
                     <img class="rounded-full h-12 w-12" :src="message.avatar_url">
