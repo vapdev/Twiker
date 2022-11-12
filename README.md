@@ -26,7 +26,7 @@ WITHOUT DOCKER
 - start the server `python manage.py runserver`
 
 WITH DOCKER
-- run `docker-compose up --build`
+- run `docker-compose up --build` (if its not the first time you dont need to build it)
 - enter the container bash `docker exec -it twikker-web-1 bash`
 - run db migrations `python manage.py migrate`
 
