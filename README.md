@@ -17,12 +17,18 @@ Work in progress.
 
 - clone the repository  `git clone https://github.com/vapdev/Twikker.git`
 - cd into directory `cd  Twikker`
+
+WITHOUT DOCKER
 - create virtual env `python -m venv venv`
 - activate virtual env `venv\Scripts\activate`
 - install requirements `pip install -r requirements.txt`
 - run db migrations `python manage.py migrate`
 - start the server `python manage.py runserver`
-- access at `localhost:8000`
+
+WITH DOCKER
+- run `docker-compose up --build`
+- enter the container bash `docker exec -it twikker-web-1 bash`
+- run db migrations `python manage.py migrate`
 
 OLD VERSION PRINTS
 
