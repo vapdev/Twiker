@@ -51,9 +51,10 @@ createApp({
                         if (data.next) {
                             this.hasNext = true
                         }
-                        for (let i = 0; i < data.results.length; i++) {
-                            this.tweeks.push(data.results[i])
-                        }
+                        this.tweeks = data.results
+                        // for (let i = 0; i < data.results.length; i++) {
+                        //     this.tweeks.push(data.results[i])
+                        // }
                 }).catch(error => {
                     console.log(error)
                 })
@@ -265,7 +266,7 @@ createApp({
                 .catch((error) => {
                     console.log(error)
                 })
-                window.location.reload();
+                this.getTweeks()
             }
             this.body = '';
         }
