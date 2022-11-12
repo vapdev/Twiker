@@ -51,10 +51,10 @@ createApp({
                         if (data.next) {
                             this.hasNext = true
                         }
-                        this.tweeks = data.results
-                        // for (let i = 0; i < data.results.length; i++) {
-                        //     this.tweeks.push(data.results[i])
-                        // }
+                        // this.tweeks = data.results
+                        for (let i = 0; i < data.results.length; i++) {
+                            this.tweeks.push(data.results[i])
+                        }
                 }).catch(error => {
                     console.log(error)
                 })
@@ -101,7 +101,7 @@ createApp({
                 })
                 .catch((error) => {
                     console.log(error);
-                });x
+                });
         },
         unlikeTweek(tweek){
             tweek.is_liked = false;
@@ -266,6 +266,8 @@ createApp({
                 .catch((error) => {
                     console.log(error)
                 })
+                this.currentPage = 1;
+                this.tweeks=[];
                 this.getTweeks()
             }
             this.body = '';
