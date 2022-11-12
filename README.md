@@ -30,11 +30,8 @@ WITH DOCKER
 - enter the container bash `docker exec -it twikker-web-1 bash`
 - run db migrations `python manage.py migrate`
 
-OLD VERSION PRINTS
+<h2> Prints </h2>
 
-![image](https://user-images.githubusercontent.com/88452580/195798844-3de23718-9bf0-4f2e-893f-50445d71bd4e.png)
-
-NEW VERSION
-
-![image](https://user-images.githubusercontent.com/88452580/200156701-8b07dcbf-86cd-4084-9ea5-0ef81df9abc6.png)
+![image](https://user-images.githubusercontent.com/88452580/201464963-479c031f-0d06-405b-b0fb-0b4bd6781a61.png)
+![image](https://user-images.githubusercontent.com/88452580/201464967-bde7576c-3b0a-4f89-9167-b449220706a6.png)
 
