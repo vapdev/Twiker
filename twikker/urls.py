@@ -21,15 +21,15 @@ from django.contrib.auth import views
 
 from apps.conversation.views import conversations, conversation, global_chat
 from apps.core.views import frontpage, signup, users
-from apps.feed.api import api_get_profile_tweeks, api_remove_like, api_delete_tweek, api_get_tweeks, api_remove_dislike, \
+from apps.feed.views import api_get_profile_tweeks, api_remove_like, api_delete_tweek, api_get_tweeks, api_remove_dislike, \
     api_remove_retweek, api_add_like, api_add_dislike, api_add_tweek, api_get_tweek
 from apps.feed.views import feed, search, view_tweek
 from apps.notification.views import notifications, clear_notifications
 from apps.twikkerprofile.views import twikkerprofile, edit_profile, unfollow_tweeker, followers, follows, \
     follow_tweeker, toggle_dark_mode
-from apps.conversation.api import api_add_message, api_get_global_messages, api_get_dm_messages
+from apps.conversation.views import api_add_message, api_get_global_messages, api_get_dm_messages
 
-from apps.notification.api import NotificationsList
+from apps.notification.views import NotificationsList
 
 urlpatterns = [
     #

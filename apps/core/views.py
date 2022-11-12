@@ -1,8 +1,4 @@
-import json
-
 from django.contrib.auth import login
-from django.http import JsonResponse
-
 from .forms import CustomUserForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
@@ -14,12 +10,9 @@ def frontpage(request):
 
 def users(request):
     users = User.objects.all()
-
-
     context = {
         'users': users,
     }
-
     return render(request, 'core/users.html', context)
 
 
