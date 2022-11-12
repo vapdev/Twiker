@@ -1,5 +1,3 @@
-import json
-
 from asgiref.sync import sync_to_async
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -65,6 +63,7 @@ def save_follow(follower_id, following_id):
     follower.twikkerprofile.follows.add(following.twikkerprofile)
     create_notification(created_by=follower, notification_type=Notification.FOLLOWER, to_user=following)
 
+
 @login_required
 def unfollow_tweeker(request, username):
     user = get_object_or_404(User, username=username)
@@ -72,6 +71,7 @@ def unfollow_tweeker(request, username):
     request.user.twikkerprofile.follows.remove(user.twikkerprofile)
 
     return redirect('twikkerprofile', username=username)
+
 
 @login_required
 def follow_tweeker(request, username):
@@ -91,6 +91,7 @@ def followers(request, username):
     }
 
     return render(request, 'twikkerprofile/followers.html', context)
+
 
 def follows(request, username):
     user = get_object_or_404(User, username=username)

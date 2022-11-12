@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 
 from django.contrib.auth.decorators import login_required
+from rest_framework import generics
 
 from .models import Notification
+from .serializers import NotificationSerializer
+
 
 @login_required
 def notifications(request):
@@ -30,3 +33,10 @@ def notifications(request):
 def clear_notifications(request):
     Notification.objects.filter(to_user=request.user).update(is_read=True)
     return redirect('notifications')
+
+
+class NotificationsList(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+
+    def get_queryset(self):
+        return Notification.objects.filter(to_user=self.kwargs.get("user_id"))
