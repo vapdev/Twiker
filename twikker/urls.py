@@ -20,7 +20,7 @@ from django.urls import path, include
 from django.contrib.auth import views
 
 from apps.conversation.views import conversations, conversation, global_chat
-from apps.core.views import frontpage, signup, users
+from apps.core.views import frontpage, signup, users, UsersList
 from apps.feed.views import api_get_profile_tweeks, api_remove_like, api_delete_tweek, api_get_tweeks, api_remove_dislike, \
     api_remove_retweek, api_add_like, api_add_dislike, api_add_tweek, api_get_tweek
 from apps.feed.views import feed, search, view_tweek
@@ -77,6 +77,7 @@ urlpatterns = [
     path('api/messages/<int:conversation_id>/', api_get_dm_messages, name='api_get_dm_messages'),
     path('api/tweek/<int:tweek_id>/', api_get_tweek, name='api_get_tweek'),
     path('api/notifications/<int:user_id>', NotificationsList.as_view(), name='api_get_notifications'),
+    path('api/users/', UsersList.as_view(), name='api_get_users'),
 
 
     path('settings/darkmode/', toggle_dark_mode, name='darkmode'),

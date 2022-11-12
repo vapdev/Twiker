@@ -1,7 +1,11 @@
 from django.contrib.auth import login
+from rest_framework import generics
+
 from .forms import CustomUserForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
+
+from .serializers import UserSerializer
 
 
 def frontpage(request):
@@ -14,6 +18,13 @@ def users(request):
         'users': users,
     }
     return render(request, 'core/users.html', context)
+
+
+class UsersList(generics.ListAPIView):
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        return User.objects.all()
 
 
 def signup(request):
