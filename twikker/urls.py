@@ -29,6 +29,8 @@ from apps.twikkerprofile.views import twikkerprofile, edit_profile, unfollow_twe
     follow_tweeker, toggle_dark_mode
 from apps.conversation.api import api_add_message, api_get_global_messages, api_get_dm_messages
 
+from apps.notification.api import NotificationsList
+
 urlpatterns = [
     #
     #
@@ -74,6 +76,7 @@ urlpatterns = [
     path('api/messages/global/', api_get_global_messages, name='api_get_global_messages'),
     path('api/messages/<int:conversation_id>/', api_get_dm_messages, name='api_get_dm_messages'),
     path('api/tweek/<int:tweek_id>/', api_get_tweek, name='api_get_tweek'),
+    path('api/notifications/<int:user_id>', NotificationsList.as_view(), name='api_get_notifications'),
 
 
     path('settings/darkmode/', toggle_dark_mode, name='darkmode'),

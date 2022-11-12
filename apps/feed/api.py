@@ -56,7 +56,7 @@ def api_add_like(request):
         Like.objects.create(tweek_id=tweek.id, created_by=request.user)
 
     if request.user != tweek.created_by:
-        create_notification(request, tweek.created_by, 'like')
+        create_notification(request.user, tweek.created_by, 'like')
 
     return JsonResponse({'success': True})
 
@@ -90,7 +90,7 @@ def api_add_dislike(request):
         Dislike.objects.create(tweek_id=tweek.id, created_by=request.user)
 
     if request.user != tweek.created_by:
-        create_notification(request, tweek.created_by, 'dislike')
+        create_notification(request.user, tweek.created_by, 'dislike')
 
     return JsonResponse({'success': True})
 
