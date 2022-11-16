@@ -1,2 +1,1 @@
-*.css linguist-vendored
-static/css/css/**
+static/css/css/** linguist-vendored
