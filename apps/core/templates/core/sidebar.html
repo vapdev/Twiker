@@ -1,17 +1,19 @@
-{% load chat %} 
-{% load static %} 
+{% load chat %}
+{% load static %}
 {% if request.user.is_authenticated %}
 <div class="sticky top-0 left-0 px-2 h-screen max-[600px]:h-fit max-[600px]:w-screen bg-white dark:bg-slate-900">
     <div class="flex flex-col max-[600px]:flex-row justify-center">
         <div class="flex py-1 max-[600px]:hidden">
-            <a class="flex justify-center font-semibold text-lg p-1 hover:bg-green-200 hover:rounded-full " href="{% url 'feed' %} ">
+            <a class="flex justify-center font-semibold text-lg p-1 hover:bg-green-200 hover:rounded-full "
+                href="{% url 'feed' %} ">
                 <div class="flex w-11 h-11">
                     <i class="text-4xl m-auto fa-solid fa-ankh"></i>
                 </div>
             </a>
         </div>
         <div class="flex py-1">
-            <a class="flex justify-center  font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'feed' %} ">
+            <a class="flex justify-center  font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full "
+                href="{% url 'feed' %} ">
                 <div class="flex w-11 h-11">
                     <i class="text-lg m-auto fa-solid fa-house"></i>
                 </div>
@@ -19,7 +21,8 @@
             </a>
         </div>
         <div class="flex py-1">
-            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'notifications' %} ">
+            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full "
+                href="{% url 'notifications' %} ">
                 <div class="flex w-11 h-11">
                     <i class="text-lg m-auto fa-solid fa-bell"></i>
                 </div>
@@ -27,7 +30,8 @@
             </a>
         </div>
         <div class="flex py-1">
-            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'users' %} ">
+            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full "
+                href="{% url 'users' %} ">
                 <div class="flex w-11 h-11">
                     <i class="text-lg m-auto fa-solid fa-users"></i>
                 </div>
@@ -35,7 +39,8 @@
             </a>
         </div>
         <div class="flex py-1">
-            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'global' %} ">
+            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full "
+                href="{% url 'global' %} ">
                 <div class="flex w-11 h-11">
                     <i class="text-lg m-auto fa-solid fa-earth-americas"></i>
                 </div>
@@ -43,7 +48,8 @@
             </a>
         </div>
         <div class="flex py-1">
-            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'conversations' %} ">
+            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full "
+                href="{% url 'conversations' %} ">
                 <div class="flex w-11 h-11">
                     <i class="text-lg m-auto fa-solid fa-comments"></i>
                 </div>
@@ -51,7 +57,8 @@
             </a>
         </div>
         <div class="flex py-1">
-            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full " href="{% url 'twikkerprofile' request.user.username %} ">
+            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full "
+                href="{% url 'twikkerprofile' request.user.username %} ">
                 <div class="flex w-11 h-11">
                     <i class="text-lg m-auto fa-solid fa-user"></i>
                 </div>
@@ -59,7 +66,8 @@
             </a>
         </div>
         <div class="flex py-1">
-            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full" onclick="toggleDarkMode()">
+            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full"
+                onclick="toggleDarkMode()">
                 <div class="flex w-11 h-11">
                     <i class="text-xl m-auto fa-solid fa-moon"></i>
                 </div>
@@ -68,17 +76,17 @@
     </div>
 </div>
 {% else %}
+<div>
     <div>
         <div>
-            <div>
-                <a href="{% url 'signup' %} ">Sign Up</a>
-                <a href="{% url 'login' %} ">Log in</a>
-            </div>
+            <a href="{% url 'signup' %} ">Sign Up</a>
+            <a href="{% url 'login' %} ">Log in</a>
         </div>
     </div>
-{% endif %} 
+</div>
+{% endif %}
 {% block script %}
-    <script>
+<script>
     function toggleDarkMode() {
         var element = document.body;
         element.classList.toggle("dark");
@@ -93,38 +101,39 @@
             })
         })
     }
-    </script>
-    <script>
-        {#const notificationSocket = new WebSocket(#}
-        {#    'ws://' +#}
-        {#    window.location.host +#}
-        {#    '/ws/' +#}
-        {#    'notifications/'#}
-        {#);#}
+</script>
+<script>
 
-        {% if conversation %} {% get_chat_user_id conversation request.user.id as userid %} {% endif %}
+    {% if conversation %} {% get_chat_user_id conversation request.user.id as userid %} {% endif %}
 
-        const chatSocket = new WebSocket(
-            'ws://' +
-            window.location.host +
-            '/ws/' +
-            'chat/' +
-            '{% if conversation %}{{ userid }}{% else %}0{% endif %}' +
-            '/'
-        );
+    const chatSocket = new WebSocket(
+        'wss://' +
+        window.location.host +
+        '/ws/' +
+        'chat/' +
+        '{% if conversation %}{{ userid }}{% else %}0{% endif %}' +
+        '/'
+    );
 
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            conversationapp.messages.push(data);
-            setTimeout(() => {
-                scrollToBottom();
-            }, 0);
-        };
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        conversationapp.messages.push(data);
+        setTimeout(() => {
+            scrollToBottom();
+        }, 0);
+    };
 
-        {#notificationSocket.onmessage = function(e) {#}
-        {#    notifications_el = document.querySelector('#notifications').innerHTML#}
-        {#    notification_count = parseInt(notifications_el.split('(')[1].split(')')[0])#}
-        {#    document.querySelector('#notifications').innerHTML = '<span class="white ">Notifications (' + (notification_count + 1) + ')</span>'#}
+    // const notificationSocket = new WebSocket(
+    //     'ws://' +
+    //      window.location.host +
+    //     '/ws/' +
+    //     'notifications/'
+    // );
 
-    </script>
+    // notificationSocket.onmessage = function (e) {
+    //      notifications_el = document.querySelector('#notifications').innerHTML
+    //      notification_count = parseInt(notifications_el.split('(')[1].split(')')[0])
+    //      document.querySelector('#notifications').innerHTML = '<span class="white ">Notifications (' + (notification_count + 1) + ')</span>'
+
+</script>
 {% endblock %}
