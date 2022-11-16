@@ -34,4 +34,3 @@ WITH DOCKER
 
 ![image](https://user-images.githubusercontent.com/88452580/201464963-479c031f-0d06-405b-b0fb-0b4bd6781a61.png)
 ![image](https://user-images.githubusercontent.com/88452580/201464967-bde7576c-3b0a-4f89-9167-b449220706a6.png)
-[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=vapdev)](https://github.com/anuraghazra&hide=css/github-readme-stats)
