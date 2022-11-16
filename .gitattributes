@@ -1,1 +1,2 @@
-static/css/css/* linguist-vendored
+static/css/css/** linguist-vendored
+frontend/twikker/src/assets/css/** linguist-vendored
