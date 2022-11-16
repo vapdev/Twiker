@@ -107,7 +107,7 @@
     {% if conversation %} {% get_chat_user_id conversation request.user.id as userid %} {% endif %}
 
     const chatSocket = new WebSocket(
-        'wss://' +
+        'ws://' +
         window.location.host +
         '/ws/' +
         'chat/' +
