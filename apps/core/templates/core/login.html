@@ -1,14 +1,19 @@
-{% extends 'core/base.html' %}
+<script src="https://cdn.tailwindcss.com"></script>
 
 {% block content %}
-    <div>
-        <div>
-            <h1>Log In</h1>
-            <form method="post" action=".">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Log In</button>
-            </form>
+    <div class="dark h-screen w-screen bg-gray-700 flex items-center justify-center">
+        <div class="m-3 rounded-md border-2 border-gray-500">
+            <div class="pl-2 py-1 font-bold w-full border-b-2 border-gray-500">
+               <h1 class="text-lg">Log In</h1> 
+            </div>
+            <div class="pt-2 px-1">
+                <form method="post" action="." class="flex-col grid justify-items-end mb-2 p-3 font-medium ">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="mt-3 px-2 border-2 bg-gray-100 hover:bg-gray-300 rounded-xl">Log In</button>
+                </form>
+            </div>
+            
         </div>
     </div>
 {% endblock %}

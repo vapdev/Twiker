@@ -1,5 +1,14 @@
-{% extends 'core/base.html' %}
+<script src="https://cdn.tailwindcss.com"></script>
+<div class="bg-red-500 dark h-screen w-screen bg-gray-700 flex items-center justify-center">
+    <div class="mr-3 text-lg hover:scale-105 text-bold hover:text-gray-300">
+        <a href="{% url 'signup' %} ">Sign Up</a>
+    </div>
+    <div class="text-lg hover:scale-105 text-bold hover:text-gray-300">
+        <a href="{% url 'login' %} ">Log in</a> 
+    </div>
+    
+</div>
 {% load static %}
 {% block content %}
-<img src="{% static 'img/cp.jpg' %}">
+<!-- <img src="{% static 'img/cp.jpg' %}"> -->
 {% endblock %}
