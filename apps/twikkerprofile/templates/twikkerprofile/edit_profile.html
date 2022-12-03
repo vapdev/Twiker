@@ -3,31 +3,36 @@
 {% load humanize %}
 
 {% block content %}
-    <div>
-        <div>
+    <div class="border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0">
+        <div class="border-gray-100 border-y-2 dark:border-gray-700 pb-3">
             <div>
-                <h1>Edit profile</h1>
-                {% if user.twikkerprofile.avatar %}
-                <article>
-                    <figure>
-                        <p>
-                            {%  if user.twikkerprofile.avatar %}
-                                <img class="w-12 h-12" src="{{ user.twikkerprofile.avatar.url}}">
-                            {% endif %}
-                        </p>
-                    </figure>
-                </article> 
-                {% endif %}
+                <div class="px-2 pb-1 order-gray-100 border-b-2 dark:border-gray-700 mt-2 mb-5">
+                    <h1 class="text-xl">Edit profile</h1>
+                </div>
+                <div class="px-2">
+                    {% if user.twikkerprofile.avatar %}
+                    <article>
+                        <figure>
+                            <p>
+                                {%  if user.twikkerprofile.avatar %}
+                                    <img class="w-12 h-12" src="{{ user.twikkerprofile.avatar.url}}">
+                                {% endif %}
+                            </p>
+                        </figure>
+                    </article> 
+                    {% endif %}
 
-                <form method="post" enctype="multipart/form-data" action=".">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <div>
-                        <div>
-                            <button>Save changes</button>
+                    <form method="post" enctype="multipart/form-data" action=".">
+                        {% csrf_token %}
+                        {{ form.avatar}}
+                        <div class="flex justify-end">
+                            <div>
+                                <button class="p-1 mt-2 rounded-xl bg-gray-100 text-black hover:bg-gray-500 hover:text-white">Save changes</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                   
             </div>
         </div>
     </div>
