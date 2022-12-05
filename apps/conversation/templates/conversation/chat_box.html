@@ -1,15 +1,15 @@
 {% load humanize %}
 <div id="conversationapp" class="flex flex-col h-full">
-    <div id="chatcontainer" class="flex flex-col h-full">
-        <div v-for="message in messages" :class="message.tweeker_name == '{{ request.user.username }}' ? 'justify-end flex w-full' : 'flex w-full'  ">
-            <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-100 dark:border-gray-700 ">
+    <div id="chatcontainer" class="flex flex-col h-full mr-3 mt-2">
+        <div class="mb-1.5" v-for="message in messages" :class="message.tweeker_name == '{{ request.user.username }}' ? 'justify-end flex w-full' : 'flex w-full' ">
+            <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-100 dark:border-gray-700 rounded-tl-2xl rounded-tr-2xl  rounded-bl-2xl">
                 <figure class="shrink-0">
                     <img class="rounded-full h-12 w-12" :src="message.avatar_url">
                 </figure>
-                <div class="flex-col">
+                <div class="flex-col ml-2.5">
                     <div>
                         <strong>
-                            <a href="">[[ message.tweeker_name ]]</a>
+                            <a  href="">[[ message.tweeker_name ]]</a>
                         </strong>
                         <small>[[ message.formatted_time ]]</small>
                     </div>
@@ -24,10 +24,10 @@
         <form v-on:submit.prevent="submitMessage()" class="w-full p-2">
             <div class="flex">
                 <div class="w-full">
-                    <input type="text" class="w-full" v-model="content" placeholder="Your message..."></input>
+                    <input type="text" class="w-full rounded-lg text-base outline-none text-gray-600" v-model="content" placeholder="Your message..."></input>
                 </div>
-                <div class="bg-green-200 rounded-full px-2 mx-1">
-                    <button>Send</button>
+                <div>
+                    <button class="ml-2 text-green-200 px-2 rounded-full hover:bg-gray-700"><i class="fa-regular fa-paper-plane"></i></button>
                 </div>
             </div>
         </form>
