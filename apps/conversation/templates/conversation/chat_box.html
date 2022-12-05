@@ -2,7 +2,7 @@
 <div id="conversationapp" class="flex flex-col h-full">
     <div id="chatcontainer" class="flex flex-col h-full mr-3 mt-2">
         <div class="mb-1.5" v-for="message in messages" :class="message.tweeker_name == '{{ request.user.username }}' ? 'justify-end flex w-full' : 'flex w-full' ">
-            <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-100 dark:border-gray-700 rounded-tl-2xl rounded-tr-2xl  rounded-bl-2xl">
+            <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-100 dark:border-gray-700 rounded-tl-3xl rounded-tr-3xl  rounded-bl-3xl">
                 <figure class="shrink-0">
                     <img class="rounded-full h-12 w-12" :src="message.avatar_url">
                 </figure>
