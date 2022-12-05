@@ -20,16 +20,14 @@
             </article>
         </div>
     </div>
-    <div class="sticky bg-white dark:bg-slate-900  bottom-0 w-full border">
-        <form v-on:submit.prevent="submitMessage()" class="w-full p-2">
-            <div class="flex">
-                <div class="w-full">
-                    <input type="text" class="w-full rounded-lg text-base outline-none text-gray-300 bg-gray-700 pl-2" v-model="content" placeholder="Your message..."></input>
-                </div>
-                <div>
-                    <button class="ml-2 text-green-200 px-2 rounded-full hover:bg-gray-700"><i class="fa-regular fa-paper-plane"></i></button>
-                </div>
+    <div class="sticky flex bg-white dark:bg-slate-900  bottom-0 w-full border items-center">
+            <div class="w-full">
+                <form v-on:submit.prevent="submitMessage()">
+                    <input type="text" class="px-1 h-10 w-full text-base outline-none text-white bg-gray-700" v-model="content" placeholder="Your message..."></input>
+                </form>
             </div>
-        </form>
+            <div class="bg-gray-600 hover:bg-gray-500">
+                <button class="h-10 text-green-300 px-2 rounded-full hover:text-green-500"><i class="fa-regular fa-paper-plane"></i></button>
+            </div>
     </div>
 </div>
