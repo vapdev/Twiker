@@ -8,10 +8,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .serializers import UserSerializer
 
 
-def frontpage(request):
-    return render(request, 'core/frontpage.html')
-
-
 def users(request):
     users = User.objects.all()
     context = {
@@ -33,7 +29,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('frontpage')
+            return redirect('login')
         else:
             return render(request, 'core/signup.html', {'form':form})
     else:

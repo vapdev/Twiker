@@ -35,7 +35,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "feed"
-LOGOUT_REDIRECT_URL = "frontpage"
+LOGOUT_REDIRECT_URL = "login"
 
 # Application definition
 
