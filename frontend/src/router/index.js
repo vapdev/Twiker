@@ -7,6 +7,16 @@ import Users from "../views/Users.vue"
 
 const routes = [
   {
+    path: "/signup",
+    name: "SignUp",
+    component: () => import("../views/SignUp.vue"),
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/Login.vue"),
+  },
+  {
     path: "/",
     name: "Feed",
     component: Feed,
