@@ -3,7 +3,7 @@
     <div class="w-2/4 m-auto text-center ">
         <i class="text-4xl m-auto fa-solid fa-ankh"></i>
         <h1 class="text-4xl font-bold text-blue-300">Twikker</h1>
-        <p class="text-xs text-gray-300">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
+        <p class="text-xs text-gray-300">"Quem já tem ciência age na inteligência, tudo te leva a crer, vitória é ter paciência"</p>
     </div>
     <div class="w-2/4 dark w-50 flex items-center justify-center border-l-2 border-gray-500 text-gray-400">
         <form @submit.prevent="submitForm" class="text-lg">
