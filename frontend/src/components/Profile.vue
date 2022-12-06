@@ -5,9 +5,7 @@
                 <div class="flex flex-col">
                         <article>
                             <figure>
-                                <p>
-                                    IMG
-                                </p>
+                                <div class="h-14 w-14 rounded-full border-2 border-white bg-gray300"></div>
                             </figure>
                         </article> 
                     <h1>Snoop Dogg</h1>
@@ -32,8 +30,8 @@
                     </div>
                     <div class="flex flex-col w-full">
                         <div>
-                        <span class="font-semibold text-lg">[[ tweek.tweeker_name ]]</span><span class="ml-2">[[ tweek.formatted_time ]]</span>
-                        <span class="flex text-xl break-all">[[ tweek.body ]]</span>
+                        <span class="font-semibold text-lg">Joaozinho</span><span class="ml-2">3 minutos atrás</span>
+                        <span class="flex text-xl break-all">Tweek do perfil</span>
                         <div class="flex flex-row justify-between w-2/3 mt-3">
                             <div class="flex">
                                 <div class="w-8 h-8 p-1 text-center hover:bg-yellow-200 hover:rounded-full">
@@ -52,13 +50,13 @@
                                     <div class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
                                         <i class="fa-regular fa-thumbs-up"></i>
                                     </div>
-                                    <span class="pt-1">[[ tweek.likes_count ]] [[ tweek.liked_tweeks ]]</span>
+                                    <span class="pt-1">12 likes</span>
                                 </div>
                                 <div class="flex mx-2">
                                     <div class="w-8 h-8 p-1 text-center hover:bg-red-200 hover:rounded-full">
                                         <i class="fa-solid fa-thumbs-down"></i>
                                     </div>
-                                    <span class="pt-1">[[ tweek.dislikes_count ]] [[ tweek.disliked_tweeks ]]</span>
+                                    <span class="pt-1">12 dislikes</span>
                                 </div>
                             </div>
                         </div>
