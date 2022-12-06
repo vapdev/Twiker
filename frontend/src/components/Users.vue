@@ -7,6 +7,10 @@
             </div>
         </div>
         <div class="flex flex-row h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
+            <figure>
+                <p class="h-12 w-12 rounded-full bg-gray-400 mr-3">
+                </p>
+            </figure>
             <div class="flex flex-col">
                 <div class="flex">
                     <h1>
@@ -22,6 +26,10 @@
             </div>
         </div>
         <div class="flex flex-row h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
+            <figure>
+                <p class="h-12 w-12 rounded-full bg-gray-400 mr-3">
+                </p>
+            </figure>
             <div class="flex flex-col">
                 <div class="flex">
                     <h1>
