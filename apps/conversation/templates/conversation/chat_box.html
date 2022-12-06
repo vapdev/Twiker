@@ -20,6 +20,7 @@
             </article>
         </div>
     </div>
+<<<<<<< HEAD
     <div class="sticky bg-white dark:bg-slate-900  bottom-0 w-full border">
         <form v-on:submit.prevent="submitMessage()" class="w-full p-2">
             <div class="flex">
@@ -29,7 +30,16 @@
                 <div>
                     <button class="ml-2 text-green-200 px-2 rounded-full hover:bg-gray-700"><i class="fa-regular fa-paper-plane"></i></button>
                 </div>
+=======
+    <div class="sticky flex bg-white dark:bg-slate-900  bottom-0 w-full items-center">
+            <div class="w-full">
+                <form v-on:submit.prevent="submitMessage()">
+                    <input type="text" class="px-1 h-10 w-full text-base outline-none text-white bg-gray-700" v-model="content" placeholder="Your message..."></input>
+                </form>
             </div>
-        </form>
+            <div class="bg-gray-600">
+                <button class="h-10 text-green-400 px-2 rounded-full hover:bg-gray-700"><i class="fa-regular fa-paper-plane"></i></button>
+>>>>>>> 761f502eebb60694d3c6d3341a82f6357f647eed
+            </div>
     </div>
 </div>
