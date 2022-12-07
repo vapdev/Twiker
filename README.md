@@ -2,6 +2,7 @@
 Social network built with Django and Vue.js
 
 Work in progress.
+We are currently building a new Frontend.
 
 ✅ Likes and Dislikes  <br>
 ✅ Feed  <br>
@@ -10,8 +11,6 @@ Work in progress.
 ✅ Global Chat <br>
 ✅ Real Time Chat <br> 
 ✅ Real Time Notifications <br>
-⏳ Real Time Feed (Likes and dislikes count) (Will be implemented with Server Sent Events or Websockets) <br>
-⏳ I may change some websockets to server sent events, only chat will remain with web sockets
 
 <h2> Setup </h2>
 
