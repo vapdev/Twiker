@@ -40,6 +40,11 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: Profile
+  },
+  {
+    path: "/globalchat",
+    name: "GlobalChat",
+    component: () => import("../views/GlobalChat.vue")
   }
 ]
 
