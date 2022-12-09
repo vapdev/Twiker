@@ -144,9 +144,10 @@ export default {
                 if (response.data.next) {
                     this.hasNext = true
                 }
-                for (let i = 0; i < response.data.results.length; i++) {
-                    this.tweeks.push(response.data.results[i])
-                }
+                // for (let i = 0; i < response.data.results.length; i++) {
+                //     this.tweeks.push(response.data.results[i])
+                // }
+                this.tweeks = response.data.results
             }).catch(error => {
                 console.log('error' + error)
             })
@@ -214,7 +215,6 @@ export default {
             }else{
                 await this.submitTweek(tweek_id);
             }
-            window.location.reload();
         },
         async unretweekTweek(tweek_id){
             this.retweeked_tweeks = this.retweeked_tweeks.filter(item => item !== tweek_id)
@@ -324,7 +324,6 @@ export default {
                     console.log(error)
                 })
                 this.currentPage = 1;
-                this.tweeks=[];
                 this.getTweeks()
             }
             this.body = '';
