@@ -14,6 +14,8 @@ class TweekSerializer(serializers.ModelSerializer):
 
     is_liked = serializers.SerializerMethodField()
     is_disliked = serializers.SerializerMethodField()
+    is_retweek = serializers.SerializerMethodField()
+
 
     retweek_tweeker_name = serializers.CharField(source='retweek.created_by', allow_null=True)
     retweek_body = serializers.CharField(source='retweek.body', allow_null=True)
@@ -35,6 +37,12 @@ class TweekSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         return obj.dislikes.filter(created_by=user).exists()
 
+    def get_is_retweek(self, obj):
+        user = self.context['request'].user
+        if obj.retweek:
+            return True
+        return False
+
     def get_is_retweek_liked(self, obj):
         user = self.context['request'].user
         if obj.retweek:
@@ -52,4 +60,4 @@ class TweekSerializer(serializers.ModelSerializer):
         fields = ('id', 'body', 'created_by', 'tweeker_name', 'likes_count', 'dislikes_count', 'avatar_url',
                   'formatted_time', 'retweek', 'retweek_tweeker_name', 'retweek_likes_count', 'retweek_dislikes_count',
                   'retweek_avatar_url', 'retweek_formatted_time', 'retweek_body', 'retweek_id', 'retweek_count',
-                  'retweek_retweek_count', 'is_liked', 'is_disliked', 'is_retweek_liked', 'is_retweek_disliked', 'retweeks')
+                  'retweek_retweek_count', 'is_liked', 'is_disliked', 'is_retweek', 'is_retweek_liked', 'is_retweek_disliked', 'retweeks')
