@@ -1,9 +1,11 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
 
 export default createStore({
     state: {
         token: '',
-        isAuthenticated: false
+        isAuthenticated: false,
+        username: '',
+        user_id: '',
     },
     mutations: {
         initializeStore(state) {
@@ -22,10 +24,16 @@ export default createStore({
         removeToken(state) {
             state.token = ''
             state.isAuthenticated = false
+        },
+        setUsername(state, username) {
+            state.username = username
+        },
+        setUserId(state, user_id) {
+            state.user_id = user_id
         }
     },
     actions: {
-
+        
     },
     modules: {
     }

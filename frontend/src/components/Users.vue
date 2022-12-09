@@ -43,10 +43,7 @@ import axios from 'axios'
         },
         methods: {
             getUsers(){
-                axios.get(`/api/users/`,
-                {
-                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                }) 
+                axios.get(`/api/users/`,) 
                 .then(response => {
                     this.users = response.data;
                     console.log(this.users)

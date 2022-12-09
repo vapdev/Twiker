@@ -136,10 +136,8 @@ export default {
     },
     methods: {
         async getTweeks(){
-            await axios.get(`/api/get_tweeks/?page=${this.currentPage}`,
-                {
-                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                }) 
+            console.log("username" + this.$store.state.username)
+            await axios.get(`/api/get_tweeks/?page=${this.currentPage}`) 
             .then(response => {
                 this.hasNext = false
                 if (response.data.next) {
@@ -155,10 +153,7 @@ export default {
         },
         async toggleLike(tweek){
             if(tweek.retweek_id){
-                axios.get(`/api/tweek/${tweek.retweek_id}/`,
-                    {
-                        headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                    })
+                axios.get(`/api/tweek/${tweek.retweek_id}/`,)
                 .then(response => {
                     tweek = response.data['tweek']
                 }).catch(error => {
@@ -180,10 +175,7 @@ export default {
             let tweek_id = {
                 'tweek_id': tweek.id
             };
-            axios.post('/api/add_like/', tweek_id,
-                {
-                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                })
+            axios.post('/api/add_like/', tweek_id,)
             .then(response => {
                 console.log(response.data)
             }).catch(error => {
@@ -196,10 +188,7 @@ export default {
             var tweek_id = {
                 'tweek_id': tweek.id
             };
-            axios.post('/api/remove_like/', tweek_id,
-                {
-                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                })
+            axios.post('/api/remove_like/', tweek_id,)
             .then(response => {
                 console.log(response.data)
             }).catch(error => {
@@ -219,10 +208,7 @@ export default {
             var tweek = {
                 'tweek_id': tweek_id,
             };
-            axios.post('/api/remove_retweek/', tweek,
-                {
-                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                })  
+            axios.post('/api/remove_retweek/', tweek,)  
             .then(response => {
                 console.log(response.data)
             }).catch(error => {
@@ -232,10 +218,7 @@ export default {
         },
         async toggleDislike(tweek){
             if(tweek.retweek_id){
-                axios.get(`/api/tweek/${tweek.retweek_id}/`,
-                    {
-                        headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                    })
+                axios.get(`/api/tweek/${tweek.retweek_id}/`,)
                 .then(response => {
                     tweek = response.data['tweek']
                 }).catch(error => {
@@ -257,10 +240,7 @@ export default {
             let tweek_id = {
                 'tweek_id': tweek.id
             }
-            axios.post('/api/add_dislike/', tweek_id,
-                {
-                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                })
+            axios.post('/api/add_dislike/', tweek_id,)
             .then(response => {
                 console.log(response.data)
             }).catch(error => {
@@ -273,10 +253,7 @@ export default {
             var tweek_id = {
                 'tweek_id': tweek.id
             };
-            axios.post('/api/remove_dislike/', tweek_id,
-                {
-                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                })
+            axios.post('/api/remove_dislike/', tweek_id,)
             .then(response => {
                 console.log(response.data)
             }).catch(error => {
@@ -287,10 +264,7 @@ export default {
             var tweek = {
                 'tweek_id': tweek_id,
             };
-            axios.post('/api/delete_tweek/', tweek,
-                {
-                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                })
+            axios.post('/api/delete_tweek/', tweek,)
             .then(response => {
                 console.log(response.data)
             }).catch(error => {
@@ -310,13 +284,7 @@ export default {
                     'retweek_id': tweek_id,
                 };
                 // Send to backend
-                await axios.post('/api/add_tweek/', tweek, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Token ${localStorage.getItem('token')}`,
-                        'X-CSRFToken': '{{ csrf_token }}',
-                    },
-                })
+                await axios.post('/api/add_tweek/', tweek,)
                 .then((response) => {
                     console.log(response)
                 })
