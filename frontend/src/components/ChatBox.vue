@@ -1,0 +1,34 @@
+<template>
+    <div id="conversationapp" class="flex flex-col h-full">
+        <div id="chatcontainer" class="flex flex-col h-full mr-3 mt-2">
+            <div class="mb-1.5 justify-end flex w-full">
+                <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-100 dark:border-gray-700 rounded-tl-3xl rounded-tr-3xl  rounded-bl-3xl bg-gray-700">
+                    <figure class="shrink-0">
+                        <img class="rounded-full h-12 w-12 bg-gray-300">
+                    </figure>
+                    <div class="flex-col ml-2.5">
+                        <div>
+                            <strong>
+                                <a  href="">Joaozinho</a>
+                            </strong>
+                            <small>10:21</small>
+                        </div>
+                        <div class="break-all">
+                            <span>Conteúdo da mensagem</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="sticky flex bg-white dark:bg-slate-900  bottom-0 w-full items-center">
+                <div class="w-full">
+                    <form>
+                        <input type="text" class="px-1 h-10 w-full text-base outline-none text-white bg-gray-700" placeholder="Your message...">
+                    </form>
+                </div>
+                <div class="bg-gray-600 hover:bg-gray-500">
+                    <button class="h-10 text-green-300 px-2 rounded-full hover:text-green-500"><i class="fa-regular fa-paper-plane"></i></button>
+                </div>
+        </div>
+    </div>
+</template>

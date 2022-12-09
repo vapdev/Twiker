@@ -2,12 +2,13 @@ from django.shortcuts import render, redirect
 
 from django.contrib.auth.decorators import login_required
 from rest_framework import generics
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
 from .models import Notification
 from .serializers import NotificationSerializer
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 def notifications(request):
     goto = request.GET.get('goto', '')
     notification_id = request.GET.get('notification', 0)
@@ -29,7 +30,7 @@ def notifications(request):
     return render(request, 'notification/notifications.html')
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 def clear_notifications(request):
     Notification.objects.filter(to_user=request.user).update(is_read=True)
     return redirect('notifications')

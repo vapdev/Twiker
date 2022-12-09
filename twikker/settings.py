@@ -30,17 +30,17 @@ SIMPLE_JWT = {
    'AUTH_HEADER_TYPES': ('JWT',),
 }
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "a7bd-186-226-50-81.sa.ngrok.io"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:8000']
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAdminUser'
     ]
 }
 

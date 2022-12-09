@@ -4,7 +4,8 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
 from apps.notification.utilities import create_notification
 
 from .forms import TwikkerProfileForm
@@ -38,7 +39,7 @@ def twikkerprofile(request, username):
     return render(request, 'twikkerprofile/twikkerprofile.html', context)
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 def edit_profile(request):
     if request.method == 'POST':
         form = TwikkerProfileForm(request.POST, request.FILES, instance=request.user.twikkerprofile)
@@ -64,7 +65,7 @@ def save_follow(follower_id, following_id):
     create_notification(created_by=follower, notification_type=Notification.FOLLOWER, to_user=following)
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 def unfollow_tweeker(request, username):
     user = get_object_or_404(User, username=username)
 
@@ -73,7 +74,7 @@ def unfollow_tweeker(request, username):
     return redirect('twikkerprofile', username=username)
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 def follow_tweeker(request, username):
     user = get_object_or_404(User, username=username)
 
@@ -104,7 +105,7 @@ def follows(request, username):
     return render(request, 'twikkerprofile/follows.html', context)
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 @api_view(['POST'])
 def toggle_dark_mode(request):
     data = request.data

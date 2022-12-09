@@ -9,7 +9,7 @@ const {createApp} = Vue
 document.body.addEventListener('keydown', function(e) {
   if(!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
         let target = e.target;
-        let submit_button = document.querySelector('#submit-tweet');
+        let submit_button = document.querySelector('#submit-tweek');
         if(target.form) {
             submit_button.click();
       }

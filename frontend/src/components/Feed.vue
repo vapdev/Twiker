@@ -13,11 +13,11 @@
                     <img class="rounded-full h-12 w-12">
                 </div>
                 <div class="flex flex-col w-full pl-1">
-                    <form>
+                    <form v-on:submit.prevent="submitTweek()">
                         <div class="flex w-full py-5">
                             <textarea placeholder="What you tweeking bro..."
                                 class="text-xl resize-none h-fit w-full outline-none bg-white dark:bg-slate-900"
-                                type="text"></textarea>
+                                type="text" v-model="body"></textarea>
                         </div>
                         <div class="flex border-solid border-t-2 border-gray-100 dark:border-gray-700 w-full">
                             <div class="flex my-2 w-full">
@@ -26,7 +26,7 @@
                                         <button class=""><i class="p-1 fa-regular fa-image"></i></button>
                                     </div>
                                     <div class="flex">
-                                        <button id="submit-tweet" type="submit"
+                                        <button id="submit-tweek" type="submit"
                                             class="bg-green-400 rounded-full text-white font-bold mx-3 px-5 py-2">Submit</button>
                                     </div>
                                 </div>
@@ -35,7 +35,7 @@
                     </form>
                 </div>
             </div>
-            <div
+            <div v-for:="tweek in tweeks" :key="tweek.id"
                 class="flex h-fit w-full px-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
                 <div class="flex flex-col w-full">
                     <!-- <div v-if="tweek.retweek" class="flex mb-2">
@@ -49,13 +49,13 @@
                         <div class="flex flex-col w-full pb-3">
                             <div>
                                 <span class="font-semibold text-lg">
-                                    Fabio
+                                    {{ tweek.tweeker_name }}
                                 </span>
                                 <span class="ml-2">
-                                    10:30
+                                    {{ tweek.formatted_time }}
                                 </span>
                             </div>
-                            <span class="flex text-xl break-all">Este é o tweek meu parceiro</span>
+                            <span class="flex text-xl break-all">{{ tweek.body }}</span>
                             <div class="flex flex-row justify-between w-2/3 mt-3">
                                 <div class="flex">
                                     <div class="w-8 h-8 p-1 text-center hover:bg-yellow-200 hover:rounded-full">
@@ -64,29 +64,29 @@
                                     <span class="pt-1"></span>
                                 </div>
                                 <div class="flex">
-                                    <div class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
+                                    <div @click.stop="toggleRetweek(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
                                         <i class="fa-solid fa-retweet"></i>
                                     </div>
-                                    <span class="pt-1">14</span>
+                                    <span class="pt-1">{{ tweek.retweek_count }}</span>
                                 </div>
                                 <div class="flex">
-                                    <div class="flex mx-2">
+                                    <div @click.stop="toggleLike(tweek)" class="flex mx-2">
                                         <div class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
                                             <i class="fa-regular fa-thumbs-up"></i>
                                         </div>
-                                        <span class="pt-1">35</span>
+                                        <span class="pt-1">{{ tweek.likes_count }}</span>
                                     </div>
                                     <div class="flex mx-2">
-                                        <div class="w-8 h-8 p-1 text-center hover:bg-red-200 hover:rounded-full">
+                                        <div @click.stop="toggleDislike(tweek)" class="w-8 h-8 p-1 text-center hover:bg-red-200 hover:rounded-full">
                                             <i class="fa-regular fa-thumbs-down"></i>
                                         </div>
-                                        <span class="pt-1">21</span>
+                                        <span class="pt-1">{{ tweek.dislikes_count }}</span>
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div> -->
-                            <!-- <a href="#"><p class="text-md mt-2 text-blue-300">Ver tweek original</p></a> -->
-                            <!-- </div> -->
+                            <div v-if="tweek.retweek">
+                                <a href="#"><p class="text-md mt-2 text-blue-300 w-fit hover:text-blue-100 rounded-xl">Ver tweek original</p></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -94,3 +94,240 @@
         </div>
     </div>
 </template>
+
+<script>
+import axios from 'axios'
+
+document.body.addEventListener('keydown', function(e) {
+  if(!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
+        let target = e.target;
+        let submit_button = document.querySelector('#submit-tweek');
+        if(target.form) {
+            submit_button.click();
+      }
+  });
+
+export default {
+    data() {
+        return {
+            count: 0,
+            tweeks: [],
+            body: '',
+            currentPage: 1,
+            tweeker: 'tweeker_username',
+            created_at: 'Now',
+            avatar: 'tweeker_avatar',
+            retweeked_tweeks: [],
+        }
+    },
+    mounted() {
+        this.getTweeks()
+        window.onscroll = () => {
+            let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
+
+            if (bottomOfWindow && this.hasNext) {
+                this.currentPage += 1
+                this.getTweeks()
+            }
+        }
+    },
+    methods: {
+        getTweeks(){
+            axios.get(`/api/get_tweeks/?page=${this.currentPage}`,
+                {
+                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
+                }) 
+            .then(response => {
+                console.log(response.data)
+                this.hasNext = false
+                if (response.data.next) {
+                    this.hasNext = true
+                }
+                for (let i = 0; i < response.data.results.length; i++) {
+                    this.tweeks.push(response.data.results[i])
+                }
+            }).catch(error => {
+                console.log('error' + error)
+            })
+        },
+        viewTweek(tweek_id) {
+            window.location.href = `/tweek/${tweek_id}`
+        },
+        async toggleLike(tweek){
+            if(tweek.retweek_id){
+                axios.get(`/api/tweek/${tweek.retweek_id}/`,
+                    {
+                        headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
+                    })
+                .then(response => {
+                    tweek = response.data['tweek']
+                }).catch(error => {
+                    console.log('error' + error)
+                })
+            }
+            if(tweek.is_disliked){
+                this.undislikeTweek(tweek);
+            }
+            if(tweek.is_liked){
+                this.unlikeTweek(tweek);
+            }else{
+                this.likeTweek(tweek);
+            }
+        },
+        likeTweek(tweek){
+            tweek.is_liked = true;
+            tweek.likes_count += 1;
+            let tweek_id = {
+                'tweek_id': tweek.id
+            };
+            axios.post('/api/add_like/', tweek_id,
+                {
+                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
+                })
+            .then(response => {
+                console.log(response.data)
+            }).catch(error => {
+                console.log('error' + error)
+            })
+        },
+        unlikeTweek(tweek){
+            tweek.is_liked = false;
+            tweek.likes_count -= 1;
+            var tweek_id = {
+                'tweek_id': tweek.id
+            };
+            axios.post('/api/remove_like/', tweek_id,
+                {
+                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
+                })
+            .then(response => {
+                console.log(response.data)
+            }).catch(error => {
+                console.log('error' + error)
+            })
+        },
+        async toggleRetweek(tweek_id){
+            if(this.retweeked_tweeks.includes(tweek_id)){
+                let el = document.getElementById(`retweek-${tweek_id}`);
+                await this.unretweekTweek(tweek_id);
+            }else{
+                await this.submitTweek(tweek_id);
+            }
+            window.location.reload();
+        },
+        async unretweekTweek(tweek_id){
+            this.retweeked_tweeks = this.retweeked_tweeks.filter(item => item !== tweek_id)
+            var tweek = {
+                'tweek_id': tweek_id,
+            };
+            axios.post('/api/remove_retweek/', tweek,
+                {
+                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
+                })  
+            .then(response => {
+                console.log(response.data)
+            }).catch(error => {
+                console.log('error' + error)
+            })
+        },
+        async toggleDislike(tweek){
+            if(tweek.retweek_id){
+                axios.get(`/api/tweek/${tweek.retweek_id}/`,
+                    {
+                        headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
+                    })
+                .then(response => {
+                    tweek = response.data['tweek']
+                }).catch(error => {
+                    console.log('error' + error)
+                })
+            }
+            if(tweek.is_liked){
+            this.unlikeTweek(tweek);
+            }
+            if(tweek.is_disliked){
+            this.undislikeTweek(tweek);
+            }else{
+            this.dislikeTweek(tweek);
+            }
+        },
+        dislikeTweek(tweek){
+            tweek.is_disliked = true;
+            tweek.dislikes_count += 1;
+            let tweek_id = {
+                'tweek_id': tweek.id
+            }
+            axios.post('/api/add_dislike/', tweek_id,
+                {
+                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
+                })
+            .then(response => {
+                console.log(response.data)
+            }).catch(error => {
+                console.log('error' + error)
+            })
+        },
+        undislikeTweek(tweek){
+            tweek.is_disliked = false;
+            tweek.dislikes_count -= 1;
+            var tweek_id = {
+                'tweek_id': tweek.id
+            };
+            axios.post('/api/remove_dislike/', tweek_id,
+                {
+                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
+                })
+            .then(response => {
+                console.log(response.data)
+            }).catch(error => {
+                console.log('error' + error)
+            })
+        },
+        deleteTweek(tweek_id){
+            var tweek = {
+                'tweek_id': tweek_id,
+            };
+            axios.post('/api/delete_tweek/', tweek,
+                {
+                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
+                })
+            .then(response => {
+                console.log(response.data)
+            }).catch(error => {
+                console.log('error' + error)
+            })
+            const el = document.getElementById('tweek-' + tweek_id);
+            el.remove();
+        },
+        async submitTweek(tweek_id=null){
+            if (this.body.length > 0 || tweek_id != null){
+                let tweek = {
+                    'body': this.body,
+                    'tweeker': this.tweeker,
+                    'created_at': this.created_at,
+                    'avatar': this.avatar,
+                    'retweek_id': tweek_id,
+                };
+                // Send to backend
+                await axios.post('/api/add_tweek/', tweek, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${localStorage.getItem('token')}`,
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                })
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+                this.currentPage = 1;
+                this.tweeks=[];
+                this.getTweeks()
+            }
+            this.body = '';
+        },
+    }
+}
+</script>

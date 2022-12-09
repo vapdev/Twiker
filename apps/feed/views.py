@@ -1,54 +1,26 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 import json
 import re
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from apps.notification.utilities import create_notification
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
 from .serializers import TweekSerializer
 from apps.feed.models import Tweek, Like, Dislike
 
 
-@login_required
-def feed(request):
-    userids = [request.user.id]
 
-    for tweeker in request.user.twikkerprofile.follows.all():
-        userids.append(tweeker.user.id)
-
-    tweeks = Tweek.objects.filter(created_by__id__in=userids)
-
-    for tweek in tweeks:
-        likes = tweek.likes.filter(created_by__id=request.user.id)
-
-        if likes.count() > 0:
-            tweek.liked = True
-        else:
-            tweek.liked = False
-
-        dislikes = tweek.dislikes.filter(created_by__id=request.user.id)
-
-        if dislikes.count() > 0:
-            tweek.disliked = True
-        else:
-            tweek.disliked = False
-
-    retweeked_tweeks_ids = [tweek.retweek.id for tweek in tweeks if tweek.retweek]
-
-    return render(request, 'feed.html', {'tweeks': tweeks, 'retweeked_tweeks': retweeked_tweeks_ids})
-
-
-@login_required
+@permission_classes((IsAuthenticated, ))
 def view_tweek(request, tweek_id):
     tweek = Tweek.objects.get(id=tweek_id)
     return render(request, 'tweek.html', {'tweek': tweek})
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 def search(request):
     query = request.GET.get('query', '')
     if len(query) > 0:
@@ -65,13 +37,15 @@ def search(request):
     return render(request, 'search.html', context)
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 @csrf_exempt
+@api_view(['POST'])
 def api_add_tweek(request):
     data = json.loads(request.body)
     body = data['body']
     retweek_id = data['retweek_id']
-    tweek = Tweek.objects.create(body=body, created_by=request.user, retweek_id=retweek_id)
+    user = User.objects.get(id=request.user.id)
+    tweek = Tweek.objects.create(body=body, created_by=user, retweek_id=retweek_id)
     results = re.findall("(^|[^@\w])@(\w{1,20})", body)
     for result in results:
         result = result[1]
@@ -81,16 +55,9 @@ def api_add_tweek(request):
     return JsonResponse({'success': True})
 
 
-def check_user_exists(username):
-    try:
-        User.objects.get(username=username)
-        return True
-    except User.DoesNotExist:
-        return False
-
-
-@login_required
+@permission_classes((IsAuthenticated, ))
 @csrf_exempt
+@api_view(['POST'])
 def api_add_like(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
@@ -107,8 +74,9 @@ def api_add_like(request):
     return JsonResponse({'success': True})
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 @csrf_exempt
+@api_view(['POST'])
 def api_remove_like(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
@@ -123,8 +91,9 @@ def api_remove_like(request):
     return JsonResponse({'success': True})
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 @csrf_exempt
+@api_view(['POST'])
 def api_add_dislike(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
@@ -141,8 +110,9 @@ def api_add_dislike(request):
     return JsonResponse({'success': True})
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 @csrf_exempt
+@api_view(['POST'])
 def api_remove_dislike(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
@@ -157,8 +127,9 @@ def api_remove_dislike(request):
     return JsonResponse({'success': True})
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 @csrf_exempt
+@api_view(['POST'])
 def api_remove_retweek(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
@@ -169,8 +140,9 @@ def api_remove_retweek(request):
     return JsonResponse({'success': True})
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 @csrf_exempt
+@api_view(['POST'])
 def api_delete_tweek(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
@@ -183,7 +155,7 @@ def api_delete_tweek(request):
     return JsonResponse({'success': True})
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 @csrf_exempt
 @api_view(['GET'])
 def api_get_tweeks(request):
@@ -198,7 +170,7 @@ def api_get_tweeks(request):
     return paginator.get_paginated_response(serializer.data)
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 @csrf_exempt
 @api_view(['GET'])
 def api_get_profile_tweeks(request, user_id):
@@ -210,7 +182,7 @@ def api_get_profile_tweeks(request, user_id):
     return paginator.get_paginated_response(serializer.data)
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 @csrf_exempt
 @api_view(['GET'])
 def api_get_tweek(request, tweek_id):

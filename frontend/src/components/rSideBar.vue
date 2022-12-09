@@ -15,7 +15,7 @@
                 <div class="flex flex-col w-full mt-6">
                     <form v-on:submit.prevent="">
                         <div class="flex w-full py-2">
-                            <textarea placeholder="What you tweeking bro..." class="text-xl resize-none h-fit w-full outline-none bg-white dark:bg-slate-900" type="text" v-model="body"></textarea>
+                            <textarea placeholder="What you tweeking bro..." class="text-xl resize-none h-fit w-full outline-none bg-white dark:bg-slate-900" type="text"></textarea>
                         </div>
                         <div class="flex border-solid border-t-2 border-gray-100 dark:border-gray-700 w-full">
                             <div class="flex my-2 w-full">
@@ -24,7 +24,7 @@
                                         <button class=""><i class="p-1 fa-regular fa-image"></i></button>
                                     </div>
                                     <div class="flex">
-                                        <button id="submit-tweet" type="submit" class="bg-green-400 rounded-full text-white font-bold mx-3 px-5 py-2">Submit</button>
+                                        <button id="submit-tweek" type="submit" class="bg-green-400 rounded-full text-white font-bold mx-3 px-5 py-2">Submit</button>
                                     </div>
                                 </div>
                             </div>
