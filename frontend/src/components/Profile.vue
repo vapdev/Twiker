@@ -5,66 +5,72 @@
                 <div class="flex flex-col">
                         <article>
                             <figure>
-                                <p>
-                                    IMG
-                                </p>
+                                <div class="h-14 w-14 rounded-full border-2 border-white bg-gray300"></div>
                             </figure>
                         </article> 
-                    <h1>Snoop Dogg</h1>
+                    <h1>{{ user.username }}</h1>
                 </div>
 
                 <div class="flex flex-col">
-                    <a href="{% url 'followers' user.username %}">Followers: 11</a>
-                    <a href="{% url 'follows' user.username %}">Follows: 12</a>
+                    <a href="{% url 'followers' user.username %}">Followers: {{ user.followed_by }}</a>
+                    <a href="{% url 'follows' user.username %}">Follows: {{ user.following }}</a>
                         <a href="{% url 'conversation' user.id %}">Send message</a>
                         <span>
-                            <a href="{% url 'unfollow_tweeker' user.username %}">Unfollow</a>
-                            <a href="{% url 'follow_tweeker' user.username %}">Follow</a>
+                            <a @click="unfollowUser()">Unfollow</a>
+                            <a @click="followUser()">Follow</a>
                         </span>
                 </div>
             </div>
         </div>
-        
-            <div id="twikkerprofileapp" class="flex-col">
-                <div class="flex flex-row h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
-                    <div class="flex mr-2">
-                        <img class="rounded-full h-12 w-12" >
-                    </div>
-                    <div class="flex flex-col w-full">
-                        <div>
-                        <span class="font-semibold text-lg">[[ tweek.tweeker_name ]]</span><span class="ml-2">[[ tweek.formatted_time ]]</span>
-                        <span class="flex text-xl break-all">[[ tweek.body ]]</span>
-                        <div class="flex flex-row justify-between w-2/3 mt-3">
-                            <div class="flex">
-                                <div class="w-8 h-8 p-1 text-center hover:bg-yellow-200 hover:rounded-full">
-                                    <i class="fa-regular fa-comment-dots"></i>
-                                </div>
-                                <span class="pt-1"></span>
-                            </div>
-                            <div class="flex">
-                                <div class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
-                                    <i class="fa-solid fa-retweet"></i>
-                                </div>
-                                <span class="pt-1">25</span>
-                            </div>
-                            <div class="flex">
-                                <div class="flex mx-2">
-                                    <div class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
-                                        <i class="fa-regular fa-thumbs-up"></i>
-                                    </div>
-                                    <span class="pt-1">[[ tweek.likes_count ]] [[ tweek.liked_tweeks ]]</span>
-                                </div>
-                                <div class="flex mx-2">
-                                    <div class="w-8 h-8 p-1 text-center hover:bg-red-200 hover:rounded-full">
-                                        <i class="fa-solid fa-thumbs-down"></i>
-                                    </div>
-                                    <span class="pt-1">[[ tweek.dislikes_count ]] [[ tweek.disliked_tweeks ]]</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div>
     </div>
 </template>
+
+<script>
+import axios from 'axios';
+    export default{
+        data() {
+            return {
+                user: '',
+            }
+        },
+        mounted() {
+            this.getUser()
+        },
+        methods: {
+            async getUser(){
+                await axios.get(`/api/user_data/${this.$route.params.username}`,
+                    {
+                        headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
+                    }) 
+                .then(response => {
+                    this.user = response.data
+                    console.log(this.user)
+                }).catch(error => {
+                    console.log('error' + error)
+                })
+            },
+            followUser(){
+                axios.post(`/api/follow/${this.$route.params.username}`,
+                    {
+                        headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
+                    }) 
+                .then(response => {
+                    console.log(response)
+                }).catch(error => {
+                    console.log('error' + error)
+                })
+            },
+            unfollowUser(){
+                axios.post(`/api/unfollow/${this.$route.params.username}`,
+                    {
+                        headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
+                    }) 
+                .then(response => {
+                    console.log(response)
+                }).catch(error => {
+                    console.log('error' + error)
+                })
+            }
+        }
+    }
+</script>

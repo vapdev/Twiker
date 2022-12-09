@@ -1,9 +1,42 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import rSideBar from './components/rSideBar.vue';
-import lSideBar from './components/lSideBar.vue';
-import Feed from './views/Feed.vue';
+<script>
+import axios from 'axios'
+
+export default {
+  name: 'App',
+  beforeCreate(){
+    this.$store.commit('initializeStore')
+
+    const token = this.$store.state.token
+
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Token ${token}`
+    } else if (this.$route.name !== 'SignUp') {
+      axios.defaults.headers.common['Authorization'] = ''
+      return this.$router.push('/login')
+    } else {
+      return this.$router.push('/signup')
+    }
+  },
+  created() {
+    this.getAuthenticatedUser()
+  },
+  methods: {
+    logout() {
+      this.$store.commit('logout')
+      this.$router.push('/login')
+    },
+    getAuthenticatedUser() {
+      axios.get('/api/auth_user/')
+        .then(response => {
+          console.log(response.data)
+          this.$store.commit('setAuthenticatedUsername', response.data.username)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  }
+}
 </script>
 
 <template>

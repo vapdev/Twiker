@@ -4,24 +4,26 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
 from apps.notification.utilities import create_notification
 from .models import Conversation, ConversationMessage
 from .serializers import ChatSerializer
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 def conversations(request):
     conversations = request.user.conversations.all()
 
     return render(request, 'conversation/conversations.html', {'conversations': conversations})
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 def global_chat(request):
     return render(request, 'conversation/global.html')
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 def conversation(request, user_id):
     conversations = Conversation.objects.filter(users__in=[request.user.id])
     conversations = conversations.filter(users__in=[user_id])
@@ -38,7 +40,7 @@ def conversation(request, user_id):
     return render(request, 'conversation/conversation.html', {'conversation': conversation, 'messages': conversation.messages.all()})
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 def api_add_message(request):
     data = json.loads(request.body)
     content = data['content']
@@ -54,7 +56,7 @@ def api_add_message(request):
     return JsonResponse({'success': True})
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 @api_view(['GET'])
 def api_get_global_messages(request):
     messages = ConversationMessage.objects.filter(conversation_id=None).order_by('created_at')
@@ -62,7 +64,7 @@ def api_get_global_messages(request):
     return JsonResponse({'success': True, 'messages': serializer.data})
 
 
-@login_required
+@permission_classes((IsAuthenticated, ))
 @api_view(['GET'])
 def api_get_dm_messages(request, conversation_id):
     conversation = Conversation.objects.get(pk=conversation_id)

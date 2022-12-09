@@ -25,4 +25,6 @@ urlpatterns = [
     path('', include('apps.notification.urls')),
     path('', include('apps.twikkerprofile.urls')),
     path('admin/', admin.site.urls),
+    path('api/v1/', include('djoser.urls')),
+    path('api/v1/', include('djoser.urls.authtoken')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -33,13 +33,13 @@
             </router-link>
         </div>
         <div class="flex py-1">
-            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full "
+            <router-link to="/globalchat" class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full "
                 href="{% url 'global' %} ">
                 <div class="flex w-11 h-11">
                     <i class="text-lg m-auto fa-solid fa-earth-americas"></i>
                 </div>
                 <span class="break-keep m-auto mx-3 max-[850px]:hidden">Global chat</span>
-            </a>
+            </router-link>
         </div>
         <div class="flex py-1">
             <router-link to="/conversations" class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full">

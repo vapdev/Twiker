@@ -7,6 +7,16 @@ import Users from "../views/Users.vue"
 
 const routes = [
   {
+    path: "/signup",
+    name: "SignUp",
+    component: () => import("../views/SignUp.vue"),
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/Login.vue"),
+  },
+  {
     path: "/",
     name: "Feed",
     component: Feed,
@@ -28,8 +38,18 @@ const routes = [
   },
   {
     path: "/profile",
+    name: "SelfProfile",
+    component: Profile
+  },
+  {
+    path: "/profile/:username",
     name: "Profile",
     component: Profile
+  },
+  {
+    path: "/globalchat",
+    name: "GlobalChat",
+    component: () => import("../views/GlobalChat.vue")
   }
 ]
 

@@ -5,7 +5,7 @@ import Profile from '../components/Profile.vue';
 </script>
 <template>
     <body class="">
-        <div class="flex flex-row max-[600px]:flex-col w-full justify-center bg-white dark:bg-slate-900 dark:text-gray-300 text-black dark:text-gray-300">
+        <div class="flex flex-row max-[600px]:flex-col w-full justify-center bg-white dark:bg-slate-900 text-black dark:text-gray-300">
             <aside class="flex w-full max-[600px]:w-fit justify-end max-[600px]:sticky max-[600px]:top-0 max-[600px]:left-0">
             <lSideBar />
             </aside>
