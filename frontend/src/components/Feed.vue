@@ -65,8 +65,8 @@
                                     <span class="pt-1"></span>
                                 </div>
                                 <div class="flex">
-                                    <div @click.stop="toggleRetweek(tweek.id)" class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
-                                        <i :id="'retweek-'+tweek.id" :class=" tweek.is_retweek ? 'text-blue-600 fa-solid fa-retweet' : 'fa-solid fa-retweet'"></i>
+                                    <div @click.stop="toggleRetweek(tweek)" class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
+                                        <i :id="'retweek-'+tweek.id" :class=" tweek.is_retweeked ? 'text-blue-600 fa-solid fa-retweet' : 'fa-solid fa-retweet'"></i>
                                     </div>
                                     <span class="pt-1">{{ tweek.retweek_count }}</span>
                                 </div>
@@ -98,6 +98,7 @@
 
 <script>
 import axios from 'axios'
+import { getTransitionRawChildren } from 'vue';
 
 document.body.addEventListener('keydown', function(e) {
   if(!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
@@ -123,6 +124,7 @@ export default {
     },
     mounted() {
         this.getTweeks()
+        console.log("auth token: " + localStorage.getItem('token'))
         window.onscroll = () => {
             let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
 
@@ -133,20 +135,16 @@ export default {
         }
     },
     methods: {
-        getTweeks(){
-            axios.get(`/api/get_tweeks/?page=${this.currentPage}`,
+        async getTweeks(){
+            await axios.get(`/api/get_tweeks/?page=${this.currentPage}`,
                 {
                     headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
                 }) 
             .then(response => {
-                console.log(response.data)
                 this.hasNext = false
                 if (response.data.next) {
                     this.hasNext = true
                 }
-                // for (let i = 0; i < response.data.results.length; i++) {
-                //     this.tweeks.push(response.data.results[i])
-                // }
                 this.tweeks = response.data.results
             }).catch(error => {
                 console.log('error' + error)
@@ -208,16 +206,16 @@ export default {
                 console.log('error' + error)
             })
         },
-        async toggleRetweek(tweek_id){
-            if(this.retweeked_tweeks.includes(tweek_id)){
-                let el = document.getElementById(`retweek-${tweek_id}`);
-                await this.unretweekTweek(tweek_id);
+        async toggleRetweek(tweek){
+            console.log('aqui 1')
+            if(tweek.is_retweeked){
+                await this.unretweekTweek(tweek.id);
             }else{
-                await this.submitTweek(tweek_id);
+                console.log("submit" + tweek.id)
+                await this.submitTweek(tweek.id);
             }
         },
         async unretweekTweek(tweek_id){
-            this.retweeked_tweeks = this.retweeked_tweeks.filter(item => item !== tweek_id)
             var tweek = {
                 'tweek_id': tweek_id,
             };
@@ -230,6 +228,7 @@ export default {
             }).catch(error => {
                 console.log('error' + error)
             })
+            this.getTweeks();
         },
         async toggleDislike(tweek){
             if(tweek.retweek_id){
@@ -301,6 +300,7 @@ export default {
             el.remove();
         },
         async submitTweek(tweek_id=null){
+            console.log('id'+tweek_id)
             if (this.body.length > 0 || tweek_id != null){
                 let tweek = {
                     'body': this.body,

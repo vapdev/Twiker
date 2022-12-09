@@ -38,6 +38,11 @@ const routes = [
   },
   {
     path: "/profile",
+    name: "SelfProfile",
+    component: Profile
+  },
+  {
+    path: "/profile/:username",
     name: "Profile",
     component: Profile
   },

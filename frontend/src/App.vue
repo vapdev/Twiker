@@ -16,6 +16,25 @@ export default {
     } else {
       return this.$router.push('/signup')
     }
+  },
+  created() {
+    this.getAuthenticatedUser()
+  },
+  methods: {
+    logout() {
+      this.$store.commit('logout')
+      this.$router.push('/login')
+    },
+    getAuthenticatedUser() {
+      axios.get('/api/auth_user/')
+        .then(response => {
+          console.log(response.data)
+          this.$store.commit('setAuthenticatedUsername', response.data.username)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 }
 </script>
