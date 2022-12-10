@@ -15,7 +15,7 @@
                     <a class="cursor-pointer">Follows: {{ following }}</a>
                 </div>
                 <div class="flex flex-col ml-4">
-                    <span class="cursor-pointer" href="{% url 'conversation' user.id %}">Send message</span>
+                    <router-link :to="`/conversation/${user.id}`" class="cursor-pointer" >Send message</router-link>
                     <span class="cursor-pointer" @click="unfollowUser()">Unfollow</span>
                     <span class="cursor-pointer" @click="followUser()">Follow</span>
                 </div>

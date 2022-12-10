@@ -59,17 +59,12 @@ def api_add_message(request):
 
 @permission_classes((IsAuthenticated, ))
 @api_view(['GET'])
-def api_get_global_messages(request):
-    messages = ConversationMessage.objects.filter(conversation_id=None).order_by('created_at')
-    serializer = ChatSerializer(messages, many=True)
-    return JsonResponse({'success': True, 'messages': serializer.data})
-
-
-@permission_classes((IsAuthenticated, ))
-@api_view(['GET'])
-def api_get_dm_messages(request, conversation_id):
-    conversation = Conversation.objects.get(pk=conversation_id)
-    messages = conversation.messages.all().order_by('created_at')
+def api_get_messages(request, conversation_id):
+    if conversation_id==0:
+        messages = ConversationMessage.objects.filter(conversation_id=None).order_by('created_at')
+    else:
+        conversation = Conversation.objects.get(pk=conversation_id)
+        messages = conversation.messages.all().order_by('created_at')
     serializer = ChatSerializer(messages, many=True)
     return JsonResponse({'success': True, 'messages': serializer.data})
 

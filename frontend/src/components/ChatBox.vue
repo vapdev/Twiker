@@ -41,15 +41,16 @@ function scrollToBottom() {
 }
 
 export default{
+    props: ['conversation_id'],
     data () {
         return {
             messages: [],
-            conversation_id: 'global',
             content: '',
             tweeker: this.$store.state.username,
             formatted_time: 'Now',
             avatar: '',
             chatSocket: null,
+            current_room: 'global',
         }
     },
     created() {
@@ -64,7 +65,7 @@ export default{
             new_uri +
             '/ws/' +
             'chat/' +
-            '0' +
+            this.conversation_id +
             '/'
         );
         //append to messages when receive message
@@ -80,7 +81,7 @@ export default{
     },
     methods: {
         async getMessages(){
-            await axios.get(`/api/messages/global`,) 
+            await axios.get(`/api/messages/${this.conversation_id}`,) 
             .then(response => {
                 for (let i = 0; i < response.data.messages.length; i++) {
                     this.messages.push(response.data.messages[i])
