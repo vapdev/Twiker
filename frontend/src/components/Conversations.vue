@@ -9,7 +9,7 @@
                 </p>
             </figure>
             <div>
-                <p>{{ conversation.users }}</p>
+                <router-link :to="`conversation/${ conversation.users[1] }`"><p>{{ conversation.users[1] }}</p></router-link>
                 <p>{{ conversation.modified_at }}</p>
             </div>
         </article>

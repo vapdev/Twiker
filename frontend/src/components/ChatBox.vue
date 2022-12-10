@@ -1,8 +1,8 @@
 <template>
     <div id="conversationapp" class="flex flex-col h-full">
-        <div id="chatcontainer" class="flex flex-col h-full mr-3 mt-2">
+        <div id="chatcontainer" class="flex flex-col h-full mx-3 mt-2">
             <div class="mb-1.5" v-for="message in messages" :class="message.tweeker_name == this.$store.state.username ? 'justify-end flex w-full' : 'flex w-full' ">
-                <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-100 dark:border-gray-700 rounded-tl-3xl rounded-tr-3xl  rounded-bl-3xl bg-gray-700">
+                <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-100 dark:border-gray-700 bg-gray-700" :class="message.tweeker_name == this.$store.state.username ? 'rounded-tl-3xl rounded-tr-3xl  rounded-bl-3xl' : 'rounded-tl-3xl rounded-tr-3xl  rounded-br-3xl' ">
                     <figure class="shrink-0">
                         <img class="rounded-full h-12 w-12 bg-gray-300">
                     </figure>
@@ -41,9 +41,10 @@ function scrollToBottom() {
 }
 
 export default{
-    props: ['conversation_id'],
+    props: ['user_id'],
     data () {
         return {
+            conversation_id: '0',
             messages: [],
             content: '',
             tweeker: this.$store.state.username,
@@ -53,7 +54,8 @@ export default{
             current_room: 'global',
         }
     },
-    created() {
+    mounted() {
+        this.getMessages();
         var loc = window.location, new_uri;
         if (loc.protocol === "https:") {
             new_uri = "wss:";
@@ -77,12 +79,26 @@ export default{
                 scrollToBottom();
             }, 0);
         }.bind(this);
-        this.getMessages();
     },
     methods: {
+        async getConversationId(){
+            await axios.get(`/api/get_conversation/${this.user_id}`)
+            .then(response => {
+                this.conversation_id = response.data.conversation_id
+                console.log('conv id is ' + this.conversation_id)
+            })
+            .catch(error => {
+                console.log('error 2' + error)
+            })
+        },
         async getMessages(){
+            if (this.user_id){
+                await this.getConversationId();
+            }
+            console.log('messages conv id is   ' + this.conversation_id)
             await axios.get(`/api/messages/${this.conversation_id}`,) 
             .then(response => {
+                console.log("the messages are    " + response.data.messages)
                 for (let i = 0; i < response.data.messages.length; i++) {
                     this.messages.push(response.data.messages[i])
                 }
@@ -92,7 +108,7 @@ export default{
                 }, 0);
             })
             .catch(error => {
-                console.log('error' + error)
+                console.log('error 1' + error)
             })
         },
         submitMessage() {
@@ -102,7 +118,7 @@ export default{
                     'tweeker_name': this.$store.state.username,
                     'formatted_time': this.formatted_time,
                     'avatar_url': this.avatar,
-                    'conversation_id': '',
+                    'conversation_id': this.conversation_id,
                 };
                 this.chatSocket.send(JSON.stringify(message));
                 this.content = '';

@@ -10,7 +10,7 @@ import ChatBox from './ChatBox.vue';
             </a>
         </div>
         <div class="flex flex-col h-full w-full">
-            <ChatBox :conversation_id="this.id"></ChatBox>
+            <ChatBox :user_id="this.id"></ChatBox>
         </div>
     </div>
 </template>

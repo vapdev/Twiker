@@ -12,20 +12,12 @@ from .models import Conversation, ConversationMessage
 from .serializers import ChatSerializer, ConversationSerializer
 
 
+
+@api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
-def conversations(request):
-    conversations = request.user.conversations.all()
-
-    return render(request, 'conversation/conversations.html', {'conversations': conversations})
-
-
-@permission_classes((IsAuthenticated, ))
-def global_chat(request):
-    return render(request, 'conversation/global.html')
-
-
-@permission_classes((IsAuthenticated, ))
-def conversation(request, user_id):
+def api_get_conversation(request, user_id):
+    print("request.user.id: ", request.user.id)
+    print("user_id: ", user_id)
     conversations = Conversation.objects.filter(users__in=[request.user.id])
     conversations = conversations.filter(users__in=[user_id])
 
@@ -38,9 +30,9 @@ def conversation(request, user_id):
         conversation.users.add(recipient)
         conversation.save()
 
-    return render(request, 'conversation/conversation.html', {'conversation': conversation, 'messages': conversation.messages.all()})
+    return JsonResponse({'conversation_id': conversation.id})
 
-
+@api_view(['POST'])
 @permission_classes((IsAuthenticated, ))
 def api_add_message(request):
     data = json.loads(request.body)

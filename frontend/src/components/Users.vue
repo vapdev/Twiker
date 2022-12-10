@@ -14,7 +14,7 @@
             <div class="flex flex-col">
                 <div class="flex">
                     <h1>
-                        <a>{{ user.username }}</a>
+                        <router-link :to="`/profile/${user.username}`">{{ user.username }}</router-link>
                     </h1>
                 </div>
                 <div class="flex">
