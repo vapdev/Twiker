@@ -22,16 +22,12 @@ export default {
   },
   methods: {
     getAuthenticatedUser() {
-      console.log("hey ho")
       axios.get('/api/auth_user/')
         .then(response => {
-          console.log(response.data)
           this.$store.commit('setUsername', response.data.username)
           this.$store.commit('setUserId', response.data.id)
           localStorage.setItem('username', response.data.username)
           localStorage.setItem('user_id', response.data.id)
-          console.log("username is " + localStorage.getItem('username'))
-          console.log("user_id is " + localStorage.getItem('user_id'))
         })
         .catch(error => {
           console.log(error)

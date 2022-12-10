@@ -146,7 +146,7 @@ export default {
         },
         async toggleLike(tweek){
             if(tweek.retweek_id){
-                axios.get(`/api/tweek/${tweek.retweek_id}/`,)
+                await axios.get(`/api/tweek/${tweek.retweek_id}/`,)
                 .then(response => {
                     tweek = response.data['tweek']
                 }).catch(error => {
@@ -184,18 +184,18 @@ export default {
                 console.log('error' + error)
             })
         },
-        async toggleRetweek(tweek){
+        toggleRetweek(tweek){
             if(tweek.is_retweeked){
-                await this.unretweekTweek(tweek.id);
+                this.unretweekTweek(tweek.id);
             }else{
-                await this.submitTweek(tweek.id);
+                this.submitTweek(tweek.id);
             }
         },
         async unretweekTweek(tweek_id){
             var tweek = {
                 'tweek_id': tweek_id,
             };
-            axios.post('/api/remove_retweek/', tweek,)  
+            await axios.post('/api/remove_retweek/', tweek,)  
             .catch(error => {
                 console.log('error' + error)
             })
@@ -203,7 +203,7 @@ export default {
         },
         async toggleDislike(tweek){
             if(tweek.retweek_id){
-                axios.get(`/api/tweek/${tweek.retweek_id}/`,)
+                await axios.get(`/api/tweek/${tweek.retweek_id}/`,)
                 .then(response => {
                     tweek = response.data['tweek']
                 }).catch(error => {

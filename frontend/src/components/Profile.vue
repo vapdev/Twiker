@@ -41,24 +41,19 @@ import axios from 'axios';
                 await axios.get(`/api/user_data/${this.$route.params.username}`,) 
                 .then(response => {
                     this.user = response.data
-                    console.log(this.user)
                 }).catch(error => {
                     console.log('error' + error)
                 })
             },
             followUser(){
                 axios.post(`/api/follow/${this.$route.params.username}`,) 
-                .then(response => {
-                    console.log(response)
-                }).catch(error => {
+                .catch(error => {
                     console.log('error' + error)
                 })
             },
             unfollowUser(){
                 axios.post(`/api/unfollow/${this.$route.params.username}`,) 
-                .then(response => {
-                    console.log(response)
-                }).catch(error => {
+                .catch(error => {
                     console.log('error' + error)
                 })
             }
