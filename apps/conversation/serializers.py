@@ -16,7 +16,16 @@ class ChatSerializer(serializers.ModelSerializer):
 
 class ConversationSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
+    user_id = serializers.SerializerMethodField()
     formatted_time = serializers.SerializerMethodField()
+
+    def get_user_id(self, obj):
+        user1 = obj.users.all()[0]
+        user2 = obj.users.all()[1]
+        user = self.context['request'].user
+        if user == user1:
+            return user2.id
+        return user1.id
 
     def get_username(self, obj):
         user1 = obj.users.all()[0]
@@ -33,6 +42,6 @@ class ConversationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Conversation
-        fields = ['id', 'username', 'formatted_time']
+        fields = ['id', 'username', 'formatted_time', 'user_id']
 
     

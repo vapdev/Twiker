@@ -9,7 +9,7 @@
                 </p>
             </figure>
             <div>
-                <router-link :to="`conversation/${ conversation.username }`"><p>{{ conversation.username }}</p></router-link>
+                <router-link :to="`conversation/${ conversation.user_id }`"><p>{{ conversation.username }}</p></router-link>
                 <p>{{ conversation.formatted_time }}</p>
             </div>
         </article>
