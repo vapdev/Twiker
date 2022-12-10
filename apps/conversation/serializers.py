@@ -2,7 +2,7 @@ from datetime import datetime
 from rest_framework import serializers
 from django.contrib.humanize.templatetags.humanize import naturaltime
 
-from .models import ConversationMessage
+from .models import ConversationMessage, Conversation
 
 
 class ChatSerializer(serializers.ModelSerializer):
@@ -13,3 +13,8 @@ class ChatSerializer(serializers.ModelSerializer):
         model = ConversationMessage
         fields = ['id', 'content', 'tweeker_name', 'created_at', 'avatar_url', 'formatted_time']
 
+
+class ConversationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Conversation
+        fields = '__all__'

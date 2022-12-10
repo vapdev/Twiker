@@ -37,7 +37,6 @@
 import axios from 'axios'
 
 function scrollToBottom() {
-    console.log('scrolling to bottom')
     window.scrollTo(0, document.body.scrollHeight);
 }
 
@@ -104,7 +103,6 @@ export default{
                     'avatar_url': this.avatar,
                     'conversation_id': '',
                 };
-                console.log('message is: ' + this.$store.state.username)
                 this.chatSocket.send(JSON.stringify(message));
                 this.content = '';
             }

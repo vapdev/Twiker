@@ -4,11 +4,12 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
 from apps.notification.utilities import create_notification
 from .models import Conversation, ConversationMessage
-from .serializers import ChatSerializer
+from .serializers import ChatSerializer, ConversationSerializer
 
 
 @permission_classes((IsAuthenticated, ))
@@ -72,3 +73,9 @@ def api_get_dm_messages(request, conversation_id):
     serializer = ChatSerializer(messages, many=True)
     return JsonResponse({'success': True, 'messages': serializer.data})
 
+
+class ConversationsList(generics.ListAPIView):
+    serializer_class = ConversationSerializer
+
+    def get_queryset(self):
+        return self.request.user.conversations.all()
