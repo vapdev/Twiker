@@ -38,10 +38,7 @@ import axios from 'axios';
         },
         methods: {
             async getUser(){
-                await axios.get(`/api/user_data/${this.$route.params.username}`,
-                    {
-                        headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                    }) 
+                await axios.get(`/api/user_data/${this.$route.params.username}`,) 
                 .then(response => {
                     this.user = response.data
                     console.log(this.user)
@@ -50,10 +47,7 @@ import axios from 'axios';
                 })
             },
             followUser(){
-                axios.post(`/api/follow/${this.$route.params.username}`,
-                    {
-                        headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                    }) 
+                axios.post(`/api/follow/${this.$route.params.username}`,) 
                 .then(response => {
                     console.log(response)
                 }).catch(error => {
@@ -61,10 +55,7 @@ import axios from 'axios';
                 })
             },
             unfollowUser(){
-                axios.post(`/api/unfollow/${this.$route.params.username}`,
-                    {
-                        headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                    }) 
+                axios.post(`/api/unfollow/${this.$route.params.username}`,) 
                 .then(response => {
                     console.log(response)
                 }).catch(error => {

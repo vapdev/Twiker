@@ -42,14 +42,12 @@ import axios from 'axios'
             }
         },
         mounted() {
+            console.log("it is" + this.$username)
             this.getNotifications();
         },
         methods: {
             getNotifications(){
-                axios.get(`/api/notifications/1`,
-                {
-                    headers: {'Authorization': `Token ${localStorage.getItem('token')}`}
-                }) 
+                axios.get(`/api/notifications/1`,) 
                 .then(response => {
                     this.notifications = response.data;
                 }).catch(error => {
