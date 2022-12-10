@@ -36,6 +36,11 @@
 <script>
 import axios from 'axios'
 
+function scrollToBottom() {
+    console.log('scrolling to bottom')
+    window.scrollTo(0, document.body.scrollHeight);
+}
+
 export default{
     data () {
         return {
@@ -63,14 +68,15 @@ export default{
             '0' +
             '/'
         );
+        //append to messages when receive message
         this.chatSocket.onmessage = function (e) {
             const data = JSON.parse(e.data);
             // append message to messages
             this.messages.push(data);
             setTimeout(() => {
-                window.scrollTo(0, document.body.scrollHeight);
+                scrollToBottom();
             }, 0);
-        };
+        }.bind(this);
         this.getMessages();
     },
     methods: {
@@ -80,8 +86,12 @@ export default{
                 for (let i = 0; i < response.data.messages.length; i++) {
                     this.messages.push(response.data.messages[i])
                 }
-                this.scrollToBottom();
-            }).catch(error => {
+            }).then(() => {
+                setTimeout(() => {
+                    scrollToBottom();
+                }, 0);
+            })
+            .catch(error => {
                 console.log('error' + error)
             })
         },
@@ -99,10 +109,6 @@ export default{
                 this.content = '';
             }
         },
-        scrollToBottom() {
-            console.log("aqui eu caio")
-            window.scrollTo(0, document.body.scrollHeight);
-        }
     }
 }
 </script>

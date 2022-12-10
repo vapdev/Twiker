@@ -37,7 +37,6 @@ export default {
                 .post('api/v1/users/', formData)
                 .then(response => {
                     this.$router.push('/signup')
-                    console.log(response)
                 })
                 .catch(error => {
                     console.log(error)

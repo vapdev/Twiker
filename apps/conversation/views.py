@@ -61,7 +61,6 @@ def api_add_message(request):
 def api_get_global_messages(request):
     messages = ConversationMessage.objects.filter(conversation_id=None).order_by('created_at')
     serializer = ChatSerializer(messages, many=True)
-    print("serializer.data", serializer.data)
     return JsonResponse({'success': True, 'messages': serializer.data})
 
 

@@ -119,7 +119,6 @@ export default {
     },
     mounted() {
         this.getTweeks()
-        console.log("auth token: " + localStorage.getItem('token'))
         window.onscroll = () => {
             let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
 
@@ -131,7 +130,6 @@ export default {
     },
     methods: {
         async getTweeks(){
-            console.log("username" + this.$store.state.username)
             await axios.get(`/api/get_tweeks/?page=${this.currentPage}`) 
             .then(response => {
                 this.hasNext = false
@@ -171,9 +169,7 @@ export default {
                 'tweek_id': tweek.id
             };
             axios.post('/api/add_like/', tweek_id,)
-            .then(response => {
-                console.log(response.data)
-            }).catch(error => {
+            .catch(error => {
                 console.log('error' + error)
             })
         },
@@ -184,18 +180,14 @@ export default {
                 'tweek_id': tweek.id
             };
             axios.post('/api/remove_like/', tweek_id,)
-            .then(response => {
-                console.log(response.data)
-            }).catch(error => {
+            .catch(error => {
                 console.log('error' + error)
             })
         },
         async toggleRetweek(tweek){
-            console.log('aqui 1')
             if(tweek.is_retweeked){
                 await this.unretweekTweek(tweek.id);
             }else{
-                console.log("submit" + tweek.id)
                 await this.submitTweek(tweek.id);
             }
         },
@@ -204,9 +196,7 @@ export default {
                 'tweek_id': tweek_id,
             };
             axios.post('/api/remove_retweek/', tweek,)  
-            .then(response => {
-                console.log(response.data)
-            }).catch(error => {
+            .catch(error => {
                 console.log('error' + error)
             })
             this.getTweeks();
@@ -236,9 +226,7 @@ export default {
                 'tweek_id': tweek.id
             }
             axios.post('/api/add_dislike/', tweek_id,)
-            .then(response => {
-                console.log(response.data)
-            }).catch(error => {
+            .catch(error => {
                 console.log('error' + error)
             })
         },
@@ -249,9 +237,7 @@ export default {
                 'tweek_id': tweek.id
             };
             axios.post('/api/remove_dislike/', tweek_id,)
-            .then(response => {
-                console.log(response.data)
-            }).catch(error => {
+            .catch(error => {
                 console.log('error' + error)
             })
         },
@@ -260,16 +246,13 @@ export default {
                 'tweek_id': tweek_id,
             };
             axios.post('/api/delete_tweek/', tweek,)
-            .then(response => {
-                console.log(response.data)
-            }).catch(error => {
+            .catch(error => {
                 console.log('error' + error)
             })
             const el = document.getElementById('tweek-' + tweek_id);
             el.remove();
         },
         async submitTweek(tweek_id=null){
-            console.log('id'+tweek_id)
             if (this.body.length > 0 || tweek_id != null){
                 let tweek = {
                     'body': this.body,
@@ -280,9 +263,6 @@ export default {
                 };
                 // Send to backend
                 await axios.post('/api/add_tweek/', tweek,)
-                .then((response) => {
-                    console.log(response)
-                })
                 .catch((error) => {
                     console.log(error)
                 })
