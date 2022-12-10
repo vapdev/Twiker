@@ -9,8 +9,8 @@
                 </p>
             </figure>
             <div>
-                <router-link :to="`conversation/${ conversation.users[1] }`"><p>{{ conversation.users[1] }}</p></router-link>
-                <p>{{ conversation.modified_at }}</p>
+                <router-link :to="`conversation/${ conversation.username }`"><p>{{ conversation.username }}</p></router-link>
+                <p>{{ conversation.formatted_time }}</p>
             </div>
         </article>
     </div>
