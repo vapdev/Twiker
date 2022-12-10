@@ -35,8 +35,7 @@
                     </form>
                 </div>
             </div>
-            <div v-for:="tweek in tweeks" :key="tweek.id"
-                class="flex h-fit w-full px-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
+            <div v-for:="tweek in tweeks" :key="tweek.id" class="flex h-fit w-full px-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
                 <div class="flex flex-col w-full">
                     <div v-if="tweek.retweek" class="flex items-center mb-1">
                         <i class="text-blue-600 fa-solid fa-retweet mr-2"></i>
@@ -44,7 +43,7 @@
                     </div>
                     <div class="flex h-3"></div>
                     <div class="flex">
-                        <div class="flex w-14 h-full pr-2">
+                        <div class="flex w-14 h-full mr-2">
                             <img class="rounded-full h-12 w-12">
                         </div>
                         <div class="flex flex-col w-full pb-3">
@@ -58,31 +57,27 @@
                             </div>
                             <span class="flex text-xl break-all">{{ tweek.retweek ? tweek.retweek_body : tweek.body }}</span>
                             <div v-if="!tweek.is_retweek" class="flex flex-row justify-between w-2/3 mt-3">
-                                <div class="flex">
-                                    <div class="w-8 h-8 p-1 text-center hover:bg-yellow-200 hover:rounded-full">
-                                        <i class="fa-regular fa-comment-dots"></i>
+                                <div class="flex items-center">
+                                    <div class="flex w-8 h-8 hover:bg-yellow-200 hover:rounded-full">
+                                        <i class="m-auto fa-regular fa-comment-dots"></i>
                                     </div>
-                                    <span class="pt-1"></span>
+                                    <span>12</span>
                                 </div>
-                                <div class="flex">
-                                    <div @click.stop="toggleRetweek(tweek)" class="w-8 h-8 p-1 text-center hover:bg-blue-300 hover:rounded-full">
-                                        <i :id="'retweek-'+tweek.id" :class=" tweek.is_retweeked ? 'text-blue-600 fa-solid fa-retweet' : 'fa-solid fa-retweet'"></i>
+                                <div class="flex items-center">
+                                    <div @click.stop="toggleRetweek(tweek)" class="flex w-8 h-8 hover:bg-blue-300 hover:rounded-full">
+                                        <i :id="'retweek-'+tweek.id" :class="tweek.is_retweeked ? 'text-blue-600 fa-solid fa-retweet' : 'fa-solid fa-retweet'" class="m-auto"></i>
                                     </div>
-                                    <span class="pt-1">{{ tweek.retweek_count }}</span>
+                                    <span>{{ tweek.retweek_count }}</span>
                                 </div>
-                                <div class="flex">
-                                    <div @click.stop="toggleLike(tweek)" class="flex mx-2">
-                                        <div class="w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
-                                            <i :id="'like-'+tweek.id" :class=" !tweek.is_liked ? 'fa-regular fa-thumbs-up' : 'fa-solid fa-thumbs-up' "></i>
-                                        </div>
-                                        <span :id="'likes-'+tweek.id" class="pt-1">{{ tweek.likes_count }}</span>
+                                <div class="flex items-center">
+                                    <div @click.stop="toggleLike(tweek)" class="flex w-8 h-8 p-1 text-center hover:bg-green-200 hover:rounded-full">
+                                        <i :id="'like-'+tweek.id" :class=" !tweek.is_liked ? 'fa-regular fa-thumbs-up' : 'fa-solid fa-thumbs-up'" class="m-auto"></i>
                                     </div>
-                                    <div class="flex mx-2">
-                                        <div @click.stop="toggleDislike(tweek)" class="w-8 h-8 p-1 text-center hover:bg-red-200 hover:rounded-full">
-                                            <i :id="'dislike-'+tweek.id" :class=" !tweek.is_disliked ? 'fa-regular fa-thumbs-down' : 'fa-solid fa-thumbs-down' "></i>
-                                        </div>
-                                        <span  :id="'dislikes-'+tweek.id" class="pt-1">{{ tweek.dislikes_count }}</span>
+                                    <span :id="'likes-'+tweek.id">{{ tweek.likes_count }}</span>
+                                    <div @click.stop="toggleDislike(tweek)" class="flex w-8 h-8 p-1 text-center hover:bg-red-200 hover:rounded-full">
+                                        <i :id="'dislike-'+tweek.id" :class=" !tweek.is_disliked ? 'fa-regular fa-thumbs-down' : 'fa-solid fa-thumbs-down'" class="m-auto"></i>
                                     </div>
+                                    <span  :id="'dislikes-'+tweek.id">{{ tweek.dislikes_count }}</span>
                                 </div>
                             </div>
                             <div v-if="tweek.retweek">
