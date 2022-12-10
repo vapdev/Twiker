@@ -28,7 +28,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         content = data['content']
         tweeker_name = data['tweeker_name']
         avatar_url = data['avatar_url']
-        conversation = data['conversation_id']
+        conversation = data['conversation_id'] if data['conversation_id'] else None
 
         to_user_id = await self.save_message(tweeker_name, conversation, content)
 
@@ -61,19 +61,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @sync_to_async
     def save_message(self, tweeker_username, conversation_id, content):
-        tweeker= User.objects.get(username=tweeker_username)
-
+        tweeker = User.objects.get(username=tweeker_username)
         try:
             conversation = Conversation.objects.get(id=conversation_id)
         except:
             conversation = None
-
         ConversationMessage.objects.create(created_by=tweeker, conversation=conversation, content=content)
-
         if conversation:
-
             users = conversation.users.all()
-
             for user in users:
                 if user != tweeker:
                     create_notification(created_by=tweeker, to_user=user, notification_type='message')
