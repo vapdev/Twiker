@@ -42,7 +42,6 @@ import axios from 'axios'
             }
         },
         mounted() {
-            console.log("it is" + this.$username)
             this.getNotifications();
         },
         methods: {

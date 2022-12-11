@@ -81,7 +81,6 @@ def toggle_dark_mode(request):
     user_id = data['user_id']
     user = User.objects.get(id=user_id)
     user.twikkerprofile.dark_mode = not user.twikkerprofile.dark_mode
-    print("Dark mode: ", user.twikkerprofile.dark_mode)
     user.twikkerprofile.save()
     return JsonResponse({'dark_mode': user.twikkerprofile.dark_mode})
 
@@ -91,7 +90,6 @@ def toggle_dark_mode(request):
 def get_user_data(request, username):
     user = get_object_or_404(User, username=username)
     serializer = UserSerializer(user)
-    print("User data: ", serializer.data)
     return JsonResponse(serializer.data)
 
 
@@ -100,7 +98,6 @@ def get_user_data(request, username):
 def get_auth_user(request):
     user = get_object_or_404(User, username=request.user.username)
     serializer = UserSerializer(user)
-    print("User data: ", serializer.data)
     return JsonResponse(serializer.data)
 
 

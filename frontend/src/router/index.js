@@ -27,6 +27,12 @@ const routes = [
     component: Conversations
   },
   {
+    path: "/conversation/:id",
+    name: "Conversation",
+    props: true,
+    component: () => import("../views/Conversation.vue")
+  },
+  {
     path: "/notifications",
     name: "Notifications",
     component: Notifications

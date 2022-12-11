@@ -10,15 +10,14 @@
                         </article> 
                     <h1>{{ user.username }}</h1>
                 </div>
-
-                <div class="flex flex-col">
-                    <a href="{% url 'followers' user.username %}">Followers: {{ user.followed_by }}</a>
-                    <a href="{% url 'follows' user.username %}">Follows: {{ user.following }}</a>
-                        <a href="{% url 'conversation' user.id %}">Send message</a>
-                        <span>
-                            <a @click="unfollowUser()">Unfollow</a>
-                            <a @click="followUser()">Follow</a>
-                        </span>
+                <div class="flex flex-col ml-4">
+                    <a class="cursor-pointer">Followers: {{ followed_by }}</a>
+                    <a class="cursor-pointer">Follows: {{ following }}</a>
+                </div>
+                <div class="flex flex-col ml-4">
+                    <router-link v-if="user.id != this.$store.state.user_id"  :to="`/conversation/${user.id}`" class="cursor-pointer" >Send message</router-link>
+                    <span class="cursor-pointer" @click="unfollowUser()">Unfollow</span>
+                    <span class="cursor-pointer" @click="followUser()">Follow</span>
                 </div>
             </div>
         </div>
@@ -31,6 +30,8 @@ import axios from 'axios';
         data() {
             return {
                 user: '',
+                followed_by: '',
+                following: '',
             }
         },
         mounted() {
@@ -41,24 +42,27 @@ import axios from 'axios';
                 await axios.get(`/api/user_data/${this.$route.params.username}`,) 
                 .then(response => {
                     this.user = response.data
-                    console.log(this.user)
+                    this.followed_by = response.data.followed_by
+                    this.following = response.data.following
                 }).catch(error => {
                     console.log('error' + error)
                 })
             },
             followUser(){
-                axios.post(`/api/follow/${this.$route.params.username}`,) 
+                axios.post(`/api/follow/${this.$route.params.username}`,)
                 .then(response => {
-                    console.log(response)
-                }).catch(error => {
+                    this.getUser()
+                }) 
+                .catch(error => {
                     console.log('error' + error)
                 })
             },
             unfollowUser(){
                 axios.post(`/api/unfollow/${this.$route.params.username}`,) 
                 .then(response => {
-                    console.log(response)
-                }).catch(error => {
+                    this.getUser()
+                })
+                .catch(error => {
                     console.log('error' + error)
                 })
             }

@@ -96,9 +96,6 @@ createApp({
                     credentials: 'same-origin',
                     body: JSON.stringify(tweek_id)
                 })
-                .then((response) => {
-                    console.log(response);
-                })
                 .catch((error) => {
                     console.log(error);
                 });
@@ -125,12 +122,12 @@ createApp({
                     console.log(error);
                 });
         },
-        async toggleRetweek(tweek_id){
+        toggleRetweek(tweek_id){
             if(this.retweeked_tweeks.includes(tweek_id)){
                 let el = document.getElementById(`retweek-${tweek_id}`);
-                await this.unretweekTweek(tweek_id);
+                this.unretweekTweek(tweek_id);
             }else{
-                await this.submitTweek(tweek_id);
+                this.submitTweek(tweek_id);
             }
             window.location.reload();
         },
