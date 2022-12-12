@@ -11,9 +11,32 @@ export default {
     data() {
         return {
             count: 0,
+            body: '',
+            tweeker: 'tweeker_username',
+            created_at: 'Now',
+            avatar: 'tweeker_avatar',
         }
     },
     methods: {
+        async submitTweek(tweek_id=null){
+            if (this.body.length > 0 || tweek_id != null){
+                let tweek = {
+                    'body': this.body,
+                    'tweeker': this.tweeker,
+                    'created_at': this.created_at,
+                    'avatar': this.avatar,
+                    'retweek_id': tweek_id,
+                };
+                // Send to backend
+                await axios.post('/api/add_tweek/', tweek,)
+                .catch((error) => {
+                    console.log(error)
+                })
+                this.currentPage = 1;
+                this.$emit('callGetTweeks');
+            }
+            this.body = '';
+        },
         async toggleLike(tweek){
             if(tweek.retweek_id){
                 await axios.get(`/api/tweek/${tweek.retweek_id}/`,)
@@ -58,7 +81,7 @@ export default {
             if(tweek.is_retweeked){
                 this.unretweekTweek(tweek.id);
             }else{
-                this.$emit('callSubmitTweek');
+                this.submitTweek(tweek.id);
             }
         },
         async unretweekTweek(tweek_id){

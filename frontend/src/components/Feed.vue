@@ -35,7 +35,7 @@
                     </form>
                 </div>
             </div>
-            <Tweek v-for="tweek in tweeks" :key="tweek.id" :tweek="tweek" @callGetTweeks="getTweeks" @callSubmitTweek="submitTweek(tweek.id)"/>
+            <Tweek v-for="tweek in tweeks" :key="tweek.id" :tweek="tweek" @callGetTweeks="getTweeks"/>
         </div>
     </div>
 </template>
