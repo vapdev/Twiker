@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0">
         <div class="min-[600px]:sticky p-3 bg-white dark:bg-slate-900 top-0 w-full h-fit min-[600px]:opacity-95 text-2xl border-solid border-b-2 border-gray-100 dark:border-gray-700">
-            <span class="opacity-100">Notificações</span>
+            <span class="opacity-100">Tweek</span>
         </div>
         <div class="flex h-fit w-full p-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
             <div class="flex flex-col w-full">
@@ -61,7 +61,7 @@
 export default {
     data() {
         return {
-            tweeks: []
+        
         }
     }
 }
