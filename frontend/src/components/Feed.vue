@@ -35,7 +35,7 @@
                     </form>
                 </div>
             </div>
-            <Tweek v-for="tweek in tweeks" :key="tweek.id" :tweek="tweek" />
+            <Tweek v-for="tweek in tweeks" :key="tweek.id" :tweek="tweek" @callGetTweeks="getTweeks" @callSubmitTweek="submitTweek(tweek.id)"/>
         </div>
     </div>
 </template>
@@ -44,6 +44,7 @@
 import axios from 'axios'
 import { getTransitionRawChildren } from 'vue';
 import Tweek from './Tweek.vue';
+
 
 document.body.addEventListener('keydown', function(e) {
   if(!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;

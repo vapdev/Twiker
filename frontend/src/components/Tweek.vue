@@ -11,31 +11,9 @@ export default {
     data() {
         return {
             count: 0,
-            tweeks: [],
-            body: '',
-            currentPage: 1,
-            tweeker: 'tweeker_username',
-            created_at: 'Now',
-            avatar: 'tweeker_avatar',
-            retweeked_tweeks: [],
         }
     },
     methods: {
-        async getTweeks(){
-            await axios.get(`/api/get_tweeks/?page=${this.currentPage}`) 
-            .then(response => {
-                this.hasNext = false
-                if (response.data.next) {
-                    this.hasNext = true
-                }
-                this.tweeks = response.data.results
-            }).catch(error => {
-                console.log('error' + error)
-            })
-        },
-        viewTweek(tweek_id) {
-            window.location.href = `/tweek/${tweek_id}`
-        },
         async toggleLike(tweek){
             if(tweek.retweek_id){
                 await axios.get(`/api/tweek/${tweek.retweek_id}/`,)
@@ -80,7 +58,7 @@ export default {
             if(tweek.is_retweeked){
                 this.unretweekTweek(tweek.id);
             }else{
-                this.submitTweek(tweek.id);
+                this.$emit('callSubmitTweek');
             }
         },
         async unretweekTweek(tweek_id){
@@ -91,7 +69,7 @@ export default {
             .catch(error => {
                 console.log('error' + error)
             })
-            this.getTweeks();
+            this.$emit('callGetTweeks');
         },
         async toggleDislike(tweek){
             if(tweek.retweek_id){
@@ -143,25 +121,6 @@ export default {
             })
             const el = document.getElementById('tweek-' + tweek_id);
             el.remove();
-        },
-        async submitTweek(tweek_id=null){
-            if (this.body.length > 0 || tweek_id != null){
-                let tweek = {
-                    'body': this.body,
-                    'tweeker': this.tweeker,
-                    'created_at': this.created_at,
-                    'avatar': this.avatar,
-                    'retweek_id': tweek_id,
-                };
-                // Send to backend
-                await axios.post('/api/add_tweek/', tweek,)
-                .catch((error) => {
-                    console.log(error)
-                })
-                this.currentPage = 1;
-                this.getTweeks()
-            }
-            this.body = '';
         },
     }
 }

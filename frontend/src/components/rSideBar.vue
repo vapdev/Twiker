@@ -12,10 +12,12 @@
                         </div>
                     </div>
                 </form>
-                <div class="flex flex-col w-full mt-6">
-                    <form v-on:submit.prevent="">
-                        <div class="flex w-full py-2">
-                            <textarea placeholder="What you tweeking bro..." class="text-xl resize-none h-fit w-full outline-none bg-white dark:bg-slate-900" type="text"></textarea>
+                <div class="flex flex-col w-full">
+                    <form v-on:submit.prevent="submitTweek()" class="m-0">
+                        <div class="flex w-full pb-3">
+                            <textarea placeholder="What you tweeking bro..."
+                                class="text-xl resize-none h-fit w-full outline-none bg-white dark:bg-slate-900"
+                                type="text" v-model="body"></textarea>
                         </div>
                         <div class="flex border-solid border-t-2 border-gray-100 dark:border-gray-700 w-full">
                             <div class="flex my-2 w-full">
@@ -24,7 +26,8 @@
                                         <button class=""><i class="p-1 fa-regular fa-image"></i></button>
                                     </div>
                                     <div class="flex">
-                                        <button id="submit-tweek" type="submit" class="bg-green-400 rounded-full text-white font-bold mx-3 px-5 py-2">Submit</button>
+                                        <button id="submit-tweek" type="submit"
+                                            class="bg-green-400 rounded-full text-white font-bold mx-3 px-5 py-2">Submit</button>
                                     </div>
                                 </div>
                             </div>
@@ -46,3 +49,62 @@
         </div>
     </div>        
 </template>
+
+<script>
+import axios from 'axios'
+
+document.body.addEventListener('keydown', function(e) {
+  if(!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
+        let target = e.target;
+        let submit_button = document.querySelector('#submit-tweek');
+        if(target.form) {
+            submit_button.click();
+      }
+  });
+
+export default {
+    data() {
+        return {
+            tweeks: [],
+            body: '',
+            currentPage: 1,
+            tweeker: 'tweeker_username',
+            created_at: 'Now',
+            avatar: 'tweeker_avatar',
+        }
+    },
+    methods: {
+        async getTweeks(){
+            await axios.get(`/api/get_tweeks/?page=${this.currentPage}`) 
+            .then(response => {
+                this.hasNext = false
+                if (response.data.next) {
+                    this.hasNext = true
+                }
+                this.tweeks = response.data.results
+            }).catch(error => {
+                console.log('error' + error)
+            })
+        },
+        async submitTweek(tweek_id=null){
+            if (this.body.length > 0 || tweek_id != null){
+                let tweek = {
+                    'body': this.body,
+                    'tweeker': this.tweeker,
+                    'created_at': this.created_at,
+                    'avatar': this.avatar,
+                    'retweek_id': tweek_id,
+                };
+                // Send to backend
+                await axios.post('/api/add_tweek/', tweek,)
+                .catch((error) => {
+                    console.log(error)
+                })
+                this.currentPage = 1;
+                this.getTweeks()
+            }
+            this.body = '';
+        },
+    }
+}
+</script>
