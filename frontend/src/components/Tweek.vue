@@ -32,7 +32,6 @@ export default {
                     'avatar': this.avatar,
                     'retweek_id': tweek_id,
                 };
-                // Send to backend\
                 await axios.post('/api/add_tweek/', tweek,)
                 .catch((error) => {
                     console.log(error)
