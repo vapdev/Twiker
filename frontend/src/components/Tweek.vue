@@ -144,10 +144,10 @@ export default {
                 'tweek_id': tweek_id,
             };
             await axios.post('/api/delete_tweek/', tweek,)
-            this.$emit('callGetTweeks')
             .catch(error => {
                 console.log('error' + error)
             })
+            this.$emit('callGetTweeks')
             const el = document.getElementById('tweek-' + tweek_id);
             el.remove();
         },
