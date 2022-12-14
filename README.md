@@ -17,19 +17,18 @@ We are currently building a new Frontend.
 - clone the repository  `git clone https://github.com/vapdev/Twikker.git`
 - cd into directory `cd  Twikker`
 
-WITHOUT DOCKER
-- create virtual env `python -m venv venv`
-- activate virtual env `venv\Scripts\activate`
-- install requirements `pip install -r requirements.txt`
-- run db migrations `python manage.py migrate`
-- start the server `python manage.py runserver`
-
-WITH DOCKER
+HOW TO RUN BACKEND
 - run `docker-compose up --build` (if its not the first time you dont need to build it)
 - enter the container bash `docker exec -it twikker-web-1 bash`
 - run db migrations `python manage.py migrate`
 
+HOW TO RUN FRONTEND
+- `cd /frontend`
+- install the dependencies `npm install`
+- run with `npm run dev`
+
 <h2> Prints </h2>
 
-![image](https://user-images.githubusercontent.com/88452580/201464963-479c031f-0d06-405b-b0fb-0b4bd6781a61.png)
-![image](https://user-images.githubusercontent.com/88452580/201464967-bde7576c-3b0a-4f89-9167-b449220706a6.png)
+![image](https://user-images.githubusercontent.com/88452580/207665167-9bef6367-4394-4ac2-80b4-6daeafdabea8.png)
+![image](https://user-images.githubusercontent.com/88452580/207665384-c3fae7fa-92ae-4088-af8d-2d44368a8888.png)
+
