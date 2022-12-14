@@ -146,6 +146,7 @@ def api_remove_retweek(request):
 def api_delete_tweek(request):
     data = json.loads(request.body)
     tweek_id = data['tweek_id']
+    print("tweek id is")
 
     tweek = Tweek.objects.get(pk=tweek_id)
 

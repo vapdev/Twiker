@@ -139,11 +139,11 @@ export default {
                 console.log('error' + error)
             })
         },
-        deleteTweek(tweek_id){
+        async deleteTweek(tweek_id){
             var tweek = {
                 'tweek_id': tweek_id,
             };
-            axios.post('/api/delete_tweek/', tweek,)
+            await axios.post('/api/delete_tweek/', tweek,)
             .catch(error => {
                 console.log('error' + error)
             })
@@ -182,7 +182,7 @@ export default {
                             </div>
                             <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                                 <div id="tweek_menu" v-show="active" class="absolute flex flex-col right-10 min-w-max bg-white dark:bg-slate-900 shadow-[0_1px_10px_4px_rgba(255,255,255,0.2)] rounded-md">
-                                    <div @click.stop="deleteTweek(tweek)" class="p-2 hover:bg-white hover:rounded-md hover:bg-opacity-20">
+                                    <div @click.stop="deleteTweek(tweek.id)" class="p-2 hover:bg-white hover:rounded-md hover:bg-opacity-20">
                                         <i class="text-red-400 fa-solid fa-trash mr-2"></i>
                                         <span class="break-normal text-red-400 font-semibold">Deletar tweek</span>
                                     </div>
