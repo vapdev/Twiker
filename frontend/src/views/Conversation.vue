@@ -9,7 +9,7 @@ import Conversation from '../components/Conversation.vue';
         <lSideBar />
         </aside>
         <main class="flex max-w-2xl w-full shrink-0  max-[720px]:max-w-[600px] ">
-        <Conversation :id="this.id"></Conversation>
+        <Conversation :id="this.id" />
         </main>
         <aside class="flex w-full">
         <rSideBar />

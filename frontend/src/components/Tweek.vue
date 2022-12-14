@@ -10,6 +10,7 @@ export default {
     },
     data() {
         return {
+            active: false,
             count: 0,
             body: '',
             tweeker: 'tweeker_username',
@@ -18,6 +19,10 @@ export default {
         }
     },
     methods: {
+        toggle(){
+            this.active = !this.active;
+
+        },
         async submitTweek(tweek_id=null){
             if (this.body.length > 0 || tweek_id != null){
                 let tweek = {
@@ -27,7 +32,7 @@ export default {
                     'avatar': this.avatar,
                     'retweek_id': tweek_id,
                 };
-                // Send to backend
+                // Send to backend\
                 await axios.post('/api/add_tweek/', tweek,)
                 .catch((error) => {
                     console.log(error)
@@ -144,6 +149,7 @@ export default {
             })
             const el = document.getElementById('tweek-' + tweek_id);
             el.remove();
+            this.$emit('callGetTweeks');
         },
     }
 }
@@ -154,20 +160,35 @@ export default {
         <div class="flex flex-col w-full">
             <div v-if="tweek.retweek" class="flex items-center mb-1">
                 <i class="text-blue-600 fa-solid fa-retweet mr-2"></i>
-                <span class="flex font-semibold"> {{ tweek.tweeker_name + ' compartilhou' }} </span>
+                <span class="flex text-sm font-bold opacity-80"> {{ tweek.tweeker_name + ' compartilhou' }} </span>
             </div>
             <div class="flex">
                 <div class="flex w-14 h-full mr-2">
                     <img class="rounded-full h-12 w-12" :src="tweek.retweek ? tweek.retweek_avatar_url : tweek.avatar_url">
                 </div>
                 <div class="flex flex-col w-full">
-                    <div>
-                        <span class="font-semibold text-lg">
-                            {{ tweek.retweek ? tweek.retweek_tweeker_name : tweek.tweeker_name }}
-                        </span>
-                        <span class="ml-2">
-                            {{ tweek.retweek ? tweek.retweek_formatted_time : tweek.formatted_time }}
-                        </span>
+                    <div class="flex justify-between">
+                        <div>
+                            <span class="font-semibold text-lg">
+                                {{ tweek.retweek ? tweek.retweek_tweeker_name : tweek.tweeker_name }}
+                            </span>
+                            <span class="ml-2">
+                                {{ tweek.retweek ? tweek.retweek_formatted_time : tweek.formatted_time }}
+                            </span>
+                        </div>
+                        <div class="relative flex items-center">
+                            <div @click="toggle" class="flex w-8 h-8 hover:bg-white hover:rounded-full hover:bg-opacity-20">
+                                <i class="m-auto text-xl fa-solid fa-ellipsis"></i>
+                            </div>
+                            <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+                                <div id="tweek_menu" v-show="active" class="absolute flex flex-col right-10 min-w-max bg-white dark:bg-slate-900 shadow-[0_1px_10px_4px_rgba(255,255,255,0.2)] rounded-md">
+                                    <div @click.stop="deleteTweek(tweek)" class="p-2 hover:bg-white hover:rounded-md hover:bg-opacity-20">
+                                        <i class="text-red-400 fa-solid fa-trash mr-2"></i>
+                                        <span class="break-normal text-red-400 font-semibold">Deletar tweek</span>
+                                    </div>
+                                </div>
+                            </transition>
+                        </div>
                     </div>
                     <span class="flex text-xl break-all">{{ tweek.retweek ? tweek.retweek_body : tweek.body }}</span>
                     <div v-if="!tweek.is_retweek" class="flex flex-row justify-between w-2/3 mt-1">
@@ -185,11 +206,11 @@ export default {
                         </div>
                         <div class="flex items-center">
                             <div @click.stop="toggleLike(tweek)" class="flex w-8 h-8 p-1 mx-1 text-center hover:bg-green-200 hover:rounded-full">
-                                <i :id="'like-'+tweek.id" :class=" !tweek.is_liked ? 'fa-regular fa-thumbs-up' : 'fa-solid fa-thumbs-up'" class="m-auto"></i>
+                                <i :id="'like-'+tweek.id" :class=" !tweek.is_liked ? 'fa-regular fa-thumbs-up' : 'text-green-300 fa-solid fa-thumbs-up'" class="m-auto"></i>
                             </div>
                             <span :id="'likes-'+tweek.id">{{ tweek.likes_count }}</span>
                             <div @click.stop="toggleDislike(tweek)" class="flex w-8 h-8 p-1 mx-1 text-center hover:bg-red-200 hover:rounded-full">
-                                <i :id="'dislike-'+tweek.id" :class=" !tweek.is_disliked ? 'fa-regular fa-thumbs-down' : 'fa-solid fa-thumbs-down'" class="m-auto"></i>
+                                <i :id="'dislike-'+tweek.id" :class=" !tweek.is_disliked ? 'fa-regular fa-thumbs-down' : 'text-red-300 fa-solid fa-thumbs-down'" class="m-auto"></i>
                             </div>
                             <span  :id="'dislikes-'+tweek.id">{{ tweek.dislikes_count }}</span>
                         </div>

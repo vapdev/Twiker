@@ -1,6 +1,6 @@
 <template>
     <div class="flex h-screen w-screen bg-slate-900">
-    <div class="w-2/4 m-auto text-center ">
+    <div class="w-2/4 m-auto text-center">
         <i class="text-4xl m-auto fa-solid fa-ankh"></i>
         <h1 class="text-4xl font-bold text-blue-300">Twikker</h1>
         <p class="text-xs text-gray-300">"Quem já tem ciência age na inteligência, tudo te leva a crer, vitória é ter paciência"</p>

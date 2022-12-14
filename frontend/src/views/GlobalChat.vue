@@ -9,7 +9,7 @@ import GlobalChat from '../components/GlobalChat.vue';
         <lSideBar />
         </aside>
         <main class="flex max-w-2xl w-full shrink-0  max-[720px]:max-w-[600px] ">
-        <GlobalChat></GlobalChat>
+        <GlobalChat />
         </main>
         <aside class="flex w-full">
         <rSideBar />
