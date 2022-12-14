@@ -148,8 +148,6 @@ export default {
                 console.log('error' + error)
             })
             this.$emit('callGetTweeks')
-            const el = document.getElementById('tweek-' + tweek_id);
-            el.remove();
         },
     }
 }
