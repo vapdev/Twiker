@@ -27,7 +27,7 @@ HOW TO RUN FRONTEND
 - install the dependencies `npm install`
 - run with `npm run dev`
 
-<h2> Prints </h2>
+<h2> Images </h2>
 
 ![image](https://user-images.githubusercontent.com/88452580/207665167-9bef6367-4394-4ac2-80b4-6daeafdabea8.png)
 ![image](https://user-images.githubusercontent.com/88452580/207665384-c3fae7fa-92ae-4088-af8d-2d44368a8888.png)
