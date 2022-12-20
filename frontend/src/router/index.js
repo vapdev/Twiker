@@ -56,6 +56,12 @@ const routes = [
     path: "/globalchat",
     name: "GlobalChat",
     component: () => import("../views/GlobalChat.vue")
+  },
+  {
+    path: "/tweek/:id",
+    name: "Tweek",
+    props: true,
+    component: () => import("../components/TweekPage.vue")
   }
 ]
 

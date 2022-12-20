@@ -23,14 +23,15 @@ export default {
             this.active = !this.active;
 
         },
-        async submitTweek(tweek_id=null){
+        async submitTweek(tweek_id=null, tweek_type='tweek'){
             if (this.body.length > 0 || tweek_id != null){
                 let tweek = {
                     'body': this.body,
                     'tweeker': this.tweeker,
                     'created_at': this.created_at,
                     'avatar': this.avatar,
-                    'retweek_id': tweek_id,
+                    'parent_id': tweek_id,
+                    'tweek_type': tweek_type,
                 };
                 await axios.post('/api/add_tweek/', tweek,)
                 .catch((error) => {
@@ -85,8 +86,11 @@ export default {
             if(tweek.is_retweeked){
                 this.unretweekTweek(tweek.id);
             }else{
-                this.submitTweek(tweek.id);
+                this.submitTweek(tweek.id, 'retweek');
             }
+        },
+        async commentTweek(tweek_id){
+            this.submitTweek(tweek_id, 'comment');
         },
         async unretweekTweek(tweek_id){
             var tweek = {
@@ -187,7 +191,7 @@ export default {
                             </transition>
                         </div>
                     </div>
-                    <span class="flex text-xl break-all">{{ tweek.retweek ? tweek.retweek_body : tweek.body }}</span>
+                    <router-link :to="`tweek/${ tweek.id }`" class="flex text-xl break-all">{{ tweek.retweek ? tweek.retweek_body : tweek.body }}</router-link>
                     <div v-if="!tweek.is_retweek" class="flex flex-row justify-between w-2/3 mt-1">
                         <div class="flex items-center">
                             <div class="flex w-8 h-8 hover:bg-yellow-200 hover:rounded-full">
