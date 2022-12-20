@@ -43,15 +43,26 @@ def search(request):
 def api_add_tweek(request):
     data = json.loads(request.body)
     body = data['body']
-    retweek_id = data['retweek_id']
+    parent_id = data['parent_id']
+    tweek_type = data['tweek_type']
+
     user = User.objects.get(id=request.user.id)
-    tweek = Tweek.objects.create(body=body, created_by=user, retweek_id=retweek_id)
+
+    if tweek_type == 'retweek':
+        Tweek.objects.create(body=body, created_by=user, retweek=parent_id)
+    elif tweek_type == 'comment':
+        Tweek.objects.create(body=body, created_by=user, comment_from=parent_id)
+    else:
+        Tweek.objects.create(body=body, created_by=user)
+
+    # send notification to users mentioned in the tweek
     results = re.findall("(^|[^@\w])@(\w{1,20})", body)
     for result in results:
         result = result[1]
         if User.objects.filter(username=result).exists() and result != request.user.username:
             user = User.objects.get(username=result)
             create_notification(request, user, 'mention')
+            
     return JsonResponse({'success': True})
 
 
