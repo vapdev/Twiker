@@ -1,5 +1,4 @@
 <script setup>
-import rSideBar from '../components/rSideBar.vue';
 import lSideBar from '../components/lSideBar.vue';
 </script>
 <template>
@@ -11,7 +10,7 @@ import lSideBar from '../components/lSideBar.vue';
         <router-view />
         </main>
         <aside class="flex w-full">
-        <rSideBar />
+        <router-view name="right"/>
         </aside>
     </div>
 </template>

@@ -6,6 +6,7 @@ import Notifications from "../components/Notifications.vue"
 import Profile from "../components/Profile.vue"
 import Users from "../components/Users.vue"
 import Globalchat from "../components/GlobalChat.vue"
+import rSideBar from '../components/rSideBar.vue';
 
 const routes = [
   {
@@ -26,49 +27,76 @@ const routes = [
       {
         path: "/",
         name: "Feed",
-        component: Feed,
+        components: {
+          default: Feed,
+          right: rSideBar,
+        },
       },
       {
         path: "/conversations",
         name: "Conversations",
-        component: Conversations,
+        components: {
+          default: Conversations,
+          right: rSideBar, 
+        },
       },
       {
         path: "/conversation/:id",
         name: "Conversation",
         props: true,
-        component: () => import("../components/Conversation.vue")
+        components: {
+          default: () => import("../components/Conversation.vue"),
+          right: rSideBar,
+        },
       },
       {
         path: "/notifications",
         name: "Notifications",
-        component: Notifications
+        components: {
+          default: Notifications,
+          right: rSideBar,
+        },
       },
       {
         path: "/users",
         name: "Users",
-        component: Users
+        components: {
+          default: Users,
+          right: rSideBar,
+        },
       },
       {
         path: "/profile",
         name: "SelfProfile",
-        component: Profile
+        components: {
+          default: Profile,
+          right: rSideBar,
+        },
       },
       {
         path: "/profile/:username",
         name: "Profile",
-        component: Profile
+        components: {
+          default: Profile,
+          right: rSideBar,
+        },
       },
       {
         path: "/globalchat",
         name: "GlobalChat",
-        component: Globalchat
+        components: {
+          default: Globalchat,
+          right: rSideBar,
+        },
       },
       {
         path: "/tweek/:id",
         name: "Tweek",
         props: true,
-        component: () => import("../components/TweekPage.vue")
+        components: {
+          default: () => import("../components/TweekPage.vue"),
+          right: rSideBar,
+        },
       },
     ]
   },
