@@ -61,7 +61,6 @@ export default {
     },
     data() {
         return {
-            count: 0,
             tweeks: [],
             body: '',
             currentPage: 1,

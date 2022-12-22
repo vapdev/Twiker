@@ -49,7 +49,7 @@ def api_add_tweek(request):
     user = User.objects.get(id=request.user.id)
 
     if tweek_type == 'retweek':
-        Tweek.objects.create(body=body, created_by=user, retweek=parent_id)
+        Tweek.objects.create(body=body, created_by=user, retweek_id=parent_id)
     elif tweek_type == 'comment':
         Tweek.objects.create(body=body, created_by=user, comment_from=parent_id)
     else:

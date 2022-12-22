@@ -1,8 +1,9 @@
 <template>
     <div class="flex-col w-full bg-white dark:bg-slate-900 border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0" id="twikkerprofileapp">
         <div class="flex flex-col p-4 border-solid border-b-2 border-gray-100 dark:border-gray-700">
+            <div class="flex h-92"></div>
             <div class="flex">
-                <div class="flex flex-col">
+                <div class="flex">
                         <article>
                             <figure>
                                 <div class="h-14 w-14 rounded-full border-2 border-white bg-gray300"></div>
