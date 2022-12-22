@@ -16,8 +16,3 @@ import lSideBar from '../components/lSideBar.vue';
     </div>
 </template>
 
-<script>
-export default {
-    props: ['id'],
-}
-</script>

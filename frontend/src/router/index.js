@@ -24,7 +24,7 @@ const routes = [
     component: Main,
     children: [
       {
-        path: "/feed",
+        path: "/",
         name: "Feed",
         component: Feed,
       },
