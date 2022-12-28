@@ -7,6 +7,8 @@ import Profile from "../components/Profile.vue"
 import Users from "../components/Users.vue"
 import Globalchat from "../components/GlobalChat.vue"
 import rSideBar from '../components/rSideBar.vue';
+import noConversation from '../components/noConversation.vue'
+import EditProfile from '../components/EditProfile.vue'
 
 const routes = [
   {
@@ -33,11 +35,19 @@ const routes = [
         },
       },
       {
-        path: "/conversations",
+        path: "/edit",
+        name: "EditProfile",
+        components: {
+          default: EditProfile,
+          right: rSideBar, 
+        },
+      },
+      {
+        path: "/conversation",
         name: "Conversations",
         components: {
-          default: Conversations,
-          right: rSideBar, 
+          default: noConversation,
+          right: Conversations, 
         },
       },
       {
@@ -46,7 +56,7 @@ const routes = [
         props: true,
         components: {
           default: () => import("../components/Conversation.vue"),
-          right: rSideBar,
+          right: Conversations,
         },
       },
       {

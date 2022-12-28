@@ -45,7 +45,7 @@
             </router-link>
         </div>
         <div class="flex py-1">
-            <router-link to="/conversations" class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full">
+            <router-link to="/conversation" class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full">
                 <div class="flex w-11 h-11">
                     <i class="text-lg m-auto fa-solid fa-comments"></i>
                 </div>
@@ -60,18 +60,9 @@
                 <span class="m-auto mx-3 max-[850px]:hidden">Perfil</span>
             </router-link>
         </div>
-        <div class="flex py-1">
-            <a class="flex font-semibold text-lg p-1 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full"
-                onclick="">
-                <div class="flex w-11 h-11">
-                    <i class="text-xl m-auto fa-solid fa-moon"></i>
-                </div>
-            </a>
-        </div>
     </div>
 </div>
 </template>
-
 <style>
 @import '../assets/icons/css/all.css';
 </style>

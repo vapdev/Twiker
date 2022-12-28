@@ -12,98 +12,73 @@
                         </div>
                     </div>
                 </form>
-                <div class="flex flex-col w-full">
-                    <form v-on:submit.prevent="submitTweek()" class="m-0">
-                        <div class="flex w-full pb-3">
-                            <textarea placeholder="What you tweeking bro..."
-                                class="text-xl resize-none h-fit w-full outline-none bg-white dark:bg-slate-900"
-                                type="text" v-model="body"></textarea>
-                        </div>
-                        <div class="flex border-solid border-t-2 border-gray-100 dark:border-gray-700 w-full">
-                            <div class="flex my-2 w-full">
-                                <div class="flex justify-between w-full">
-                                    <div class="flex">
-                                        <button class=""><i class="p-1 fa-regular fa-image"></i></button>
-                                    </div>
-                                    <div class="flex">
-                                        <button id="submit-tweek" type="submit"
-                                            class="bg-green-400 rounded-full text-white font-bold mx-3 px-5 py-2">Submit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
             </div>
-            <div class="flex flex-row justify-between w-full my-3 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full">
-                <div class="flex p-1">
-                    <img class="rounded-full h-12 w-12 m-auto" src="">
-                    <h1 class="ml-1  font-semibold ">Fabio</h1>
+            <div class="relative w-full my-3" @click="toggle">
+                <div class="flex justify-between w-full hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full">
+                    <div class="flex p-1">
+                        <img class="rounded-full h-12 w-12 m-auto" src="">
+                        <h1 class="ml-1  font-semibold ">Fabio</h1>
+                    </div>
+                    <div class="flex m-3">
+                        <i class="m-auto text-xl fa-solid fa-bars"></i>
+                    </div>
                 </div>
-                <div class="flex">
-                    <a class=" text-lg m-auto p-1" style="margin-left: auto; " href="">
-                        <i class="fa-solid fa-user-pen"></i>
-                    </a>
-                </div>
+                <transition
+                enter-active-class="transition ease-out duration-100"
+                enter-from-class="transform opacity-0 scale-95"
+                enter-to-class="transform opacity-100 scale-100"
+                leave-active-class="transition ease-in duration-75"
+                leave-from-class="transform opacity-100 scale-100"
+                leave-to-class="transform opacity-0 scale-95"
+                >
+                    <div id="rSidebar_menu" v-show="active" class="absolute w-48 h-fit flex flex-col bottom-16 right-2 min-w-max bg-white dark:bg-slate-900 shadow-[0_1px_10px_4px_rgba(255,255,255,0.2)] rounded-md">
+                        <div class="flex hover:bg-gray-200 dark:hover:bg-gray-700">
+                            <a class="flex font-semibold text-lg p-1" onclick="">
+                                <div class="flex w-11 h-11">
+                                    <i class="text-xl m-auto fa-solid fa-moon"></i>
+                                </div>
+                                <span class="m-auto mx-3 max-[850px]:hidden">
+                                    Dark mode
+                                </span>
+                            </a>
+                        </div>
+                        <div class="flex hover:bg-gray-200 dark:hover:bg-gray-700">
+                            <router-link to="/edit" class="flex font-semibold text-lg p-1">
+                                <div class="flex w-11 h-11">
+                                    <i class="text-lg m-auto fa-solid fa-user-pen"></i>
+                                </div>
+                                <span class="m-auto mx-3 max-[850px]:hidden">
+                                    Editar Profile
+                                </span>
+                            </router-link>
+                        </div>
+                        <div class="flex hover:bg-gray-200 text-red-500 dark:hover:bg-gray-700">
+                            <router-link to="" class="flex font-semibold text-lg p-1">
+                                <div class="flex w-11 h-11">
+                                    <i class="text-xl m-auto rotate-180 fa-solid fa-right-from-bracket"></i>
+                                </div>
+                                <span class="m-auto mx-3 max-[850px]:hidden">
+                                    Logout
+                                </span>
+                            </router-link>
+                        </div>
+                    </div>
+                </transition>
             </div>
         </div>
     </div>        
 </template>
 
 <script>
-import axios from 'axios'
-
-document.body.addEventListener('keydown', function(e) {
-  if(!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
-        let target = e.target;
-        let submit_button = document.querySelector('#submit-tweek');
-        if(target.form) {
-            submit_button.click();
-      }
-  });
-
 export default {
     data() {
         return {
-            tweeks: [],
-            body: '',
-            currentPage: 1,
-            tweeker: 'tweeker_username',
-            created_at: 'Now',
-            avatar: 'tweeker_avatar',
-        }
+            active: false,
+        };
     },
     methods: {
-        async getTweeks(){
-            await axios.get(`/api/get_tweeks/?page=${this.currentPage}`) 
-            .then(response => {
-                this.hasNext = false
-                if (response.data.next) {
-                    this.hasNext = true
-                }
-                this.tweeks = response.data.results
-            }).catch(error => {
-                console.log('error' + error)
-            })
-        },
-        async submitTweek(tweek_id=null){
-            if (this.body.length > 0 || tweek_id != null){
-                let tweek = {
-                    'body': this.body,
-                    'tweeker': this.tweeker,
-                    'created_at': this.created_at,
-                    'avatar': this.avatar,
-                    'retweek_id': tweek_id,
-                };
-                // Send to backend
-                await axios.post('/api/add_tweek/', tweek,)
-                .catch((error) => {
-                    console.log(error)
-                })
-                this.currentPage = 1;
-                this.getTweeks()
-            }
-            this.body = '';
+        toggle() {
+            this.active = !this.active;
         },
     }
 }
