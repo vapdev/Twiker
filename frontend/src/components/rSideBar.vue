@@ -87,7 +87,7 @@ export default {
             this.active = !this.active;
         },   
         async getUser(){
-            await axios.get(`/api/user_data/${this.$route.params.username}`,) 
+            await axios.get(``,) 
             .then(response => {
                 this.user = response.data
             }).catch(error => {
