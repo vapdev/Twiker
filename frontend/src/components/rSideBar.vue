@@ -17,7 +17,7 @@
                 <div class="flex justify-between w-full hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full">
                     <div class="flex p-1">
                         <img class="rounded-full h-12 w-12 m-auto" src="">
-                        <h1 class="ml-1  font-semibold ">Fabio</h1>
+                        <h1 class="ml-1 font-semibold ">{{ user.username }}</h1>
                     </div>
                     <div class="flex m-3">
                         <i class="m-auto text-xl fa-solid fa-bars"></i>
@@ -31,7 +31,7 @@
                 leave-from-class="transform opacity-100 scale-100"
                 leave-to-class="transform opacity-0 scale-95"
                 >
-                    <div id="rSidebar_menu" v-show="active" class="absolute w-48 h-fit flex flex-col bottom-16 right-2 min-w-max bg-white dark:bg-slate-900 shadow-[0_1px_10px_4px_rgba(255,255,255,0.2)] rounded-md">
+                    <div id="rSidebar_menu" v-show="active" class="absolute w-48 h-fit flex flex-col bottom-16 right-2 min-w-max bg-white dark:bg-slate-900 shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md">
                         <div class="flex hover:bg-gray-200 dark:hover:bg-gray-700">
                             <a class="flex font-semibold text-lg p-1" onclick="">
                                 <div class="flex w-11 h-11">
@@ -70,15 +70,29 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
             active: false,
-        };
+            user: '',
+        }
     },
+    mounted() {
+        this.getUser()
+    }, 
     methods: {
         toggle() {
             this.active = !this.active;
+        },   
+        async getUser(){
+            await axios.get(`/api/user_data/${this.$route.params.username}`,) 
+            .then(response => {
+                this.user = response.data
+            }).catch(error => {
+                console.log('error' + error)
+            })
         },
     }
 }

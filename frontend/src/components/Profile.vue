@@ -16,8 +16,8 @@
                     <a class="cursor-pointer">Follows: {{ following }}</a>
                 </div>
                 <div class="flex justify-end">
-                    <div class="flex flex-col ml-4">
-                        <router-link v-if="user.id != this.$store.state.user_id"  :to="`/conversation/${user.id}`" class="cursor-pointer" >Send message</router-link>
+                    <div class="flex flex-col ml-4" v-if="user.id != this.$store.state.user_id">
+                        <router-link :to="`/conversation/${user.id}`" class="cursor-pointer" >Send message</router-link>
                         <span class="cursor-pointer" @click="unfollowUser()">Unfollow</span>
                         <span class="cursor-pointer" @click="followUser()">Follow</span>
                     </div>

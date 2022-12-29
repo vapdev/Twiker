@@ -16,7 +16,7 @@ export default {
       tweeker: "tweeker_username",
       created_at: "Now",
       avatar: "tweeker_avatar",
-    };
+    }
   },
   methods: {
     toggle() {
@@ -198,7 +198,7 @@ export default {
                 <div
                   id="tweek_menu"
                   v-show="active"
-                  class="absolute flex flex-col right-10 min-w-max bg-white dark:bg-slate-900 shadow-[0_1px_10px_4px_rgba(255,255,255,0.2)] rounded-md"
+                  class="absolute flex flex-col right-10 min-w-max bg-white dark:bg-slate-900 shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md"
                 >
                   <div
                     @click.stop="deleteTweek(tweek.id)"
