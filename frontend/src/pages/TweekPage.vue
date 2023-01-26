@@ -3,7 +3,8 @@
 </template>
 
 <script>
-import Tweek from './Tweek.vue';
+import Tweek from '../components/Tweek.vue';
+
 export default {
     props: ['id'],
     components: {

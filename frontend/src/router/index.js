@@ -1,16 +1,16 @@
 import { createWebHistory, createRouter } from "vue-router"
 import Main from "../views/Main.vue"
-import Feed from "../components/Feed.vue"
+import Feed from "../pages/Feed.vue"
 import Conversations from "../components/Conversations.vue"
-import Notifications from "../components/Notifications.vue"
-import Profile from "../components/Profile.vue"
-import Users from "../components/Users.vue"
-import Globalchat from "../components/GlobalChat.vue"
+import Notifications from "../pages/Notifications.vue"
+import Profile from "../pages/Profile.vue"
+import Users from "../pages/Users.vue"
+import Globalchat from "../pages/GlobalChat.vue"
 import rSideBar from '../components/rSideBar.vue';
-import noConversation from '../components/noConversation.vue'
+import noConversation from '../pages/noConversation.vue'
 import EditProfile from '../components/EditProfile.vue'
-import Conversation from '../components/Conversation.vue'
-import TweekPage from '../components/TweekPage.vue'
+import Conversation from '../pages/Conversation.vue'
+import TweekPage from '../pages/TweekPage.vue'
 
 const routes = [
   {
@@ -46,7 +46,7 @@ const routes = [
       },
       {
         path: "/conversation",
-        name: "Conversation",
+        name: "Conversations",
         components: {
           default: noConversation,
           right: Conversations, 
@@ -54,7 +54,7 @@ const routes = [
       },
       {
         path: "/conversation/:id",
-        name: "Conversations",
+        name: "Conversation",
         props: true,
         components: {
           default: Conversation,

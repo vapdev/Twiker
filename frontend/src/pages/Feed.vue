@@ -43,7 +43,7 @@
 <script>
 import axios from 'axios'
 import { getTransitionRawChildren } from 'vue';
-import Tweek from './Tweek.vue';
+import Tweek from '../components/Tweek.vue';
 
 
 document.body.addEventListener('keydown', function(e) {
