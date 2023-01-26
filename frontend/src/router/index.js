@@ -9,6 +9,8 @@ import Globalchat from "../components/GlobalChat.vue"
 import rSideBar from '../components/rSideBar.vue';
 import noConversation from '../components/noConversation.vue'
 import EditProfile from '../components/EditProfile.vue'
+import Conversation from '../components/Conversation.vue'
+import TweekPage from '../components/TweekPage.vue'
 
 const routes = [
   {
@@ -44,7 +46,7 @@ const routes = [
       },
       {
         path: "/conversation",
-        name: "Conversations",
+        name: "Conversation",
         components: {
           default: noConversation,
           right: Conversations, 
@@ -52,10 +54,10 @@ const routes = [
       },
       {
         path: "/conversation/:id",
-        name: "Conversation",
+        name: "Conversations",
         props: true,
         components: {
-          default: () => import("../components/Conversation.vue"),
+          default: Conversation,
           right: Conversations,
         },
       },
@@ -104,7 +106,7 @@ const routes = [
         name: "Tweek",
         props: true,
         components: {
-          default: () => import("../components/TweekPage.vue"),
+          default: TweekPage,
           right: rSideBar,
         },
       },
@@ -114,7 +116,7 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes,
 })
 
 export default router
