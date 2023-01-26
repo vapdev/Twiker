@@ -66,8 +66,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
             conversation = Conversation.objects.get(id=conversation_id)
         except:
             conversation = None
-        ConversationMessage.objects.create(created_by=tweeker, conversation=conversation, content=content)
-        if conversation:
+        if not conversation:
+            ConversationMessage.objects.create(created_by=tweeker, content=content)
+        else:
+            ConversationMessage.objects.create(created_by=tweeker, conversation=conversation, content=content)
             users = conversation.users.all()
             for user in users:
                 if user != tweeker:

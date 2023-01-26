@@ -43,8 +43,15 @@ def search(request):
 def api_add_tweek(request):
     data = json.loads(request.body)
     body = data['body']
-    parent_id = data['parent_id']
-    tweek_type = data['tweek_type']
+    try:
+        parent_id = data['parent_id']
+    except:
+        parent_id = None
+
+    try:
+        tweek_type = data['tweek_type']
+    except:
+        tweek_type = None
 
     user = User.objects.get(id=request.user.id)
 
