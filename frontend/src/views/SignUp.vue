@@ -36,7 +36,7 @@ export default {
             axios
                 .post('api/v1/users/', formData)
                 .then(response => {
-                    this.$router.push('/signup')
+                    this.$router.push('/')
                 })
                 .catch(error => {
                     console.log(error)
