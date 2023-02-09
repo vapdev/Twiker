@@ -1,6 +1,11 @@
 # Twikker
 Social network built with Django and Vue.js
 
+---- LIVE NOW -----
+https://twiker.herokuapp.com/
+--- OPEN SOURCE -----
+We will be pleased if you contribute
+
 Work in progress.
 We are currently building a new Frontend.
 
