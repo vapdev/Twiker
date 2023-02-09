@@ -52,7 +52,7 @@ def api_add_message(request):
 @permission_classes((IsAuthenticated, ))
 @api_view(['GET'])
 def api_get_messages(request, conversation_id):
-    if conversation_id==0:
+    if conversation_id == 0:
         messages = ConversationMessage.objects.filter(conversation_id=None).order_by('created_at')
     else:
         conversation = Conversation.objects.get(pk=conversation_id)
