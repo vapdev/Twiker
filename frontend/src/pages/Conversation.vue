@@ -15,8 +15,4 @@
 import ChatBox from '../components/ChatBox.vue';
 import { defineProps, onMounted } from 'vue'
 defineProps(['id'])
-
-onMounted(() => {
-    console.log('mounted conversation ' + id)
-})
 </script>
