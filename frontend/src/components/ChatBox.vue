@@ -73,7 +73,6 @@ export default{
         //append to messages when receive message
         this.chatSocket.onmessage = function (e) {
             const data = JSON.parse(e.data);
-            console.log(data)
             // append message to messages
             this.messages.push(data);
             setTimeout(() => {

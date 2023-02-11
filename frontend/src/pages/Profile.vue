@@ -8,7 +8,7 @@
                                 <div class="h-14 w-14 rounded-full border-2 border-white bg-gray-300"></div>
                             </figure>
                         </article> 
-                    <h1>{{ user.username }}</h1>
+                    <h1>{{ this.user.username }}</h1>
                 </div>
 
                 <div class="flex flex-col ml-4">
@@ -16,8 +16,8 @@
                     <a class="cursor-pointer">Follows: {{ following }}</a>
                 </div>
                 <div class="flex justify-end">
-                    <div class="flex flex-col ml-4" v-if="user.id != this.$store.state.user_id">
-                        <router-link :to="{ name: 'Conversation', params: { id: user.id } }" class="cursor-pointer" >Send message</router-link>
+                    <div class="flex flex-col ml-4" v-if="this.user.id != this.$store.state.user_id">
+                        <router-link :to="`/conversation/${this.user.id}`" class="cursor-pointer" >Send message</router-link>
                         <span class="cursor-pointer" @click="unfollowUser()">Unfollow</span>
                         <span class="cursor-pointer" @click="followUser()">Follow</span>
                     </div>
