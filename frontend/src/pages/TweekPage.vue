@@ -16,7 +16,6 @@ export default {
         }
     },
     mounted() {
-        console.log("id is: " + this.id)
     },
 }
 </script>

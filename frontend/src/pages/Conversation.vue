@@ -17,6 +17,6 @@ import ChatBox from '../components/ChatBox.vue';
 
 <script>
     export default{
-        props: ['id']
+        props: ['id'],
     }
 </script>
