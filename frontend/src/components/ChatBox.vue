@@ -85,20 +85,16 @@ export default{
             await axios.get(`/api/get_conversation/${this.user_id}`)
             .then(response => {
                 this.conversation_id = response.data.conversation_id
-                console.log('conv id is ' + this.conversation_id)
             })
             .catch(error => {
-                console.log('error 2' + error)
             })
         },
         async getMessages(){
             if (this.user_id){
                 await this.getConversationId();
             }
-            console.log('messages conv id is   ' + this.conversation_id)
             await axios.get(`/api/messages/${this.conversation_id}`,) 
             .then(response => {
-                console.log("the messages are    " + response.data.messages)
                 for (let i = 0; i < response.data.messages.length; i++) {
                     this.messages.push(response.data.messages[i])
                 }

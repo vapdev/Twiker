@@ -1,11 +1,14 @@
 import { createStore } from 'vuex';
-
+import axios from 'axios';
 export default createStore({
     state: {
         token: '',
         isAuthenticated: false,
         username: '',
         user_id: '',
+    },
+    getters: {
+        isAuthenticated: state => state.isAuthenticated
     },
     mutations: {
         initializeStore(state) {
@@ -21,9 +24,16 @@ export default createStore({
             state.token = token
             state.isAuthenticated = true
         },
-        removeToken(state) {
-            state.token = ''
-            state.isAuthenticated = false
+        async removeToken(state) {
+            try {
+                await axios.post('/api/v1/auth/logout/');
+                localStorage.removeItem('token');
+                state.token = ''
+                state.isAuthenticated = false
+                this.$router.push({ name: 'Login' });
+            } catch (error) {
+                console.error(error);
+            }
         },
         setUsername(state, username) {
             state.username = username

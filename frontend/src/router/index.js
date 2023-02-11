@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router"
+import store from '../store/index.js'
 import Main from "../views/Main.vue"
 import Feed from "../pages/Feed.vue"
 import Conversations from "../components/Conversations.vue"
@@ -21,6 +22,11 @@ const routes = [
   {
     path: "/login",
     name: "Login",
+    component: () => import("../views/Login.vue"),
+  },
+  {
+    path: "/logout",
+    name: "Logout",
     component: () => import("../views/Login.vue"),
   },
   {
@@ -118,5 +124,20 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 })
+
+router.beforeEach((to, from, next) => {
+  // if user is not logged in and tries to access a page that requires authentication then redirect to login page
+  if (!store.getters.isAuthenticated && (to.name === 'Feed' || to.name === 'Notifications' || 
+  to.name === 'Users' || to.name === 'GlobalChat' || to.name === 'Profile' || to.name === 'EditProfile' || 
+  to.name === 'Conversation' || to.name === 'Tweek')) {
+    console.log("from , to ", from, to)
+    console.log("is authenticated: ", store.getters.isAuthenticated)
+    next({ name: 'Login' })
+  } else {
+    console.log("from , to ", from, to)
+    console.log("is authenticated: ", store.getters.isAuthenticated)
+    next()
+  }
+});
 
 export default router

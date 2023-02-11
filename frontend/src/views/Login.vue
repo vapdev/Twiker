@@ -53,6 +53,12 @@ export default {
                     console.log('error' + error)
                 })
         }
+    },
+    mounted(){
+        if (this.$route.name == 'Logout'){
+            this.$store.commit('removeToken')
+        }
     }
+    
 }
 </script>

@@ -53,7 +53,7 @@
                             </router-link>
                         </div>
                         <div class="flex hover:bg-gray-200 text-red-500 dark:hover:bg-gray-700">
-                            <router-link to="" class="flex font-semibold text-lg p-1">
+                            <router-link to="/logout" class="flex font-semibold text-lg p-1">
                                 <div class="flex w-11 h-11">
                                     <i class="text-xl m-auto rotate-180 fa-solid fa-right-from-bracket"></i>
                                 </div>
