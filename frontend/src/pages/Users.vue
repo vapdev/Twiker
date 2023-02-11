@@ -29,27 +29,22 @@
 </template>
 
 
-<script>
+<script setup>
 import axios from 'axios'
+import { ref, onMounted } from 'vue'
 
-    export default{
-        data () {
-            return {
-                users: [],
-            }
-        },
-        mounted() {
-            this.getUsers();
-        },
-        methods: {
-            getUsers(){
-                axios.get(`/api/users/`,) 
-                .then(response => {
-                    this.users = response.data;
-                }).catch(error => {
-                    console.log('error' + error)
-                })
-            },
-        }
-    }
+const users = ref([]);
+
+function getUsers(){
+    axios.get(`/api/users/`,) 
+    .then(response => {
+        users.value = response.data;
+    }).catch(error => {
+        console.log('error' + error)
+    })
+}
+onMounted(() => {
+    getUsers();
+})
+
 </script>

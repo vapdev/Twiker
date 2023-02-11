@@ -40,10 +40,10 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import axios from 'axios'
-import { getTransitionRawChildren } from 'vue';
 import Tweek from '../components/Tweek.vue';
+import { ref, onMounted } from 'vue';
 
 
 document.body.addEventListener('keydown', function(e) {
@@ -55,64 +55,58 @@ document.body.addEventListener('keydown', function(e) {
       }
   });
 
-export default {
-    components: {
-        Tweek,
-    },
-    data() {
-        return {
-            tweeks: [],
-            body: '',
-            currentPage: 1,
-            tweeker: 'tweeker_username',
-            created_at: 'Now',
-            avatar: 'tweeker_avatar',
-            retweeked_tweeks: [],
-        }
-    },
-    mounted() {
-        this.getTweeks()
-        window.onscroll = () => {
-            let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
 
-            if (bottomOfWindow && this.hasNext) {
-                this.currentPage += 1
-                this.getTweeks()
-            }
+const tweeks = ref([]);
+const body = ref('');
+let currentPage = 1;
+let tweeker = 'tweeker_username';
+let created_at = 'Now';
+let avatar = 'tweeker_avatar';
+let retweeked_tweeks =  [];
+let hasNext = false;
+
+async function getTweeks(){
+    await axios.get(`/api/get_tweeks/?page=${currentPage}`) 
+    .then(response => {
+        hasNext = false
+        if (response.data.next) {
+            hasNext = true
         }
-    },
-    methods: {
-        async getTweeks(){
-            await axios.get(`/api/get_tweeks/?page=${this.currentPage}`) 
-            .then(response => {
-                this.hasNext = false
-                if (response.data.next) {
-                    this.hasNext = true
-                }
-                this.tweeks = response.data.results
-            }).catch(error => {
-                console.log('error' + error)
-            })
-        },
-        async submitTweek(tweek_id=null){
-            if (this.body.length > 0 || tweek_id != null){
-                let tweek = {
-                    'body': this.body,
-                    'tweeker': this.tweeker,
-                    'created_at': this.created_at,
-                    'avatar': this.avatar,
-                    'retweek_id': tweek_id,
-                };
-                // Send to backend
-                await axios.post('/api/add_tweek/', tweek,)
-                .catch((error) => {
-                    console.log(error)
-                })
-                this.currentPage = 1;
-                this.getTweeks()
-            }
-            this.body = '';
-        },
-    }
+        tweeks.value = response.data.results
+        console.log(tweeks.value);
+    }).catch(error => {
+        console.log('error' + error)
+    })
 }
+async function submitTweek(tweek_id=null){
+    if (body.value.length > 0 || tweek_id != null){
+        let tweek = {
+            'body': body.value,
+            'tweeker': tweeker,
+            'created_at': created_at,
+            'avatar': avatar,
+            'retweek_id': tweek_id,
+        };
+        // Send to backend
+        await axios.post('/api/add_tweek/', tweek,)
+        .catch((error) => {
+            console.log(error)
+        })
+        currentPage = 1;
+        getTweeks()
+    }
+    body.value = '';
+}
+
+onMounted(() => {
+    getTweeks()
+    window.onscroll = () => {
+        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documtweeksentElement.offsetHeight
+
+        if (bottomOfWindow && hasNext) {
+            currentPage += 1
+            getTweeks()
+        }
+    }
+})
 </script>

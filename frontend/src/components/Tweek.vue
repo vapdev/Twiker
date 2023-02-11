@@ -1,157 +1,3 @@
-<script>
-import axios from "axios";
-
-export default {
-  name: "Tweek",
-  props: {
-    tweek: {
-      type: Object,
-    },
-  },
-  data() {
-    return {
-      active: false,
-      count: 0,
-      body: "",
-      tweeker: "tweeker_username",
-      created_at: "Now",
-      avatar: "tweeker_avatar",
-    }
-  },
-  methods: {
-    toggle() {
-      this.active = !this.active;
-    },
-    async submitTweek(tweek_id = null, tweek_type = "tweek") {
-      if (this.body.length > 0 || tweek_id != null) {
-        let tweek = {
-          body: this.body,
-          tweeker: this.tweeker,
-          created_at: this.created_at,
-          avatar: this.avatar,
-          parent_id: tweek_id,
-          tweek_type: tweek_type,
-        };
-        await axios.post("/api/add_tweek/", tweek).catch((error) => {
-          console.log(error);
-        });
-        this.currentPage = 1;
-        this.$emit("callGetTweeks");
-      }
-      this.body = "";
-    },
-    async toggleLike(tweek) {
-      if (tweek.retweek_id) {
-        await axios
-          .get(`/api/tweek/${tweek.retweek_id}/`)
-          .then((response) => {
-            tweek = response.data["tweek"];
-          })
-          .catch((error) => {
-            console.log("error" + error);
-          });
-      }
-      if (tweek.is_disliked) {
-        this.undislikeTweek(tweek);
-      }
-      if (tweek.is_liked) {
-        this.unlikeTweek(tweek);
-      } else {
-        this.likeTweek(tweek);
-      }
-    },
-    likeTweek(tweek) {
-      tweek.is_liked = true;
-      tweek.likes_count += 1;
-      let tweek_id = {
-        tweek_id: tweek.id,
-      };
-      axios.post("/api/add_like/", tweek_id).catch((error) => {
-        console.log("error" + error);
-      });
-    },
-    unlikeTweek(tweek) {
-      tweek.is_liked = false;
-      tweek.likes_count -= 1;
-      var tweek_id = {
-        tweek_id: tweek.id,
-      };
-      axios.post("/api/remove_like/", tweek_id).catch((error) => {
-        console.log("error" + error);
-      });
-    },
-    toggleRetweek(tweek) {
-      if (tweek.is_retweeked) {
-        this.unretweekTweek(tweek.id);
-      } else {
-        this.submitTweek(tweek.id, "retweek");
-      }
-    },
-    async commentTweek(tweek_id) {
-      this.submitTweek(tweek_id, "comment");
-    },
-    async unretweekTweek(tweek_id) {
-      var tweek = {
-        tweek_id: tweek_id,
-      };
-      await axios.post("/api/remove_retweek/", tweek).catch((error) => {
-        console.log("error" + error);
-      });
-      this.$emit("callGetTweeks");
-    },
-    async toggleDislike(tweek) {
-      if (tweek.retweek_id) {
-        await axios
-          .get(`/api/tweek/${tweek.retweek_id}/`)
-          .then((response) => {
-            tweek = response.data["tweek"];
-          })
-          .catch((error) => {
-            console.log("error" + error);
-          });
-      }
-      if (tweek.is_liked) {
-        this.unlikeTweek(tweek);
-      }
-      if (tweek.is_disliked) {
-        this.undislikeTweek(tweek);
-      } else {
-        this.dislikeTweek(tweek);
-      }
-    },
-    dislikeTweek(tweek) {
-      tweek.is_disliked = true;
-      tweek.dislikes_count += 1;
-      let tweek_id = {
-        tweek_id: tweek.id,
-      };
-      axios.post("/api/add_dislike/", tweek_id).catch((error) => {
-        console.log("error" + error);
-      });
-    },
-    undislikeTweek(tweek) {
-      tweek.is_disliked = false;
-      tweek.dislikes_count -= 1;
-      var tweek_id = {
-        tweek_id: tweek.id,
-      };
-      axios.post("/api/remove_dislike/", tweek_id).catch((error) => {
-        console.log("error" + error);
-      });
-    },
-    async deleteTweek(tweek_id) {
-      var tweek = {
-        tweek_id: tweek_id,
-      };
-      await axios.post("/api/delete_tweek/", tweek).catch((error) => {
-        console.log("error" + error);
-      });
-      this.$emit("callGetTweeks");
-    },
-  },
-};
-</script>
-
 <template>
   <div
     class="flex h-fit w-full p-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700"
@@ -197,7 +43,7 @@ export default {
               >
                 <div
                   id="tweek_menu"
-                  v-show="active"
+                  v-show="show"
                   class="absolute flex flex-col right-10 min-w-max bg-white dark:bg-slate-900 shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md"
                 >
                   <div
@@ -285,3 +131,153 @@ export default {
     </div>
   </div>
 </template>
+
+<script setup>
+import axios from "axios"
+import { ref } from 'vue'
+
+const props =  defineProps({
+  tweek: Object,
+})
+
+const emit = defineEmits(['callGetTweeks',])
+
+const show = ref(false);
+const body = ref("");
+const tweeker = "tweeker_username";
+const created_at = "Now";
+const avatar = "tweeker_avatar";
+
+
+function toggle() {
+  show.value = !show.value;
+}
+
+async function submitTweek(tweek_id = null, tweek_type = "tweek") {
+  if (body.length > 0 || tweek_id != null) {
+    let tweek = {
+      body: body.value,
+      tweeker: tweeker,
+      created_at: created_at,
+      avatar: avatar,
+      parent_id: tweek_id,
+      tweek_type: tweek_type,
+    };
+    await axios.post("/api/add_tweek/", tweek).catch((error) => {
+      console.log(error);
+    });
+    emit("callGetTweeks");
+  }
+  body.value = "";
+}
+async function toggleLike(tweek) {
+  if (tweek.retweek_id) {
+    await axios
+      .get(`/api/tweek/${tweek.retweek_id}/`)
+      .then((response) => {
+        tweek = response.data["tweek"];
+      })
+      .catch((error) => {
+        console.log("error" + error);
+      });
+  }
+  if (tweek.is_disliked) {
+    undislikeTweek(tweek);
+  }
+  if (tweek.is_liked) {
+    unlikeTweek(tweek);
+  } else {
+    likeTweek(tweek);
+  }
+}
+function likeTweek(tweek) {
+  tweek.is_liked = true;
+  tweek.likes_count += 1;
+  let tweek_id = {
+    tweek_id: tweek.id,
+  };
+  axios.post("/api/add_like/", tweek_id).catch((error) => {
+    console.log("error" + error);
+  });
+}
+function unlikeTweek(tweek) {
+  tweek.is_liked = false;
+  tweek.likes_count -= 1;
+  var tweek_id = {
+    tweek_id: tweek.id,
+  };
+  axios.post("/api/remove_like/", tweek_id).catch((error) => {
+    console.log("error" + error);
+  });
+}
+function toggleRetweek(tweek) {
+  if (tweek.is_retweeked) {
+    unretweekTweek(tweek.id);
+  } else {
+    submitTweek(tweek.id, "retweek");
+  }
+}
+async function commentTweek(tweek_id) {
+  submitTweek(tweek_id, "comment");
+}
+async function unretweekTweek(tweek_id) {
+  var tweek = {
+    tweek_id: tweek_id,
+  };
+  await axios.post("/api/remove_retweek/", tweek).catch((error) => {
+    console.log("error" + error);
+  });
+  emit("callGetTweeks");
+}
+async function toggleDislike(tweek) {
+  if (tweek.retweek_id) {
+    await axios
+      .get(`/api/tweek/${tweek.retweek_id}/`)
+      .then((response) => {
+        tweek = response.data["tweek"];
+      })
+      .catch((error) => {
+        console.log("error" + error);
+      });
+  }
+  if (tweek.is_liked) {
+    unlikeTweek(tweek);
+  }
+  if (tweek.is_disliked) {
+    undislikeTweek(tweek);
+  } else {
+    dislikeTweek(tweek);
+  }
+}
+function dislikeTweek(tweek) {
+  tweek.is_disliked = true;
+  tweek.dislikes_count += 1;
+  let tweek_id = {
+    tweek_id: tweek.id,
+  };
+  axios.post("/api/add_dislike/", tweek_id).catch((error) => {
+    console.log("error" + error);
+  });
+}
+function undislikeTweek(tweek) {
+  tweek.is_disliked = false;
+  tweek.dislikes_count -= 1;
+  var tweek_id = {
+    tweek_id: tweek.id,
+  };
+  axios.post("/api/remove_dislike/", tweek_id).catch((error) => {
+    console.log("error" + error);
+  });
+}
+async function deleteTweek(tweek_id) {
+  var tweek = {
+    tweek_id: tweek_id,
+  };
+  await axios.post("/api/delete_tweek/", tweek).catch((error) => {
+    console.log("error" + error);
+  });
+  emit("callGetTweeks");
+}
+
+</script>
+

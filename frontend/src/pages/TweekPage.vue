@@ -2,20 +2,12 @@
     <Tweek :tweek="tweeks" :key="id"/>
 </template>
 
-<script>
+<script setup>
 import Tweek from '../components/Tweek.vue';
+import { ref } from 'vue';
 
-export default {
-    props: ['id'],
-    components: {
-        Tweek,
-    },
-    data() {
-        return {
-            tweeks: [],
-        }
-    },
-    mounted() {
-    },
-}
+const props = defineProps(['id']); 
+const tweek = ref([]);
+
 </script>
+

@@ -32,27 +32,23 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import axios from 'axios'
+import { ref, onMounted } from 'vue'
 
-    export default{
-        data () {
-            return {
-                notifications: [],
-            }
-        },
-        mounted() {
-            this.getNotifications();
-        },
-        methods: {
-            getNotifications(){
-                axios.get(`/api/notifications/1`,) 
-                .then(response => {
-                    this.notifications = response.data;
-                }).catch(error => {
-                    console.log('error' + error)
-                })
-            },
-        }
-    }
+const notifications = ref([]);
+
+function getNotifications(){
+    axios.get(`/api/notifications/1`,) 
+    .then(response => {
+        notifications.value = response.data;
+    }).catch(error => {
+        console.log('error' + error)
+    })
+}
+
+onMounted(() => {
+    getNotifications();
+})
+
 </script>

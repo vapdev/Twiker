@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col h-full w-fit border-solid border-r-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0">
+    <div class="flex flex-col h-full w-fit border-solid border-r-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0 ">
         <div class="min-[600px]:sticky p-3 bg-white dark:bg-slate-900 top-0 w-full h-fit min-[600px]:opacity-95 text-2xl border-solid border-b-2 border-gray-100 dark:border-gray-700">
             <span class="opacity-100">Conversas</span>
         </div>
@@ -16,30 +16,29 @@
     </div>
 </template>
 
-<script>
-import axios from 'axios'
+<script setup>
 
-    export default{
-        data () {
-            return {
-                conversations: [],
-            }
-        },
-        mounted() {
-            this.getConversations();
-        },
-        methods: {
-            getConversations(){
-                axios.get(`/api/conversations`,) 
-                .then(response => {
-                    this.conversations = response.data;
-                }).catch(error => {
-                    console.log('error' + error)
-                })
-            },
-            goToConversation(user_id) {
-                this.$router.push(`/conversation/${user_id}`)
-            }
-        }
-    }
+import axios from 'axios'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const conversations = ref([]);
+const router = useRouter();
+
+function getConversations(){
+    axios.get(`/api/conversations`,) 
+    .then(response => {
+        conversations.value = response.data;
+    }).catch(error => {
+        console.log('error' + error)
+    })
+}
+function goToConversation(user_id) {
+    router.push(`/conversation/${user_id}`)
+}
+
+onMounted(() => {
+    getConversations();
+})
+
 </script>

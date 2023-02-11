@@ -10,7 +10,7 @@
             <p class="text-base">Usuário:</p>
             <div class="flex flex-col">
                 <input class="rounded-md mb-1 text-base " type="text" name="username" v-model="username">
-                <input class="rounded-md mb-2 text-base " type="password" name="password" v-model="password"> 
+                <input class="rounded-md mb-2 text-base " type="current-password" name="password" v-model="password"> 
             </div>
             <div class="flex justify-between">
                 <button type="submit" class="hover:scale-105 text-bold hover:text-gray-200 text-sm ml-1">Log In</button>
@@ -21,44 +21,46 @@
 </div>
 </template>
 
-<script lang="ts">
-import axios from 'axios'
-export default {
-    name: 'Login',
-    data(){
-        return {
-            username: '',
-            password: '',
-        }
-    },
-    methods:{
-        submitForm(e){
-            const formData = {
-                username: this.username,
-                password: this.password,
-            }
+<script setup>
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useStore } from 'vuex'
 
-            axios
-                .post('api/v1/token/login', formData)
-                .then(response => {
-                    const token = response.data.auth_token
-                    this.$store.commit('setToken', token)
-                    axios.defaults.headers.common['Authorization'] = `Token ${token}`
-                    localStorage.setItem('token', token)
-                    if (this.$store.state.isAuthenticated){
-                        this.$router.push('/')
-                    }
-                })
-                .catch(error => {
-                    console.log('error' + error)
-                })
-        }
-    },
-    mounted(){
-        if (this.$route.name == 'Logout'){
-            this.$store.commit('removeToken')
-        }
+const router = useRouter();
+const route = useRoute();
+
+const store = useStore();
+
+const username = ref('');
+const password = ref('');
+
+
+function submitForm(e){
+    const formData = {
+        username: username.value,
+        password: password.value,
     }
-    
+
+    axios
+        .post('api/v1/token/login', formData)
+        .then(response => {
+            const token = response.data.auth_token
+            store.commit('setToken', token)
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`
+            localStorage.setItem('token', token)
+            if (store.state.isAuthenticated){
+                router.push('/')
+            }
+        })
+        .catch(error => {
+            console.log('error' + error)
+        })
 }
+
+onMounted(() => {
+    if (route.name == 'Logout'){
+        store.commit('removeToken')
+    }
+})
 </script>

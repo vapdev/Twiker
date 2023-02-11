@@ -1,6 +1,3 @@
-<script setup>
-</script>
-
 <template>
     <div class="sticky top-0 left-0 px-2 h-screen max-[600px]:h-fit max-[600px]:w-screen bg-white dark:bg-slate-900">
     <div class="flex flex-col max-[600px]:flex-row justify-center">
@@ -63,6 +60,10 @@
     </div>
 </div>
 </template>
+
+<script setup>
+</script>
+
 <style>
 @import '../assets/icons/css/all.css';
 </style>

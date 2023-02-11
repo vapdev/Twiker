@@ -15,33 +15,27 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import axios from 'axios'
+import { ref } from 'vue'
 
-export default {
-    name: 'SignUp',
-    data(){
-        return {
-            username: '',
-            password: '',
-        }
-    },
-    methods:{
-        submitForm(e){
-            const formData = {
-                username: this.username,
-                password: this.password,
-            }
+const name = 'SignUp';
+let username = ref('');
+let password = ref('');
 
-            axios
-                .post('api/v1/users/', formData)
-                .then(response => {
-                    this.$router.push('/login')
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }
+function submitForm(e){
+    const formData = {
+        username: username.value,
+        password: password.value,
     }
+    axios
+        .post('api/v1/users/', formData)
+        .then(response => {
+            this.$router.push('/login')
+        })
+        .catch(error => {
+            console.log(error)
+        })
 }
+
 </script>

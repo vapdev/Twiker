@@ -13,6 +13,8 @@
 
 <script setup>
 import ChatBox from '../components/ChatBox.vue';
-import { defineProps, onMounted } from 'vue'
-defineProps(['id'])
+import { defineProps } from 'vue'
+
+const props = defineProps(['id']);
+
 </script>
