@@ -1,7 +1,3 @@
-<script setup>
-import ChatBox from '../components/ChatBox.vue';
-</script>
-
 <template>
     <div class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0">
         <div class="min-[600px]:sticky p-3 bg-white dark:bg-slate-900 top-0 w-full h-fit min-[600px]:opacity-90 text-2xl border-b-2 border-gray-700 ">
@@ -10,13 +6,17 @@ import ChatBox from '../components/ChatBox.vue';
             </a>
         </div>
         <div class="flex flex-col h-full w-full">
-            <ChatBox :user_id="this.id"></ChatBox>
+            <ChatBox :user_id="id"></ChatBox>
         </div>
     </div>
 </template>
 
-<script>
-    export default{
-        props: ['id'],
-    }
+<script setup>
+import ChatBox from '../components/ChatBox.vue';
+import { defineProps, onMounted } from 'vue'
+defineProps(['id'])
+
+onMounted(() => {
+    console.log('mounted conversation ' + id)
+})
 </script>
