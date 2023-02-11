@@ -51,7 +51,6 @@ async function getUser(){
     }).catch(error => {
         console.log('error' + error)
     })
-    console.log(user.value);
 }
 function followUser(){
     axios.post(`/api/follow/${route.params.username}`,)
