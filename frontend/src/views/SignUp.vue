@@ -18,7 +18,10 @@
 <script setup>
 import axios from 'axios'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+ 
 const name = 'SignUp';
 let username = ref('');
 let password = ref('');
@@ -31,7 +34,7 @@ function submitForm(e){
     axios
         .post('api/v1/users/', formData)
         .then(response => {
-            this.$router.push('/login')
+            router.push('/login')
         })
         .catch(error => {
             console.log(error)

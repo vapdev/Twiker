@@ -12,7 +12,7 @@ const route = useRoute();
 
 const store = useStore();
 
-store.commit('initializeStore')
+store.commit('initializeStore');
 
 const token = store.state.token
 
@@ -30,17 +30,18 @@ function verifyToken() {
 function getAuthenticatedUser() {
   axios.get('/api/auth_user/')
     .then(response => {
-      store.commit('setUsername', response.data.username)
-      store.commit('setUserId', response.data.id)
-      localStorage.setItem('username', response.data.username)
-      localStorage.setItem('user_id', response.data.id)
+      store.commit('setUsername', response.data.username);
+      store.commit('setUserId', response.data.id);
+      localStorage.setItem('username', response.data.username);
+      localStorage.setItem('user_id', response.data.id);
     })
     .catch(error => {
       console.log(error)
     })
 }
 
-getAuthenticatedUser();
 verifyToken();
+getAuthenticatedUser();
+
 
 </script>

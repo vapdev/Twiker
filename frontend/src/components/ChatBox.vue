@@ -80,7 +80,6 @@ async function getMessages(){
     })
 }
 function submitMessage() {
-    console.log(content.value);
     if (content.value.length > 0) {
         let message = {
             'content': content.value,
@@ -89,7 +88,6 @@ function submitMessage() {
             'avatar_url': avatar,
             'conversation_id': conversation_id,
         };
-        console.log(message);
         chatSocket.send(JSON.stringify(message));
         content.value = '';
     }
