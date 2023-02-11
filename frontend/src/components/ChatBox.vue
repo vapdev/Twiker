@@ -62,7 +62,7 @@ export default{
         } else {
             new_uri = "ws:";
         }
-        new_uri += "//" + "127.0.0.1:8000";
+        new_uri += "//" + import.meta.env.VITE_SOCKET_HOST;
         this.chatSocket = new WebSocket(
             new_uri +
             '/ws/' +

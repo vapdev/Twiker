@@ -18,7 +18,6 @@ export default {
     }
   },
   created() {
-    console.log('created')
     this.getAuthenticatedUser()
   },
   methods: {

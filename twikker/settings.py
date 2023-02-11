@@ -30,9 +30,9 @@ SIMPLE_JWT = {
    'AUTH_HEADER_TYPES': ('JWT',),
 }
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "twiker.herokuapp.com"]
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:8000']
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:5173', 'https://twiker.herokuapp.com', 'http://twiker.herokuapp.com']
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -43,9 +43,7 @@ REST_FRAMEWORK = {
     ]
 }
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://vapdev-upgraded-parakeet-67457rwx5p6fxx6-8000.preview.app.github.dev"
-]
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:5173', 'https://twiker.herokuapp.com', 'http://twiker.herokuapp.com']
 
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "feed"
@@ -118,6 +116,16 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.environ.get("DB_NAME"),
+#         "USER": os.environ.get("DB_USER"),
+#         "PASSWORD": os.environ.get("DB_PASSWORD"),
+#         "PORT": os.environ.get("DB_PORT"),
+#         "HOST": os.environ.get("DB_HOST"),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
