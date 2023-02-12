@@ -1,5 +1,5 @@
 <template>
-    <div id="conversationapp" class="flex flex-col h-full">
+    <div id="conversationapp" class="flex flex-col h-full max-[600px]:mb-12">
         <div id="chatcontainer" class="flex flex-col h-full mx-3 mt-2">
             <div class="mb-1.5" v-for="message in messages" :class="message.tweeker_name == $store.state.username ? 'justify-end flex w-full' : 'flex w-full' ">
                 <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-100 dark:border-gray-700 bg-gray-700" :class="message.tweeker_name == $store.state.username ? 'rounded-tl-3xl rounded-tr-3xl  rounded-bl-3xl' : 'rounded-tl-3xl rounded-tr-3xl  rounded-br-3xl' ">
@@ -20,7 +20,7 @@
                 </article>
             </div>
         </div>
-        <div class="p-2 sticky flex bg-white dark:bg-slate-900  bottom-0 w-full items-center">
+        <div class="p-2 sticky flex bg-white dark:bg-slate-900 bottom-0  max-[600px]:bottom-11 w-full items-center">
                 <div class="w-full">
                     <form class="m-0" v-on:submit.prevent="submitMessage()">
                         <input v-model="content" type="text" class="rounded-xl px-2 h-10 w-full text-base outline-none text-white bg-gray-700" placeholder="Your message...">
@@ -58,7 +58,6 @@ async function getConversationId(){
     await axios.get(`/api/get_conversation/${props.user_id}`)
     .then(response => {
         conversation_id = response.data.conversation_id;
-        console.log(conversation_id);
     })
     .catch(error => {
     })
@@ -67,7 +66,7 @@ async function getMessages(){
     if (props.user_id){
         await getConversationId();
     }
-    axios.get(`/api/messages/${conversation_id}`,) 
+    await axios.get(`/api/messages/${conversation_id}`,) 
     .then(response => {
         for (let i = 0; i < response.data.messages.length; i++) {
             messages.value.push(response.data.messages[i])

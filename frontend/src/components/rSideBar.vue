@@ -1,9 +1,9 @@
 <template>
-    <div class="sticky top-0 left-0 px-2 h-screen max-lg:hidden">
-        <div class="flex flex-col justify-between h-full">
+    <div class="sticky max-[600px]:fixed max-[600px]:bottom-0 min-[600px]:top-0 left-0 px-2 h-screen max-[600px]:h-fit max-[600px]:w-screen bg-white dark:bg-slate-900">
+        <div class="flex flex-col min-[600px]:h-full max-[600px]:flex-row justify-between">
             <div>
-                <form method="get" action="">
-                    <div class="flex flex-row p-2 my-2 border-solid border-2 border-gray-100 dark:border-gray-700 rounded-full">
+                <form method="get" action="" class="m-0">
+                    <div class="flex flex-row p-2 my-2 max-[600px]:my-0 border-solid border-2 border-gray-100 dark:border-gray-700 rounded-full">
                         <div>
                             <input class="text-sm h-fit w-full outline-none bg-white dark:bg-slate-900" type="text" name="query" placeholder="Search">
                         </div>
@@ -13,10 +13,10 @@
                     </div>
                 </form>
             </div>
-            <div class="relative w-full my-3" @click="toggle">
+            <div class="relative w-full max-[600px]:w-60" @click="toggle">
                 <div class="flex justify-between w-full hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full">
                     <div class="flex p-1">
-                        <img class="rounded-full h-12 w-12 m-auto" src="">
+                        <img class="rounded-full h-12 w-12 max-[600px]:h-8 max-[600px]:w-8 m-auto" src="">
                         <h1 class="ml-1 font-semibold ">{{ user.username }}</h1>
                     </div>
                     <div class="flex m-3">
@@ -37,7 +37,7 @@
                                 <div class="flex w-11 h-11">
                                     <i class="text-xl m-auto fa-solid fa-moon"></i>
                                 </div>
-                                <span class="m-auto mx-3 max-[850px]:hidden">
+                                <span class="m-auto mx-3">
                                     Dark mode
                                 </span>
                             </a>
@@ -47,7 +47,7 @@
                                 <div class="flex w-11 h-11">
                                     <i class="text-lg m-auto fa-solid fa-user-pen"></i>
                                 </div>
-                                <span class="m-auto mx-3 max-[850px]:hidden">
+                                <span class="m-auto mx-3">
                                     Editar Profile
                                 </span>
                             </router-link>
@@ -57,7 +57,7 @@
                                 <div class="flex w-11 h-11">
                                     <i class="text-xl m-auto rotate-180 fa-solid fa-right-from-bracket"></i>
                                 </div>
-                                <span class="m-auto mx-3 max-[850px]:hidden">
+                                <span class="m-auto mx-3">
                                     Logout
                                 </span>
                             </router-link>
