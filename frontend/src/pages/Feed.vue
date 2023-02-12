@@ -73,7 +73,6 @@ async function getTweeks(){
             hasNext = true
         }
         tweeks.value = response.data.results
-        console.log(tweeks.value);
     }).catch(error => {
         console.log('error' + error)
     })

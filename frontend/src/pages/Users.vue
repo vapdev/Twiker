@@ -36,7 +36,7 @@ import { ref, onMounted } from 'vue'
 const users = ref([]);
 
 function getUsers(){
-    axios.get(`/api/users/`,) 
+    axios.get(`/api/users/`) 
     .then(response => {
         users.value = response.data;
     }).catch(error => {

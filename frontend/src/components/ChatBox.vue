@@ -44,7 +44,8 @@ const props = defineProps(['user_id']);
 
 const store = useStore()
 
-const conversation_id = '0';
+
+let conversation_id = '0';
 const messages = ref([]);
 const content = ref('');
 const tweeker = computed(() => store.state.username);
@@ -54,9 +55,10 @@ let chatSocket = null;
 const current_room = 'global';
 
 async function getConversationId(){
-    await axios.get(`/api/get_conversation/${user_id}`)
+    await axios.get(`/api/get_conversation/${props.user_id}`)
     .then(response => {
-        conversation_id = response.data.conversation_id
+        conversation_id = response.data.conversation_id;
+        console.log(conversation_id);
     })
     .catch(error => {
     })
@@ -65,7 +67,7 @@ async function getMessages(){
     if (props.user_id){
         await getConversationId();
     }
-    await axios.get(`/api/messages/${conversation_id}`,) 
+    axios.get(`/api/messages/${conversation_id}`,) 
     .then(response => {
         for (let i = 0; i < response.data.messages.length; i++) {
             messages.value.push(response.data.messages[i])

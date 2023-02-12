@@ -6,7 +6,7 @@
             </a>
         </div>
         <div class="flex flex-col h-full w-full">
-            <ChatBox conversation_id="0"></ChatBox>
+            <ChatBox></ChatBox>
         </div>
     </div>
 </template>

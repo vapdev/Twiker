@@ -60,7 +60,7 @@ function submitForm(e){
 
 onMounted(() => {
     if (route.name == 'Logout'){
-        store.commit('removeToken')
+        store.commit('removeToken');
     }
 })
 </script>
