@@ -41,3 +41,5 @@ class NotificationsList(generics.ListAPIView):
 
     def get_queryset(self):
         return Notification.objects.filter(to_user=self.kwargs.get("user_id"))
+
+    

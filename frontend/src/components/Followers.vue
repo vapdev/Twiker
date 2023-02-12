@@ -42,6 +42,6 @@ function getUsers(){
     })
 }
 onMounted(() => {
-this.getUsers();
+    getUsers();
 })
 </script>

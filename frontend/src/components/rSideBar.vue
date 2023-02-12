@@ -17,7 +17,7 @@
                 <div class="flex justify-between w-full hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full">
                     <div class="flex p-1">
                         <img class="rounded-full h-12 w-12 max-[600px]:h-8 max-[600px]:w-8 m-auto" src="">
-                        <h1 class="ml-1 font-semibold ">{{ user.username }}</h1>
+                        <h1 class="ml-1 font-semibold ">{{ store.state.username }}</h1>
                     </div>
                     <div class="flex m-3">
                         <i class="m-auto text-xl fa-solid fa-bars"></i>
@@ -72,24 +72,14 @@
 <script setup>
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
+import { useStore } from 'vuex'
 
+const store = useStore()
 
 let show = ref(false);
-const user = ref('');
-
-onMounted(() => {
-    getUser()
-}) 
 
 function toggle() {
     show.value = !show.value;
 }   
-async function getUser(){
-    await axios.get(``,) 
-    .then(response => {
-        user.value = response.data
-    }).catch(error => {
-        console.log('error' + error)
-    })
-}
+
 </script>

@@ -1,19 +1,20 @@
 <template>
     <div class="flex flex-col w-full dark:bg-slate-900 border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0" id="twikkerprofileapp">
-        <div id="profile" class="flex flex-col p-4 border-solid border-b-2 border-gray-100 dark:border-gray-700 bg-gray-400">
+        <div id="profile" class="flex flex-col p-4 border-solid border-b-2 border-gray-100 dark:border-gray-700">
             <div class="bg-opacity-40">
-                <div class="flex w-full">
+                <div class="flex w-full justify-between">
+                    <div class="flex">
                         <article>
                             <figure>
                                 <div class="h-14 w-14 rounded-full border-2 border-white bg-gray-300"></div>
                             </figure>
                         </article> 
-                    <h1>{{ user.username }}</h1>
-                </div>
-
-                <div class="flex flex-col ml-4">
-                    <a class="cursor-pointer">Followers: {{ followed_by }}</a>
-                    <a class="cursor-pointer">Follows: {{ following }}</a>
+                        <h1>{{ user.username }}</h1>
+                    </div>
+                    <div class="flex">
+                        <a class="cursor-pointer mr-4">Followers: {{ followed_by }}</a>
+                        <a class="cursor-pointer">Follows: {{ following }}</a>
+                    </div>
                 </div>
                 <div class="flex justify-end">
                     <div class="flex flex-col ml-4" v-if="user.id != store.state.user_id">
@@ -41,7 +42,6 @@ const user = ref('');
 const followed_by = ref('');
 const following = ref('');
 
-
 async function getUser(){
     await axios.get(`/api/user_data/${route.params.username}`,) 
     .then(response => {
@@ -52,8 +52,8 @@ async function getUser(){
         console.log('error' + error)
     })
 }
-function followUser(){
-    axios.post(`/api/follow/${route.params.username}`,)
+async function followUser(){
+    await axios.post(`/api/follow/${route.params.username}`,)
     .then(response => {
         getUser()
     }) 
@@ -61,8 +61,8 @@ function followUser(){
         console.log('error' + error)
     })
 }
-function unfollowUser(){
-    axios.post(`/api/unfollow/${route.params.username}`,) 
+async function unfollowUser(){
+    await axios.post(`/api/unfollow/${route.params.username}`,) 
     .then(response => {
         getUser()
     })

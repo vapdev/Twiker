@@ -7,23 +7,23 @@
             <div class="flex flex-row h-fit w-full p-4 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700" >
                 <div>
                     <a v-if="notification.notification_type == 'message'" >
-                        <strong>{{ notification.created_by }}</strong> sent you a message
+                        <strong>{{ notification.created_by_username }}</strong> sent you a message
                         <small>{{ notification.created_at }}</small>
                     </a>
                     <a v-if="notification.notification_type == 'follower'" >
-                        <strong>{{ notification.created_by }}</strong> started following you
+                        <strong>{{ notification.created_by_username }}</strong> started following you
                         <small>{{ notification.created_at }}</small>
                     </a>
                     <a v-if="notification.notification_type == 'like'" >
-                        <strong>{{ notification.created_by }}</strong> liked a tweek you made
+                        <strong>{{ notification.created_by_username }}</strong> liked a tweek you made
                         <small>{{ notification.created_at }}</small>
                     </a>
                     <a v-if="notification.notification_type == 'dislike'">
-                        <strong>{{ notification.created_by }}</strong> liked a tweek you made
+                        <strong>{{ notification.created_by_username }}</strong> liked a tweek you made
                         <small>{{ notification.created_at }}</small>
                     </a>
                     <a v-if="notification.notification_type == 'mention'">
-                        <strong>{{ notification.created_by }}</strong> mentioned you in a tweek
+                        <strong>{{ notification.created_by_username }}</strong> mentioned you in a tweek
                         <small>{{ notification.created_at }}</small>
                     </a>
                 </div>
