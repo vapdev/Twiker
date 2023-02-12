@@ -29,6 +29,8 @@ export default createStore({
                 await axios.post('/api/v1/auth/logout/');
                 localStorage.removeItem('token');
                 state.token = ''
+                state.username = ''
+                state.user_id = ''
                 state.isAuthenticated = false
                 this.$router.push({ name: 'Login' });
             } catch (error) {
