@@ -23,7 +23,8 @@ six==1.16.0
 sqlparse==0.4.3
 Twisted==22.10.0
 txaio==22.2.1
-typing_extensions==4.4.0zope.interface==5.5.1
+typing_extensions==4.4.0
+zope.interface==5.5.1
 cloudinary
 djoser
 django-cors-headers
