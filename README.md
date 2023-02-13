@@ -9,6 +9,8 @@ We will be pleased if you contribute
 Work in progress.
 We are currently building a new Frontend.
 
+ROADMAP ==== FIX WEB SOCKETS GROUPS TO EACH CHAT ROOM
+
 ✅ Likes and Dislikes  <br>
 ✅ Feed  <br>
 ✅ DM <br>
