@@ -4,11 +4,12 @@ import re
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from apps.notification.utilities import create_notification
+from apps.notification.utilities import create_notification, create_notification_bulk
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
+from ..notification.models import Notification
 from .serializers import TweekSerializer
 from apps.feed.models import Tweek, Like, Dislike
 
@@ -64,11 +65,14 @@ def api_add_tweek(request):
 
     # send notification to users mentioned in the tweek
     results = re.findall("(^|[^@\w])@(\w{1,20})", body)
+    notifications = []
     for result in results:
         result = result[1]
         if User.objects.filter(username=result).exists() and result != request.user.username:
             user = User.objects.get(username=result)
-            create_notification(request, user, 'mention')
+            notification = Notification(created_by=request, to_user=user, notification_type='mention')
+            notifications.append(notification)
+    create_notification_bulk(notifications)
             
     return JsonResponse({'success': True})
 
