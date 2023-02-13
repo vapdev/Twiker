@@ -117,3 +117,11 @@ def follow_tweeker(request, username):
 
     request.user.twikkerprofile.follows.add(user.twikkerprofile)
     return JsonResponse({'success': True})
+
+
+@permission_classes((IsAuthenticated, ))
+@api_view(['GET'])
+def user1_follows_user2(request, username1, username2):
+    user1 = get_object_or_404(User, username=username1)
+    user2 = get_object_or_404(User, username=username2)
+    return JsonResponse({'follows': user1.twikkerprofile.follows.filter(user=user2).exists()})

@@ -1,6 +1,6 @@
 from django.urls import path
 from apps.twikkerprofile.views import edit_profile, unfollow_tweeker, followers, follows, \
-    follow_tweeker, toggle_dark_mode, get_user_data, get_auth_user
+    follow_tweeker, toggle_dark_mode, get_user_data, get_auth_user, user1_follows_user2
 
 urlpatterns = [
     path('editprofile/', edit_profile, name='edit_profile'),
@@ -13,4 +13,5 @@ urlpatterns = [
     path('api/auth_user/', get_auth_user, name='get_user_data'),
     path('api/follow/<str:username>', follow_tweeker, name='follow'),
     path('api/unfollow/<str:username>', unfollow_tweeker, name='unfollow'),
+    path('api/user1_follows_user2/<str:username1>/<str:username2>', user1_follows_user2, name='user1_follows_user2'),
 ]

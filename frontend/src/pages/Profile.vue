@@ -42,6 +42,21 @@ const user = ref('');
 const followed_by = ref('');
 const following = ref('');
 
+async function logged_user_follows_user(){
+    await axios.get(`/api/user1_follows_user2/${store.state.username}/${route.params.username}`,)
+    .then(response => {
+        if(response.data['follows'] == true){
+            console.log("USER FOLLOWS PROFILE USER")
+            followed_by.value = true
+        }else{
+            console.log("USER DOES NOT FOLLOW PROFILE USER")
+            followed_by.value = false
+        }
+    })
+    .catch(error => {
+        console.log('error' + error)
+    })
+}
 async function getUser(){
     await axios.get(`/api/user_data/${route.params.username}`,) 
     .then(response => {
@@ -73,6 +88,7 @@ async function unfollowUser(){
 
 onMounted(() => {
     getUser();
+    logged_user_follows_user();
 })
 
 </script>
