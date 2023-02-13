@@ -7,7 +7,8 @@ from rest_framework.decorators import api_view
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
-from apps.notification.utilities import create_notification
+from apps.notification.utilities import create_notification_bulk
+from ..notification.models import Notification
 from .models import Conversation, ConversationMessage
 from .serializers import ChatSerializer, ConversationSerializer
 
@@ -42,9 +43,12 @@ def api_add_message(request):
     message = ConversationMessage.objects.create(conversation_id=conversation_id, content=content, created_by=request.user)
 
     if conversation_id:
+        notifications = []
         for user in message.conversation.users.all():
             if user != request.user:
-                create_notification(request, user, 'message')
+                notification = Notification(created_by=request, to_user=user, notification_type='message')
+                notifications.append(notification)
+        create_notification_bulk(notifications)
 
     return JsonResponse({'success': True})
 
