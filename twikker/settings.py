@@ -31,7 +31,7 @@ SIMPLE_JWT = {
    'AUTH_HEADER_TYPES': ('JWT',),
 }
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "twiker.herokuapp.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "twiker-api.herokuapp.com"]
 
 CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:5173', 'https://twiker.herokuapp.com', 'http://twiker.herokuapp.com']
 
@@ -147,10 +147,5 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-
-# cloudinary settings
-from cloudinary.uploader import upload
-from cloudinary.utils import cloudinary_api_url
 
 DEFAULT_AVATAR_URL = 'https://res.cloudinary.com/deues3qyn/image/upload/v1676499936/avatar.png'
