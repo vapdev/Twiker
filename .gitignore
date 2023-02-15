@@ -13,3 +13,4 @@ twikker/__pycache__/*
 theme/*
 tailwind.config.js
 var/
+*.bak

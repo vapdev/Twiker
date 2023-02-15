@@ -30,9 +30,7 @@ class ConversationSerializer(serializers.ModelSerializer):
     def get_username(self, obj):
         user1 = obj.users.all()[0]
         user2 = obj.users.all()[1]
-        print("users are", user1.username)
         user = self.context['request'].user
-        print("user is", user)
         if user == user1:
             return user2.username
         return user1.username

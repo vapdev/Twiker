@@ -17,8 +17,6 @@ from .serializers import ChatSerializer, ConversationSerializer
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
 def api_get_conversation(request, user_id):
-    print("request.user.id: ", request.user.id)
-    print("user_id: ", user_id)
     conversations = Conversation.objects.filter(users__in=[request.user.id])
     conversations = conversations.filter(users__in=[user_id])
 
