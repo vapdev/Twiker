@@ -15,23 +15,26 @@
 <script setup>
 import axios from 'axios';
 import lSideBar from '../components/lSideBar.vue';
-import { useStore } from 'vuex'
+import { useUserStore } from '../store/UserStore.js'
 
-const store = useStore();
+const userStore = useUserStore()
 
-function getAuthenticatedUser() {
-  axios.get('/api/auth_user/')
+const expiryDate = new Date();
+expiryDate.setTime(expiryDate.getTime() + (3 * 24 * 60 * 60 * 1000));
+
+async function getAuthenticatedUser() {
+  await axios.get('/api/auth_user/')
     .then(response => {
-      store.commit('setUsername', response.data.username);
-      store.commit('setUserId', response.data.id);
-      localStorage.setItem('username', response.data.username);
-      localStorage.setItem('user_id', response.data.id);
+      userStore.setUsername(response.data.username)
+      userStore.setUserId(response.data.id)
+      document.cookie = `username=${response.data.username}; expires=${expiryDate.toUTCString()}; path=/`;
+      document.cookie = `user_id=${response.data.id}; expires=${expiryDate.toUTCString()}; path=/`;
     })
     .catch(error => {
       console.log(error)
     })
 }
 
-getAuthenticatedUser()
+getAuthenticatedUser();
 
 </script>

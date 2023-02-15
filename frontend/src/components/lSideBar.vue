@@ -50,7 +50,7 @@
             </router-link>
         </div>
         <div class="flex py-1">
-            <router-link :to="'/profile/' + this.$store.state.username" class="flex font-semibold text-xl p-2 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full ">
+            <router-link :to="'/profile/' + userStore.username" class="flex font-semibold text-xl p-2 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full ">
                 <div class="flex w-11 h-11">
                     <i class="text-xl m-auto fa-solid fa-user"></i>
                 </div>
@@ -62,6 +62,10 @@
 </template>
 
 <script setup>
+import { useUserStore } from '../store/UserStore.js'
+
+const userStore = useUserStore()
+
 </script>
 
 <style>

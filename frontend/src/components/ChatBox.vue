@@ -1,8 +1,8 @@
 <template>
     <div id="conversationapp" class="flex flex-col h-full max-[600px]:mb-12">
         <div id="chatcontainer" class="flex flex-col h-full mx-3 mt-2">
-            <div class="mb-1.5" v-for="message in messages" :class="message.tweeker_name == $store.state.username ? 'justify-end flex w-full' : 'flex w-full' ">
-                <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-100 dark:border-gray-700 bg-gray-700" :class="message.tweeker_name == $store.state.username ? 'rounded-tl-3xl rounded-tr-3xl  rounded-bl-3xl' : 'rounded-tl-3xl rounded-tr-3xl  rounded-br-3xl' ">
+            <div class="mb-1.5" v-for="message in messages" :class="message.tweeker_name == userStore.username ? 'justify-end flex w-full' : 'flex w-full' ">
+                <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-100 dark:border-gray-700 bg-gray-700" :class="message.tweeker_name == userStore.username ? 'rounded-tl-3xl rounded-tr-3xl  rounded-bl-3xl' : 'rounded-tl-3xl rounded-tr-3xl  rounded-br-3xl' ">
                     <figure class="shrink-0">
                         <img class="rounded-full h-12 w-12 bg-gray-300">
                     </figure>
@@ -36,19 +36,19 @@
 <script setup>
 import axios from 'axios'
 import { ref, onMounted, computed } from 'vue'
-import { useStore } from 'vuex'
+import { useUserStore } from '../store/UserStore.js'
 
+const userStore = useUserStore();
 
 
 const props = defineProps(['user_id']);
 
-const store = useStore()
 
 
 let conversation_id = '0';
 const messages = ref([]);
 const content = ref('');
-const tweeker = computed(() => store.state.username);
+const tweeker = computed(() => userStore.username);
 const formatted_time = 'Now';
 const avatar = '';
 let chatSocket = null;

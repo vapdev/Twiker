@@ -17,10 +17,10 @@
                     </div>
                 </div>
                 <div class="flex justify-end">
-                    <div class="flex flex-col ml-4" v-if="user.id != store.state.user_id">
+                    <div class="flex flex-col ml-4" v-if="user.id != cookie_user_id" :key="follow">
                         <router-link :to="`/conversation/${user.id}`" class="cursor-pointer" >Send message</router-link>
-                        <span class="cursor-pointer" @click="unfollowUser()">Unfollow</span>
-                        <span class="cursor-pointer" @click="followUser()">Follow</span>
+                        <span v-if="follow" class="cursor-pointer" @click="unfollowUser()">Unfollow</span>
+                        <span v-if="!follow" class="cursor-pointer" @click="followUser()">Follow</span>
                     </div>
                 </div>
             </div>
@@ -32,25 +32,32 @@
 import axios from 'axios';
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router';
-import { useStore } from 'vuex'
+
+const cookie_user_id = document.cookie.split('; ')
+            .find(row => row.startsWith('user_id='))
+            ?.split('=')[1];
+
+const cookie_username = document.cookie.split('; ')
+.find(row => row.startsWith('username='))
+?.split('=')[1];
+
 
 const route = useRoute();
-
-const store = useStore();
 
 const user = ref('');
 const followed_by = ref('');
 const following = ref('');
+const follow = ref(false)
 
 async function logged_user_follows_user(){
-    await axios.get(`/api/user1_follows_user2/${store.state.username}/${route.params.username}`,)
+    await axios.get(`/api/user1_follows_user2/${cookie_username}/${route.params.username}`,)
     .then(response => {
         if(response.data['follows'] == true){
             console.log("USER FOLLOWS PROFILE USER")
-            followed_by.value = true
+            follow.value = true
         }else{
             console.log("USER DOES NOT FOLLOW PROFILE USER")
-            followed_by.value = false
+            follow.value = false
         }
     })
     .catch(error => {
@@ -75,6 +82,7 @@ async function followUser(){
     .catch(error => {
         console.log('error' + error)
     })
+    logged_user_follows_user()
 }
 async function unfollowUser(){
     await axios.post(`/api/unfollow/${route.params.username}`,) 
@@ -84,6 +92,7 @@ async function unfollowUser(){
     .catch(error => {
         console.log('error' + error)
     })
+    logged_user_follows_user()
 }
 
 onMounted(() => {

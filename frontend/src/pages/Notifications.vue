@@ -35,14 +35,15 @@
 <script setup>
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
-import { useStore } from 'vuex'
-
-const store = useStore();
 
 const notifications = ref([]);
 
-function getNotifications(){
-    axios.get(`/api/notifications/${store.state.user_id}`,) 
+const cookie_user_id = document.cookie.split('; ')
+            .find(row => row.startsWith('user_id='))
+            ?.split('=')[1];
+
+async function getNotifications(){
+    await axios.get(`/api/notifications/${cookie_user_id}`,) 
     .then(response => {
         notifications.value = response.data;
     }).catch(error => {

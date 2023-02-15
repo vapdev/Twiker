@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^1.2.1",
+    "pinia": "^2.0.30",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6",
     "vuex": "^4.0.2"
