@@ -151,4 +151,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # cloudinary settings
 from cloudinary.uploader import upload
-from cloudinary.utils import cloudinary_url
+from cloudinary.utils import cloudinary_api_url
+
+DEFAULT_AVATAR_URL = 'https://res.cloudinary.com/deues3qyn/image/upload/v1676499936/avatar.png'

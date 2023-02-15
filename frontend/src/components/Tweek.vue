@@ -11,10 +11,7 @@
       </div>
       <div class="flex">
         <div class="flex w-14 h-full mr-2">
-          <img
-            class="rounded-full h-12 w-12"
-            :src="tweek.retweek ? tweek.retweek_avatar_url : tweek.avatar_url"
-          />
+          <Avatar />
         </div>
         <div class="flex flex-col w-full">
           <div class="flex justify-between">
@@ -44,7 +41,7 @@
                 <div
                   id="tweek_menu"
                   v-show="show"
-                  class="absolute flex flex-col right-10 min-w-max bg-white dark:bg-slate-900 shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md"
+                  class="absolute flex flex-col right-10 min-w-max bg-white dark:bg-dark shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md"
                 >
                   <div
                     @click.stop="deleteTweek(tweek.id)"
@@ -135,6 +132,7 @@
 <script setup>
 import axios from "axios"
 import { ref } from 'vue'
+import Avatar from "../components/Avatar.vue"
 
 const props =  defineProps({
   tweek: Object,
@@ -278,6 +276,5 @@ async function deleteTweek(tweek_id) {
   });
   emit("callGetTweeks");
 }
-
 </script>
 

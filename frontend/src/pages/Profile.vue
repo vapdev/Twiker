@@ -1,13 +1,11 @@
 <template>
-    <div class="flex flex-col w-full dark:bg-slate-900 border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0" id="twikkerprofileapp">
+    <div class="flex flex-col w-full dark:bg-dark border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0" id="twikkerprofileapp">
         <div id="profile" class="flex flex-col p-4 border-solid border-b-2 border-gray-100 dark:border-gray-700">
             <div class="bg-opacity-40">
                 <div class="flex w-full justify-between">
                     <div class="flex">
                         <article>
-                            <figure>
-                                <div class="h-14 w-14 rounded-full border-2 border-white bg-gray-300"></div>
-                            </figure>
+                            <Avatar />
                         </article> 
                         <h1>{{ user.username }}</h1>
                     </div>
@@ -32,6 +30,7 @@
 import axios from 'axios';
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router';
+import Avatar from '../components/Avatar.vue';
 
 const cookie_user_id = document.cookie.split('; ')
             .find(row => row.startsWith('user_id='))

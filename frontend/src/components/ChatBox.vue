@@ -2,9 +2,9 @@
     <div id="conversationapp" class="flex flex-col h-full max-[600px]:mb-12">
         <div id="chatcontainer" class="flex flex-col h-full mx-3 mt-2">
             <div class="mb-1.5" v-for="message in messages" :class="message.tweeker_name == userStore.username ? 'justify-end flex w-full' : 'flex w-full' ">
-                <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-100 dark:border-gray-700 bg-gray-700" :class="message.tweeker_name == userStore.username ? 'rounded-tl-3xl rounded-tr-3xl  rounded-bl-3xl' : 'rounded-tl-3xl rounded-tr-3xl  rounded-br-3xl' ">
+                <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-200 dark:border-gray-700 bg-lchat shadow-md dark:bg-gray-700" :class="message.tweeker_name == userStore.username ? 'rounded-tl-3xl rounded-tr-3xl  rounded-bl-3xl' : 'rounded-tl-3xl rounded-tr-3xl  rounded-br-3xl' ">
                     <figure class="shrink-0">
-                        <img class="rounded-full h-12 w-12 bg-gray-300">
+                        <Avatar />
                     </figure>
                     <div class="flex-col ml-2.5">
                         <div>
@@ -20,13 +20,13 @@
                 </article>
             </div>
         </div>
-        <div class="p-2 sticky flex bg-white dark:bg-slate-900 bottom-0  max-[600px]:bottom-11 w-full items-center">
+        <div class="p-2 sticky flex bg-white dark:bg-dark bottom-0  max-[600px]:bottom-11 w-full items-center">
                 <div class="w-full">
                     <form class="m-0" v-on:submit.prevent="submitMessage()">
-                        <input v-model="content" type="text" class="rounded-xl px-2 h-10 w-full text-base outline-none text-white bg-gray-700" placeholder="Your message...">
+                        <input v-model="content" type="text" class="rounded-xl px-2 h-10 w-full text-base outline-none text-black dark:text-white bg-lchat dark:bg-gray-700" placeholder="Your message...">
                     </form>
                 </div>
-                <div class="bg-gray-700 hover:bg-gray-500 ml-1 rounded-xl">
+                <div class="bg-lchat dark:bg-gray-700 hover:bg-gray-500 ml-1 rounded-xl">
                     <button @click="submitMessage()" class="h-10 w-10 text-green-300 px-2 rounded-full hover:text-green-500"><i class="fa-regular fa-paper-plane"></i></button>
                 </div>
         </div>
@@ -37,7 +37,7 @@
 import axios from 'axios'
 import { ref, onMounted, computed } from 'vue'
 import { useUserStore } from '../store/UserStore.js'
-
+import Avatar from './Avatar.vue'
 const userStore = useUserStore();
 
 

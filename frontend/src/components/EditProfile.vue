@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-col w-full bg-white dark:bg-slate-900 border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0" id="twikkerprofileapp">
+    <div class="flex-col w-full bg-white dark:bg-dark border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0" id="twikkerprofileapp">
         <div class="border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0">
             <div class="border-gray-100 border-y-2 dark:border-gray-700 pb-3">
                 <Image />
@@ -9,11 +9,7 @@
                     </div>
                     <div class="px-2">
                         <article>
-                            <figure>
-                                <p>
-                                    <div class="w-12 h-12 rounded-full bg-gray-300" src=""></div>
-                                </p>
-                            </figure>
+                            <Avatar />
                         </article> 
                         <form method="post" enctype="multipart/form-data" action=".">
                             <!-- {{ form.avatar }} -->
@@ -33,4 +29,5 @@
 
 <script setup>
 import Image from '../components/Image.vue'
+import Avatar from '../components/Avatar.vue'
 </script>

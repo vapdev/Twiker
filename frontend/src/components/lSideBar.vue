@@ -1,5 +1,5 @@
 <template>
-    <div class="sticky top-0 left-0 px-2 h-screen max-[600px]:h-fit max-[600px]:w-screen bg-white dark:bg-slate-900">
+    <div class="sticky top-0 left-0 px-2 h-screen max-[600px]:h-fit max-[600px]:w-screen bg-white dark:bg-dark">
     <div class="flex flex-col max-[600px]:flex-row justify-center">
         <div class="flex py-1 max-[600px]:hidden">
             <router-link to="/" class="flex justify-center font-semibold p-2 hover:bg-green-200 hover:rounded-full ">

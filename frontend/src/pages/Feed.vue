@@ -3,20 +3,18 @@
         <div id="feedapp"
             class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0">
             <div
-                class="min-[600px]:sticky p-3 bg-white dark:bg-slate-900 top-0 min-[600px]:opacity-90 w-full h-fit text-2xl">
+                class="min-[600px]:sticky p-3 bg-white dark:bg-dark top-0 min-[600px]:opacity-90 w-full h-fit text-2xl">
                 <a href="">
                     <span class="opacity-100 font-semibold">Página inicial</span>
                 </a>
             </div>
             <div class="flex h-30 w-full pt-3 pl-3 border-solid border-b-2 border-gray-100 dark:border-gray-700">
-                <div class="flex w-14 h-full pt-1">
-                    <img class="rounded-full h-12 w-12" src="">
-                </div>
+                <Avatar />
                 <div class="flex flex-col w-full pl-1">
                     <form v-on:submit.prevent="submitTweek()">
                         <div class="flex w-full py-5">
                             <textarea placeholder="What you tweeking bro..."
-                                class="text-xl resize-none h-fit w-full outline-none bg-white dark:bg-slate-900"
+                                class="text-xl resize-none h-fit w-full outline-none bg-white dark:bg-dark"
                                 type="text" v-model="body"></textarea>
                         </div>
                         <div class="flex border-solid border-t-2 border-gray-100 dark:border-gray-700 w-full">
@@ -44,7 +42,7 @@
 import axios from 'axios'
 import Tweek from '../components/Tweek.vue';
 import { ref, onMounted } from 'vue';
-
+import Avatar from '../components/Avatar.vue';
 
 document.body.addEventListener('keydown', function(e) {
   if(!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
