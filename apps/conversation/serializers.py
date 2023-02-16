@@ -6,7 +6,7 @@ from .models import ConversationMessage, Conversation
 
 
 class ChatSerializer(serializers.ModelSerializer):
-    avatar_url = serializers.CharField(source='created_by.twikkerprofile.avatar.url')
+    avatar_url = serializers.CharField(source='created_by.twikkerprofile.avatar')
     tweeker_name = serializers.CharField(source='created_by.twikkerprofile.user.username')
 
     class Meta:

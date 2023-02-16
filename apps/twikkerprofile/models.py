@@ -1,7 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
-from cloudinary.models import CloudinaryField
 from django.conf import settings
+
+if settings.DEBUG:  
+    from apps.twikkerprofile.fields import MockCloudinaryField as CloudinaryField
+else:
+    from cloudinary.models import CloudinaryField
 
 # Create your models here.
 class TwikkerProfile(models.Model):

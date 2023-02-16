@@ -36,7 +36,8 @@ def get_user_data(request, username):
 @api_view(['GET'])
 def get_profile_data(request, username):
     user = get_object_or_404(User, username=username)
-    serializer = TwikkerProfileSerializer(user)
+    profile = user.twikkerprofile
+    serializer = TwikkerProfileSerializer(profile)
     return JsonResponse(serializer.data)
 
 @permission_classes((IsAuthenticated, ))

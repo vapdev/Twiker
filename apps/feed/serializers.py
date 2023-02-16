@@ -10,7 +10,7 @@ class TweekSerializer(serializers.ModelSerializer):
     likes_count = serializers.IntegerField(source='likes.count')
     dislikes_count = serializers.IntegerField(source='dislikes.count')
     retweek_count = serializers.IntegerField(source='retweeks.count')
-    avatar_url = serializers.CharField(source='created_by.twikkerprofile.avatar.url')
+    avatar_url = serializers.CharField(source='created_by.twikkerprofile.avatar')
 
     is_liked = serializers.SerializerMethodField()
     is_disliked = serializers.SerializerMethodField()
@@ -22,7 +22,7 @@ class TweekSerializer(serializers.ModelSerializer):
     retweek_likes_count = serializers.IntegerField(source='retweek.likes.count', allow_null=True)
     retweek_dislikes_count = serializers.IntegerField(source='retweek.dislikes.count', allow_null=True)
     retweek_retweek_count = serializers.IntegerField(source='retweek.retweeks.count', allow_null=True)
-    retweek_avatar_url = serializers.CharField(source='retweek.created_by.twikkerprofile.avatar.url', allow_null=True)
+    retweek_avatar_url = serializers.CharField(source='retweek.created_by.twikkerprofile.avatar', allow_null=True)
     retweek_formatted_time = serializers.CharField(source='retweek.formatted_time', allow_null=True)
     retweek_id = serializers.IntegerField(source='retweek.id', allow_null=True)
 
