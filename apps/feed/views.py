@@ -47,11 +47,13 @@ def api_add_tweek(request):
     parent_id = request.POST.get('parent_id', None)
     tweek_type = request.POST.get('tweek_type', None)
     user = request.user
-    print("REQUEST IS ", request.POST)
     # process image
     image = request.FILES.get('image', None)
-    result = uploader.upload(image, upload_preset="ml_default")
-    image_url = result['secure_url']
+    if image:
+        result = uploader.upload(image, upload_preset="ml_default")
+        image_url = result['secure_url']
+    else:
+        image_url = None
 
     if tweek_type == 'retweek':
         Tweek.objects.create(body=body, created_by=user, retweek_id=parent_id, image=image_url)
