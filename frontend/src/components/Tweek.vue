@@ -59,17 +59,20 @@
           <router-link :to="`tweek/${tweek.id}`" class="flex text-xl break-all">{{
             tweek.retweek ? tweek.retweek_body : tweek.body
           }}</router-link>
+          <div v-if="tweek.image" class="w-64 h-64">
+            <img :src="tweek.image" class="w-full" />
+          </div>
           <div v-if="!tweek.is_retweek" class="flex flex-row justify-between w-2/3 mt-1">
             <div class="flex items-center">
-              <div class="flex w-8 h-8 hover:bg-yellow-200 hover:rounded-full">
+              <div class="flex w-8 h-8 hover:bg-yellow-200 hover:rounded-full cursor-pointer">
                 <i class="m-auto fa-regular fa-comment-dots"></i>
               </div>
-              <span>12</span>
+              <span>0</span>
             </div>
             <div class="flex items-center">
               <div
                 @click.stop="toggleRetweek(tweek)"
-                class="flex w-8 h-8 hover:bg-blue-300 hover:rounded-full"
+                class="flex w-8 h-8 hover:bg-blue-300 hover:rounded-full cursor-pointer"
               >
                 <i
                   :id="'retweek-' + tweek.id"
@@ -86,7 +89,7 @@
             <div class="flex items-center">
               <div
                 @click.stop="toggleLike(tweek)"
-                class="flex w-8 h-8 p-1 mx-1 text-center hover:bg-green-200 hover:rounded-full"
+                class="flex w-8 h-8 p-1 mx-1 text-center hover:bg-green-200 hover:rounded-full cursor-pointer"
               >
                 <i
                   :id="'like-' + tweek.id"
@@ -101,7 +104,7 @@
               <span :id="'likes-' + tweek.id">{{ tweek.likes_count }}</span>
               <div
                 @click.stop="toggleDislike(tweek)"
-                class="flex w-8 h-8 p-1 mx-1 text-center hover:bg-red-200 hover:rounded-full"
+                class="flex w-8 h-8 p-1 mx-1 text-center hover:bg-red-200 hover:rounded-full cursor-pointer"
               >
                 <i
                   :id="'dislike-' + tweek.id"

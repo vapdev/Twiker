@@ -17,10 +17,13 @@
                                 class="text-xl resize-none h-fit w-full outline-none bg-white dark:bg-dark"
                                 type="text" v-model="body"></textarea>
                         </div>
+                        <div v-if="selectedImageUrl"  class="w-64 h-64">
+                            <img :src="selectedImageUrl" />
+                        </div>
                         <div class="flex border-solid border-t-2 border-gray-100 dark:border-gray-700 w-full">
                             <div class="flex my-2 w-full">
                                 <div class="flex justify-between w-full">
-                                    <div class="flex">
+                                    <div @click="selectImage" class="flex">
                                         <button class=""><i class="p-1 fa-regular fa-image"></i></button>
                                     </div>
                                     <div class="flex">
@@ -56,12 +59,54 @@ document.body.addEventListener('keydown', function(e) {
 
 const tweeks = ref([]);
 const body = ref('');
+const selectedImageUrl = ref('');
+const image = ref(null);
 let currentPage = 1;
 let tweeker = 'tweeker_username';
 let created_at = 'Now';
 let avatar = 'tweeker_avatar';
 let retweeked_tweeks =  [];
 let hasNext = false;
+
+function selectImage(){
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = e => {
+        image.value = e.target.files[0];
+        selectedImageUrl.value = URL.createObjectURL(image.value);
+    }
+    input.click();
+    // const formData = new FormData();
+    // formData.append('file', file);
+    // await axios.post('/api/upload_image/', formData)
+    // .then(response => {
+    // imageUrl.value = response.data['image_url']
+    // })
+    // .catch(error => {
+        // console.log('error' + error)
+    // })
+}
+async function submitTweek(tweek_id=null){
+    if (body.value.length > 0 || tweek_id != null){
+        let tweek = new FormData();
+        tweek.append('body', body.value);
+        tweek.append('tweeker', tweeker);
+        tweek.append('created_at', created_at);
+        tweek.append('avatar', avatar);
+        tweek.append('retweek_id', tweek_id);
+        tweek.append('image', image.value);
+        // Send to backend
+        await axios.post('/api/add_tweek/', tweek)
+        .catch((error) => {
+            console.log(error)
+        })
+        currentPage = 1;
+        getTweeks()
+    }
+    body.value = '';
+    selectedImageUrl.value = '';
+}
 
 async function getTweeks(){
     await axios.get(`/api/get_tweeks/?page=${currentPage}`) 
@@ -75,26 +120,6 @@ async function getTweeks(){
         console.log('error' + error)
     })
 }
-async function submitTweek(tweek_id=null){
-    if (body.value.length > 0 || tweek_id != null){
-        let tweek = {
-            'body': body.value,
-            'tweeker': tweeker,
-            'created_at': created_at,
-            'avatar': avatar,
-            'retweek_id': tweek_id,
-        };
-        // Send to backend
-        await axios.post('/api/add_tweek/', tweek,)
-        .catch((error) => {
-            console.log(error)
-        })
-        currentPage = 1;
-        getTweeks()
-    }
-    body.value = '';
-}
-
 onMounted(() => {
     getTweeks()
     window.onscroll = () => {

@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from apps.notification.utilities import create_notification, create_notification_bulk
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
+from cloudinary import uploader
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
 from ..notification.models import Notification
@@ -42,26 +43,22 @@ def search(request):
 @csrf_exempt
 @api_view(['POST'])
 def api_add_tweek(request):
-    data = json.loads(request.body)
-    body = data['body']
-    try:
-        parent_id = data['parent_id']
-    except:
-        parent_id = None
-
-    try:
-        tweek_type = data['tweek_type']
-    except:
-        tweek_type = None
-
-    user = User.objects.get(id=request.user.id)
+    body = request.POST.get('body', '')
+    parent_id = request.POST.get('parent_id', None)
+    tweek_type = request.POST.get('tweek_type', None)
+    user = request.user
+    print("REQUEST IS ", request.POST)
+    # process image
+    image = request.FILES.get('image', None)
+    result = uploader.upload(image, upload_preset="ml_default")
+    image_url = result['secure_url']
 
     if tweek_type == 'retweek':
-        Tweek.objects.create(body=body, created_by=user, retweek_id=parent_id)
+        Tweek.objects.create(body=body, created_by=user, retweek_id=parent_id, image=image_url)
     elif tweek_type == 'comment':
-        Tweek.objects.create(body=body, created_by=user, comment_from=parent_id)
+        Tweek.objects.create(body=body, created_by=user, comment_from=parent_id, image=image_url)
     else:
-        Tweek.objects.create(body=body, created_by=user)
+        Tweek.objects.create(body=body, created_by=user, image=image_url)
 
     # send notification to users mentioned in the tweek
     results = re.findall("(^|[^@\w])@(\w{1,20})", body)

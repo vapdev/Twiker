@@ -11,6 +11,7 @@ class TweekSerializer(serializers.ModelSerializer):
     dislikes_count = serializers.IntegerField(source='dislikes.count')
     retweek_count = serializers.IntegerField(source='retweeks.count')
     avatar_url = serializers.CharField(source='created_by.twikkerprofile.avatar')
+    image = serializers.CharField(allow_null=True)
 
     is_liked = serializers.SerializerMethodField()
     is_disliked = serializers.SerializerMethodField()
@@ -61,7 +62,7 @@ class TweekSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tweek
-        fields = ('id', 'body', 'created_by', 'tweeker_name', 'likes_count', 'dislikes_count', 'avatar_url',
+        fields = ('id', 'body', 'created_by', 'image', 'tweeker_name', 'likes_count', 'dislikes_count', 'avatar_url',
                   'formatted_time', 'retweek', 'retweek_tweeker_name', 'retweek_likes_count', 'retweek_dislikes_count',
                   'retweek_avatar_url', 'retweek_formatted_time', 'retweek_body', 'retweek_id', 'retweek_count',
                   'retweek_retweek_count', 'is_liked', 'is_disliked', 'is_retweeked', 'is_retweek', 'is_retweek_liked', 'is_retweek_disliked', 'retweeks')
