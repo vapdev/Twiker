@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col w-full dark:bg-dark border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0" id="twikkerprofileapp">
+    <div class="flex flex-col w-full dark:bg-dark border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0 max-[600px]:mb-14" id="twikkerprofileapp">
         <div id="profile" class="flex flex-col p-4 border-solid border-b-2 border-gray-100 dark:border-gray-700">
             <div class="bg-opacity-40">
                 <div class="flex w-full justify-between">

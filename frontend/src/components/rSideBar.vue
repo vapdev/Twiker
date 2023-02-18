@@ -1,7 +1,7 @@
 <template>
-    <div class="sticky max-[600px]:fixed max-[600px]:bottom-0 min-[600px]:top-0 left-0 px-2 h-screen max-[600px]:h-fit max-[600px]:w-screen bg-white dark:bg-dark">
+    <div class="sticky max-[600px]:fixed max-[600px]:bottom-0 min-[600px]:top-0 left-0 px-2 h-screen max-[600px]:h-fit max-[600px]:w-screen bg-white dark:bg-dark max-[600px]:border-t-2  border-gray-100 dark:border-gray-700">
         <div class="flex flex-col min-[600px]:h-full max-[600px]:flex-row justify-between">
-            <div>
+            <div class="flex flex-col justify-center">
                 <form method="get" action="" class="m-0">
                     <div class="flex flex-row p-2 my-2 max-[600px]:my-0 border-solid border-2 border-gray-100 dark:border-gray-700 w-[200px] rounded-full">
                         <div>
@@ -24,12 +24,12 @@
                     </div>
                 </div>
                 <transition
-                enter-active-class="transition ease-out duration-100"
-                enter-from-class="transform opacity-0 scale-95"
-                enter-to-class="transform opacity-100 scale-100"
-                leave-active-class="transition ease-in duration-75"
-                leave-from-class="transform opacity-100 scale-100"
-                leave-to-class="transform opacity-0 scale-95"
+                    enter-active-class="transition ease-out duration-100"
+                    enter-from-class="transform opacity-0 scale-95"
+                    enter-to-class="transform opacity-100 scale-100"
+                    leave-active-class="transition ease-in duration-75"
+                    leave-from-class="transform opacity-100 scale-100"
+                    leave-to-class="transform opacity-0 scale-95"
                 >
                     <div id="rSidebar_menu" v-show="show" class="absolute w-48 h-fit flex flex-col bottom-16 right-2 min-w-max bg-white dark:bg-dark shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md">
                         <div class="flex hover:bg-gray-200 dark:hover:bg-gray-700">

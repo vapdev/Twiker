@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-14 h-full mr-2">
+    <div class="flex shrink-0 w-12 h-full mr-1">
         <img
         class="rounded-full h-12 w-12"
         :src="img"

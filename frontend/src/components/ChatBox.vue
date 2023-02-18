@@ -1,5 +1,5 @@
 <template>
-    <div id="conversationapp" class="flex flex-col h-full max-[600px]:mb-12">
+    <div id="conversationapp" class="flex flex-col h-full max-[600px]:mb-14">
         <div id="chatcontainer" class="flex flex-col h-full mx-3 mt-2">
             <div class="mb-1.5" v-for="message in messages" :class="message.tweeker_name == userStore.username ? 'justify-end flex w-full' : 'flex w-full' ">
                 <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-200 dark:border-gray-700 bg-lchat shadow-md dark:bg-gray-700" :class="message.tweeker_name == userStore.username ? 'rounded-tl-3xl rounded-tr-3xl  rounded-bl-3xl' : 'rounded-tl-3xl rounded-tr-3xl  rounded-br-3xl' ">
@@ -20,7 +20,7 @@
                 </article>
             </div>
         </div>
-        <div class="p-2 sticky flex bg-white dark:bg-dark bottom-0  max-[600px]:bottom-11 w-full items-center">
+        <div class="p-2 sticky flex bg-white dark:bg-dark bottom-0  max-[600px]:bottom-14 w-full items-center">
                 <div class="w-full">
                     <form class="m-0" v-on:submit.prevent="submitMessage()">
                         <input v-model="content" type="text" class="rounded-xl px-2 h-10 w-full text-base outline-none text-black dark:text-white bg-lchat dark:bg-gray-700" placeholder="Your message...">

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center max-[600px]:flex-col max-[600px]:min-h-full w-full bg-white dark:bg-dark text-black dark:text-gray-300">
+    <div class="flex justify-center max-[600px]:flex-col max-[600px]:min-h-full w-full bg-white dark:bg-dark text-black dark:text-gray-300 ">
         <aside class="flex max-[600px]:w-fit justify-end max-[600px]:sticky max-[600px]:top-0 max-[600px]:left-0 z-50">
         <lSideBar />
         </aside>

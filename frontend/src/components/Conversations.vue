@@ -1,5 +1,5 @@
 <template>
-    <div class="sticky max-[600px]:fixed max-[600px]:bottom-0 min-[600px]:top-0 min-[600px]:left-0 max-[600px]:right-0 h-screen max-[600px]:h-12 max-[600px]:w-screen w-[216px]  bg-white dark:bg-dark max-[600px]:overflow-y-hidden overflow-auto">
+    <div class="sticky max-[600px]:fixed max-[600px]:bottom-0 min-[600px]:top-0 min-[600px]:left-0 max-[600px]:right-0 h-screen max-[600px]:h-14 max-[600px]:w-screen w-[216px]  bg-white dark:bg-dark max-[600px]:overflow-y-hidden overflow-auto">
         <div class="flex flex-col max-[600px]:flex-row h-full max-[600px]:w-screen border-solid border-r-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0 overflow">
             <div class="p-3 bg-white dark:bg-dark top-0 w-full h-fit min-[600px]:opacity-95 text-2xl border-solid border-b-2 border-gray-100 dark:border-gray-700 max-[600px]:hidden">
                 <span class="opacity-100">Conversas</span>

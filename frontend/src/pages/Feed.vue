@@ -1,5 +1,5 @@
 <template>
-    <div class="flex min-w-full">
+    <div class="flex min-w-full max-[600px]:mb-14">
         <div id="feedapp"
             class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0">
             <div
@@ -87,7 +87,7 @@ function selectImage(){
         // console.log('error' + error)
     // })
 }
-async function submitTweek(tweek_id=null){
+function submitTweek(tweek_id=null){
     if (body.value.length > 0 || tweek_id != null){
         let tweek = new FormData();
         tweek.append('body', body.value);
@@ -97,7 +97,7 @@ async function submitTweek(tweek_id=null){
         tweek.append('retweek_id', tweek_id);
         tweek.append('image', image.value);
         // Send to backend
-        await axios.post('/api/add_tweek/', tweek)
+        axios.post('/api/add_tweek/', tweek)
         .catch((error) => {
             console.log(error)
         })
@@ -132,3 +132,9 @@ onMounted(() => {
     }
 })
 </script>
+
+<style>
+
+
+
+</style>
