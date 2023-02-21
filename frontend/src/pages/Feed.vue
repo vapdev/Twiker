@@ -11,11 +11,17 @@
             <div class="flex h-30 w-full pt-3 pl-3 border-solid border-b-2 border-gray-100 dark:border-gray-700">
                 <Avatar />
                 <div class="flex flex-col w-full pl-1">
-                    <form v-on:submit.prevent="submitTweek()">
-                        <div class="flex w-full py-5">
-                            <textarea placeholder="What you tweeking bro..."
-                                class="text-xl resize-none h-fit w-full outline-none bg-white dark:bg-dark" type="text"
-                                v-model="body"></textarea>
+                    <form>
+                        <div class="flex w-full py-2">
+                            <textarea
+                            @input="textAreaAdjust($event.target)"
+                            id="textarea"  
+                            placeholder="What you tweeking bro..."
+                            class="text-xl resize-none overflow-hidden w-full h-8 break-all outline-none pl-1.5 pr-6 bg-white dark:bg-dark"
+                            type="text"
+                            v-model="body"
+                            >
+                            </textarea>
                         </div>
                         <div v-if="selectedImageUrl" class="w-64 h-64">
                             <img :src="selectedImageUrl" />
@@ -23,12 +29,12 @@
                         <div class="flex border-solid border-t-2 border-gray-100 dark:border-gray-700 w-full">
                             <div class="flex mt-2 w-full">
                                 <div class="flex justify-between h-10 w-full">
-                                    <div @click="selectImage" class="flex">
+                                    <div @click.prevent="selectImage()" class="flex">
                                         <button class=""><i class="p-1 fa-regular fa-image"></i></button>
                                     </div>
                                     <div class="flex">
-																				<LoadingSpinner v-if="isPosting" :size="8" class="py-1.5"/>
-                                        <button id="submit-tweek" type="submit"
+										<LoadingSpinner v-if="isPosting" :size="8" class="py-1.5"/>
+                                        <button @click.prevent="submitTweek()" id="submit-tweek" type="submit"
                                             class="bg-green-400 rounded-full text-white font-bold mx-3 px-5 py-2">
                                             Submit
                                         </button>
@@ -48,11 +54,14 @@
 <script setup>
 import axios from 'axios';
 import Tweek from '../components/Tweek.vue';
-import { ref, onMounted, defineAsyncComponent } from 'vue';
+import { ref, onMounted, defineAsyncComponent, computed } from 'vue';
 import Avatar from '../components/Avatar.vue';
-// import LoadingSpinner from '../components/LoadingSpinner.vue';
 
-// import LoadingSpinner as async
+function textAreaAdjust(element) {
+  element.style.height = "32px";
+  element.style.height = (element.scrollHeight)+"px";
+}
+
 const LoadingSpinner = defineAsyncComponent(() => import('../components/LoadingSpinner.vue'));
 
 let formSubmitted = false;
@@ -92,7 +101,7 @@ function selectImage() {
 }
 
 async function submitTweek(tweek_id = null) {
-    if (body.value.length > 0 || tweek_id != null) {
+    if (body.value.length > 0 || tweek_id != null || image.value != null) {
         let tweek = new FormData();
         tweek.append('body', body.value);
         tweek.append('tweeker', tweeker);
@@ -112,7 +121,8 @@ async function submitTweek(tweek_id = null) {
 				isPosting.value = false;
     }
     body.value = '';
-    selectedImageUrl.value = '';
+    selectedImageUrl.value = null;
+    image.value = null;
 }
 
 async function getTweeks() {

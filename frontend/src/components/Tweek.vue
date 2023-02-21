@@ -11,7 +11,7 @@
       </div>
       <div class="flex">
         <div class="flex w-14 h-full mr-2">
-          <Avatar />
+          <Avatar class="pt-1.5"/>
         </div>
         <div class="flex flex-col w-full">
           <div class="flex justify-between">
@@ -64,12 +64,12 @@
             </div>
           </div>
           <div class="flex">
-            <span @click.prevent="''" class="flex text-xl break-all cursor-text">
+            <span class="flex text-xl break-all cursor-text pr-4">
               {{ tweek.retweek ? tweek.retweek_body : tweek.body }}
             </span>
           </div>
-          <div v-if="tweek.image" class="w-64 h-64">
-            <img :src="tweek.image" class="w-full" />
+          <div v-if="tweek.image || tweek.retweek_image" class="pt-4 pb-2 pr-8">
+            <img :src="tweek.retweek ? tweek.retweek_image : tweek.image " class="w-full rounded-xl " />
           </div>
           <div v-if="!tweek.is_retweek" class="flex flex-row justify-between w-2/3 mt-1">
             <div class="flex items-center">
@@ -129,7 +129,7 @@
             </div>
           </div>
           <div v-if="tweek.retweek">
-            <div @click.prevent.stop="viewTweek(tweek.id)">
+            <div @click.prevent.stop="$router.replace(`/tweek/${tweek.retweek_id}`)">
               <p class="text-md mt-2 text-blue-300 w-fit hover:text-blue-100 rounded-xl">
                 Ver tweek original
               </p>
