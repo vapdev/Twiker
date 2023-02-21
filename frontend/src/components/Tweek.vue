@@ -141,7 +141,7 @@
 
 <script setup>
 import axios from "axios"
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { formatted_time } from '../utils/my-ultils.js'
 import Avatar from "../components/Avatar.vue"
 
@@ -294,8 +294,5 @@ async function deleteTweek(tweek_id) {
   emit("callGetTweeks");
 }
 
-onMounted(() => {
-  console.log(props.tweek);
-});
 </script>
 
