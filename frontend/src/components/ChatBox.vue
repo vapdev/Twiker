@@ -44,7 +44,12 @@ import Avatar from './Avatar.vue'
 const userStore = useUserStore();
 
 
-const props = defineProps(['user_id']);
+const props = defineProps({
+    user_id: {
+        type: String,
+        default: 0,
+    }
+    });
 
 
 
@@ -60,6 +65,7 @@ async function getConversationId(){
     await axios.get(`/api/get_conversation/${props.user_id}`)
     .then(response => {
         conversation_id = response.data.conversation_id;
+        console.log(conversation_id);
     })
     .catch(error => {
     })
@@ -98,8 +104,8 @@ function submitMessage() {
 function scrollToBottom() {
     window.scrollTo(0, document.body.scrollHeight);
 }
-onMounted(() => {
-    getMessages();
+onMounted(async () => {
+    await getMessages();
     var loc = window.location, new_uri;
     if (loc.protocol === "https:") {
         new_uri = "wss:";

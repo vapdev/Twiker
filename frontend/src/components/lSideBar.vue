@@ -29,7 +29,7 @@
                 <div class="flex w-11 h-11">
                     <i class="text-xl m-auto fa-solid fa-users"></i>
                 </div>
-                <span class="m-auto mx-3 max-[850px]:hidden">All users</span>
+                <span class="m-auto mx-3 max-[850px]:hidden">Todos Usuários</span>
             </router-link>
         </div>
         <div class="flex py-1">
@@ -38,7 +38,7 @@
                 <div class="flex w-11 h-11">
                     <i class="text-xl m-auto fa-solid fa-earth-americas"></i>
                 </div>
-                <span class="break-keep m-auto mx-3 max-[850px]:hidden">Global chat</span>
+                <span class="break-keep m-auto mx-3 max-[850px]:hidden">Chat Global</span>
             </router-link>
         </div>
         <div class="flex py-1">
@@ -46,7 +46,7 @@
                 <div class="flex w-11 h-11">
                     <i class="text-xl m-auto fa-solid fa-comments"></i>
                 </div>
-                <span class="m-auto mx-3 max-[850px]:hidden">Conversations</span>
+                <span class="m-auto mx-3 max-[850px]:hidden">Conversas</span>
             </router-link>
         </div>
         <div class="flex py-1">

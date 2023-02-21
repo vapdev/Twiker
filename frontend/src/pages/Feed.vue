@@ -1,9 +1,7 @@
 <template>
     <div class="flex min-w-full max-[600px]:mb-14">
-        <div id="feedapp"
-            class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0">
-            <div
-                class="min-[600px]:sticky p-3 bg-white dark:bg-dark top-0 min-[600px]:opacity-90 w-full h-fit text-2xl">
+        <div class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0">
+            <div class="min-[600px]:sticky p-3 bg-white dark:bg-dark top-0 w-full h-fit min-[600px]:opacity-90 text-2xl border-b-2 border-gray-100 dark:border-gray-700 ">
                 <a href="">
                     <span class="opacity-100 font-semibold">Página inicial</span>
                 </a>
@@ -42,7 +40,7 @@
 </template>
 
 <script setup>
-import axios from 'axios'
+import axios from 'axios';
 import Tweek from '../components/Tweek.vue';
 import { ref, onMounted } from 'vue';
 import Avatar from '../components/Avatar.vue';

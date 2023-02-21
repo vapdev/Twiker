@@ -45,6 +45,7 @@
                 leave-to-class="transform opacity-0 scale-95"
               >
                 <div
+                  v-if="tweek.created_by == cookie_user_id"
                   id="tweek_menu"
                   v-show="show"
                   class="absolute flex flex-col right-10 min-w-max bg-white dark:bg-dark shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md"
@@ -140,7 +141,7 @@
 
 <script setup>
 import axios from "axios"
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { formatted_time } from '../utils/my-ultils.js'
 import Avatar from "../components/Avatar.vue"
 
@@ -149,6 +150,10 @@ const props =  defineProps({
 })
 
 const emit = defineEmits(['callGetTweeks',])
+
+const cookie_user_id = document.cookie.split('; ')
+            .find(row => row.startsWith('user_id='))
+            ?.split('=')[1];
 
 const show = ref(false);
 const body = ref("");
@@ -288,5 +293,9 @@ async function deleteTweek(tweek_id) {
   });
   emit("callGetTweeks");
 }
+
+onMounted(() => {
+  console.log(props.tweek);
+});
 </script>
 
