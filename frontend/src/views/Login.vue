@@ -53,7 +53,7 @@ function submitForm(e){
             axios.defaults.headers.common['Authorization'] = `Token ${token}`
             document.cookie = `token=${token}; expires=${expiryDate.toUTCString()}; path=/`;
             if (userStore.isAuthenticated){
-                router.push('/')
+                router.replace('/')
             }
         })
         .catch(error => {

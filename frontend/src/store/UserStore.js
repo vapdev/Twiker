@@ -38,7 +38,7 @@ export const useUserStore = defineStore('UserStore', {
                 await axios.post('/api/v1/auth/logout/');
                 document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
                 this.$reset();
-                this.router.push({ name: 'Login' });
+                this.router.replace({ name: 'Login' });
             } catch (error) {
                 console.error(error);
             }

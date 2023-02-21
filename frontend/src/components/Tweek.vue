@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="`tweek/${tweek.id}`"
+  <router-link :to="`/tweek/${tweek.id}`"
     class="flex h-fit w-full p-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700"
   >
     <div class="flex flex-col w-full">
@@ -19,8 +19,8 @@
               <span 
               @click.prevent=" 
                 tweek.retweek ? 
-                $router.push(`/profile/${tweek.retweek_tweeker_name}`) 
-                :$router.push(`/profile/${tweek.tweeker_name}`) 
+                $router.replace(`/profile/${tweek.retweek_tweeker_name}`) 
+                :$router.replace(`/profile/${tweek.tweeker_name}`) 
               " 
               class="font-semibold text-lg">
                 {{ tweek.retweek ? tweek.retweek_tweeker_name : tweek.tweeker_name }}
@@ -63,8 +63,10 @@
               </transition>
             </div>
           </div>
-          <div class="flex text-xl break-all">
-          {{ tweek.retweek ? tweek.retweek_body : tweek.body }}
+          <div class="flex">
+            <span @click.prevent="''" class="flex text-xl break-all cursor-text">
+              {{ tweek.retweek ? tweek.retweek_body : tweek.body }}
+            </span>
           </div>
           <div v-if="tweek.image" class="w-64 h-64">
             <img :src="tweek.image" class="w-full" />

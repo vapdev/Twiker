@@ -55,15 +55,17 @@ import Avatar from '../components/Avatar.vue';
 // import LoadingSpinner as async
 const LoadingSpinner = defineAsyncComponent(() => import('../components/LoadingSpinner.vue'));
 
+let formSubmitted = false;
+
 document.body.addEventListener('keydown', function (e) {
     if (!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
     let target = e.target;
     let submit_button = document.querySelector('#submit-tweek');
-    if (target.form) {
+    if (target.form && !formSubmitted && body.value != '') {
+        formSubmitted = true;
         submit_button.click();
     }
 });
-
 
 const tweeks = ref([]);
 const body = ref('');
@@ -101,7 +103,7 @@ async function submitTweek(tweek_id = null) {
 				isPosting.value = true;
         try {
             // Send to backend
-            axios.post('/api/add_tweek/', tweek);
+            await axios.post('/api/add_tweek/', tweek);
             currentPage = 1;
             await getTweeks();
         } catch (error) {
@@ -126,6 +128,7 @@ async function getTweeks() {
         console.log('error' + error);
     }
     isLoading.value = false;
+    formSubmitted = false;
 }
 
 onMounted(() => {

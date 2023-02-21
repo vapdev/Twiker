@@ -41,7 +41,7 @@ async function getConversations(){
     isLoading.value = false;
 }
 function goToConversation(user_id) {
-    router.push(`/conversation/${user_id}`)
+    router.replace(`/conversation/${user_id}`)
 }
 onMounted(() => {
     getConversations();

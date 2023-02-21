@@ -34,7 +34,7 @@ function submitForm(e){
     axios
         .post('api/v1/users/', formData)
         .then(response => {
-            router.push('/login')
+            router.replace('/login')
         })
         .catch(error => {
             console.log(error)

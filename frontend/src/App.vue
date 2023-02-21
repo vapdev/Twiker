@@ -23,9 +23,9 @@ function verifyToken() {
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
   } else if (route.name !== 'SignUp') {
     axios.defaults.headers.common['Authorization'] = ''
-    return router.push('/login')
+    return router.replace('/login')
   } else {
-    return router.push('/signup')
+    return router.replace('/signup')
   }
 }
 
