@@ -27,6 +27,7 @@ async function getAuthenticatedUser() {
     .then(response => {
       userStore.setUsername(response.data.username)
       userStore.setUserId(response.data.id)
+      userStore.setAvatar(response.data.avatar)
       document.cookie = `username=${response.data.username}; expires=${expiryDate.toUTCString()}; path=/`;
       document.cookie = `user_id=${response.data.id}; expires=${expiryDate.toUTCString()}; path=/`;
     })

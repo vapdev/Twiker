@@ -10,6 +10,7 @@ export const useUserStore = defineStore('UserStore', {
         isAuthenticated: false,
         username: '',
         user_id: '',
+        avatar: '',
       }
     },
     getters: {
@@ -48,6 +49,9 @@ export const useUserStore = defineStore('UserStore', {
         },
         setUserId(user_id) {
             this.user_id = user_id
+        },
+        setAvatar(avatar) {
+            this.avatar = avatar
         }
     },
   })

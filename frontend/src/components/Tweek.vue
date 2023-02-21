@@ -11,7 +11,7 @@
       </div>
       <div class="flex">
         <div class="flex w-14 h-full mr-2">
-          <Avatar class="pt-1.5"/>
+          <Avatar :avatar_url="tweek.retweek ? tweek.retweek_avatar_url : tweek.avatar_url" class="pt-1.5"/>
         </div>
         <div class="flex flex-col w-full">
           <div class="flex justify-between">

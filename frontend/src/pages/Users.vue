@@ -10,7 +10,7 @@
         :to="`/profile/${user.username}`" 
         v-for="user in users"
         class="flex flex-row h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
-            <Avatar class="mr-3" />
+            <Avatar :avatar_url="user.avatar" class="mr-3" />
             <div class="flex flex-col">
                 <div class="flex">
                     <div class="font-bold">{{ user.username }}</div>

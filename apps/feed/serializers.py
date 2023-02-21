@@ -18,6 +18,7 @@ class TweekSerializer(serializers.ModelSerializer):
     is_retweek = serializers.SerializerMethodField()
     is_retweeked = serializers.SerializerMethodField()
 
+    retweek_avatar_url = serializers.CharField(source='retweek.created_by.twikkerprofile.avatar', allow_null=True)
     retweek_tweeker_name = serializers.CharField(source='retweek.created_by', allow_null=True)
     retweek_body = serializers.CharField(source='retweek.body', allow_null=True)
     retweek_likes_count = serializers.IntegerField(source='retweek.likes.count', allow_null=True)

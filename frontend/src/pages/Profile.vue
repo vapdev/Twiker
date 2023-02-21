@@ -5,7 +5,7 @@
                 <div class="flex w-full justify-between">
                     <div class="flex">
                         <article>
-                            <Avatar />
+                            <Avatar :avatar_url="user.avatar" />
                         </article> 
                         <div class="font-bold text-lg">{{ user.username }}</div>
                     </div>

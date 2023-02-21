@@ -9,7 +9,7 @@
                 </a>
             </div>
             <div class="flex h-30 w-full pt-3 pl-3 border-solid border-b-2 border-gray-100 dark:border-gray-700">
-                <Avatar />
+                <Avatar :avatar_url="userStore.avatar" />
                 <div class="flex flex-col w-full pl-1">
                     <form>
                         <div class="flex w-full py-2">
@@ -56,6 +56,10 @@ import axios from 'axios';
 import Tweek from '../components/Tweek.vue';
 import { ref, onMounted, defineAsyncComponent, computed } from 'vue';
 import Avatar from '../components/Avatar.vue';
+
+import { useUserStore } from '../store/UserStore';
+
+const userStore = useUserStore();
 
 function textAreaAdjust(element) {
   element.style.height = "32px";

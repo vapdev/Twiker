@@ -16,7 +16,7 @@
             <div class="relative w-full max-[600px]:w-60" @click="toggle">
                 <div class="flex justify-between w-full hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full">
                     <div class="flex p-1">
-                        <Avatar />
+                        <Avatar :avatar_url="userStore.avatar" />
                         <h1 class="ml-1 font-semibold ">{{ userStore.username }}</h1>
                     </div>
                     <div class="flex m-3">
