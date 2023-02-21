@@ -48,7 +48,7 @@
                   v-if="tweek.created_by == cookie_user_id"
                   id="tweek_menu"
                   v-show="show"
-                  class="absolute flex flex-col right-10 min-w-max bg-white dark:bg-dark shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md"
+                  class="absolute flex flex-col right-10 min-w-max bg-white dark:bg-dark shadow-3 dark:shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md"
                 >
                   <div
                     @click.prevent.stop="deleteTweek(tweek.id)"

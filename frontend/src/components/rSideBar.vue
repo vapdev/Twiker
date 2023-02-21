@@ -31,7 +31,7 @@
                     leave-from-class="transform opacity-100 scale-100"
                     leave-to-class="transform opacity-0 scale-95"
                 >
-                    <div id="rSidebar_menu" v-show="show" class="absolute w-48 h-fit flex flex-col bottom-16 right-2 min-w-max bg-white dark:bg-dark shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md">
+                    <div id="rSidebar_menu" v-show="show" class="absolute w-48 h-fit flex flex-col bottom-16 right-2 min-w-max bg-white dark:bg-dark shadow-3 dark:shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md">
                         <div class="flex hover:bg-gray-200 dark:hover:bg-gray-700">
                             <a class="flex font-semibold text-lg p-1" onclick="">
                                 <div class="flex w-11 h-11">
