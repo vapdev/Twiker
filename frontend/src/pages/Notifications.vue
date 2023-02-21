@@ -29,6 +29,7 @@
                 </div>
             </div>
         </div>  
+        <LoadingSpinner v-if="isLoading" :size="8" class="mt-5" />
     </div>
 </template>
 
@@ -36,20 +37,24 @@
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { formatted_time } from '../utils/my-ultils.js'
+import LoadingSpinner from '../components/LoadingSpinner.vue'
 
 const notifications = ref([]);
+const isLoading = ref(true);
 
 const cookie_user_id = document.cookie.split('; ')
             .find(row => row.startsWith('user_id='))
             ?.split('=')[1];
 
 async function getNotifications(){
+    isLoading.value = true;
     await axios.get(`/api/notifications/${cookie_user_id}`,) 
     .then(response => {
         notifications.value = response.data;
     }).catch(error => {
         console.log('error' + error)
     })
+    isLoading.value = false;
 }
 
 onMounted(() => {

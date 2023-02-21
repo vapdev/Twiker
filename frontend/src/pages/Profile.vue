@@ -24,6 +24,7 @@
             </div>
         </div>
         <Tweek v-for="tweek in tweeks" :key="tweek.id" :tweek="tweek" @callGetTweeks="getProfileTweeks"/>
+        <LoadingSpinner v-if="isLoading" :size="8" class="mt-5" />
     </div>
 </template>
 
@@ -33,6 +34,9 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router';
 import Tweek from '../components/Tweek.vue';
 import Avatar from '../components/Avatar.vue';
+import LoadingSpinner from '../components/LoadingSpinner.vue'
+
+const isLoading = ref(true);
 
 const cookie_user_id = document.cookie.split('; ')
             .find(row => row.startsWith('user_id='))
@@ -98,6 +102,7 @@ async function unfollowUser(){
 }
 
 async function getProfileTweeks(){
+    isLoading.value = true;
     await axios.get(`api/get_profile_tweeks/${user.value.id}/?page=${currentPage.value}`) 
     .then(response => {
         hasNext = false
@@ -108,6 +113,7 @@ async function getProfileTweeks(){
     }).catch(error => {
         console.log('error' + error)
     })
+    isLoading.value = false;
 }
 
 onMounted(async () => {

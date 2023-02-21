@@ -132,6 +132,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
+    
 ]
 
 
@@ -150,8 +151,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 DEFAULT_AVATAR_URL = 'https://res.cloudinary.com/deues3qyn/image/upload/v1676499936/avatar.png'
 
-CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME')
-CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY')
-CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET')
+# CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME')
+# CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY')
+# CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET')
+
+CLOUDINARY_CLOUD_NAME = 'deues3qyn'
+CLOUDINARY_API_KEY = '943651328164584'
+CLOUDINARY_API_SECRET = 'CUmDBSW5QeNIUbOqCteyxwO7yWE'
 
 DEBUG = True

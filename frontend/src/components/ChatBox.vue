@@ -22,6 +22,7 @@
                 </article>
             </div>
         </div>
+        <LoadingSpinner v-if="isLoading" class="mb-72 scale-150" />
         <div class="p-2 sticky flex bg-white dark:bg-dark bottom-0  max-[600px]:bottom-14 w-full items-center">
                 <div class="w-full">
                     <form class="m-0" v-on:submit.prevent="submitMessage()">
@@ -41,6 +42,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useUserStore } from '../store/UserStore.js'
 import { formatted_time } from '../utils/my-ultils.js'
 import Avatar from './Avatar.vue'
+import LoadingSpinner from './LoadingSpinner.vue'
 const userStore = useUserStore();
 
 
@@ -52,7 +54,7 @@ const props = defineProps({
     });
 
 
-
+const isLoading = ref(true);
 let conversation_id = '0';
 const messages = ref([]);
 const content = ref('');
@@ -70,6 +72,7 @@ async function getConversationId(){
     })
 }
 async function getMessages(){
+    isLoading.value = true;
     if (props.user_id){
         await getConversationId();
     }
@@ -86,6 +89,7 @@ async function getMessages(){
     .catch(error => {
         console.log('error 1' + error)
     })
+    isLoading.value = false;
 }
 function submitMessage() {
     if (content.value.length > 0) {

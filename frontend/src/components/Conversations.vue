@@ -4,6 +4,7 @@
             <div class="p-3 bg-white dark:bg-dark top-0 w-full h-fit min-[600px]:opacity-95 text-2xl border-solid border-b-2 border-gray-100 dark:border-gray-700 max-[600px]:hidden">
                 <span class="opacity-100">Conversas</span>
             </div>
+            <LoadingSpinner v-if="isLoading" :size="8" class="mt-5" />
             <div v-for="conversation in conversations" class="flex">
                 <a @click="goToConversation(conversation.user_id)" class="flex h-fit w-full max-[600px]:w-fit p-4 pt-3 pl-3 border-solid min-[600px]:border-b-2 max-[600px]:border hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
                     <Avatar />
@@ -19,21 +20,25 @@
 
 <script setup>
 import Avatar from "../components/Avatar.vue"
+import LoadingSpinner from "../components/LoadingSpinner.vue"
 import axios from 'axios'
 import { formatted_time } from '../utils/my-ultils.js'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const conversations = ref([]);
+const isLoading = ref(true);
 const router = useRouter();
 
-function getConversations(){
-    axios.get(`/api/conversations`,) 
+async function getConversations(){
+    isLoading.value = true;
+    await axios.get(`/api/conversations`,) 
     .then(response => {
         conversations.value = response.data;
     }).catch(error => {
         console.log('error' + error)
     })
+    isLoading.value = false;
 }
 function goToConversation(user_id) {
     router.push(`/conversation/${user_id}`)

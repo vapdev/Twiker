@@ -10,12 +10,10 @@
         :to="`/profile/${user.username}`" 
         v-for="user in users"
         class="flex flex-row h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
-            <Avatar />
+            <Avatar class="mr-3" />
             <div class="flex flex-col">
                 <div class="flex">
-                    <h1>
-                        <div>{{ user.username }}</div>
-                    </h1>
+                    <div class="font-bold">{{ user.username }}</div>
                 </div>
                 <div class="flex">
                     <a>Seguidores: {{ user.followed_by }}</a>
@@ -25,6 +23,7 @@
                 </div>
             </div>
         </router-link>
+        <LoadingSpinner v-if="isLoading" :size="8" class="mt-5" />
     </div>
 </template>
 
@@ -33,16 +32,20 @@
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import Avatar from '../components/Avatar.vue'
+import LoadingSpinner from '../components/LoadingSpinner.vue'
 
 const users = ref([]);
+const isLoading = ref(true);
 
-function getUsers(){
-    axios.get(`/api/users/`) 
+async function getUsers(){
+    isLoading.value = true;
+    await axios.get(`/api/users/`) 
     .then(response => {
         users.value = response.data;
     }).catch(error => {
         console.log('error' + error)
     })
+    isLoading.value = false;
 }
 onMounted(() => {
     getUsers();
