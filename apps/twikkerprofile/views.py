@@ -10,10 +10,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
 from apps.notification.utilities import create_notification
 from apps.twikkerprofile.serializers import TwikkerProfileSerializer
+from cloudinary import uploader
 
 from .forms import TwikkerProfileForm
 from ..core.serializers import UserSerializer
 from ..notification.models import Notification
+from .models import TwikkerProfile
 
 @permission_classes((IsAuthenticated, ))
 @api_view(['POST'])
@@ -72,3 +74,18 @@ def user1_follows_user2(request, username1, username2):
     user1 = get_object_or_404(User, username=username1)
     user2 = get_object_or_404(User, username=username2)
     return JsonResponse({'follows': user1.twikkerprofile.follows.filter(user=user2).exists()})
+
+@permission_classes((IsAuthenticated, ))
+@api_view(['POST'])
+def update_avatar(request):
+    user = request.user
+    image = request.FILES.get('file', None)
+    if image:
+        result = uploader.upload(image, upload_preset="ml_default")
+        image_url = result['secure_url']
+        profile = TwikkerProfile.objects.get(user=user)
+        profile.avatar = image_url
+        profile.save()
+    else:
+        image_url = None
+    return JsonResponse({'success': True})

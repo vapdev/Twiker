@@ -113,7 +113,7 @@ async function submitTweek(tweek_id = null) {
         tweek.append('avatar', avatar);
         tweek.append('retweek_id', tweek_id);
         tweek.append('image', image.value);
-				isPosting.value = true;
+		isPosting.value = true;
         try {
             // Send to backend
             await axios.post('/api/add_tweek/', tweek);
@@ -122,7 +122,7 @@ async function submitTweek(tweek_id = null) {
         } catch (error) {
             console.log(error);
         }
-				isPosting.value = false;
+	isPosting.value = false;
     }
     body.value = '';
     selectedImageUrl.value = null;

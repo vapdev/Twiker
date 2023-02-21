@@ -36,7 +36,9 @@ class UsersList(generics.ListAPIView):
         return User.objects.all()
 
 class ImageViewSet(viewsets.ModelViewSet):
+    
     @action(detail=False, methods=['post'])
+
     def upload_image(self, request):
         image = request.data['file']
         result = uploader.upload(image, upload_preset="ml_default")
