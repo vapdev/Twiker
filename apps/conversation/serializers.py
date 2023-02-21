@@ -11,35 +11,37 @@ class ChatSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ConversationMessage
-        fields = ['id', 'content', 'tweeker_name', 'created_at', 'avatar_url', 'formatted_time']
+        fields = ['id', 'content', 'tweeker_name', 'created_at', 'avatar_url']
 
 
 class ConversationSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
     user_id = serializers.SerializerMethodField()
-    formatted_time = serializers.SerializerMethodField()
 
     def get_user_id(self, obj):
-        user1 = obj.users.all()[0]
-        user2 = obj.users.all()[1]
-        user = self.context['request'].user
-        if user == user1:
-            return user2.id
-        return user1.id
+        users = obj.users.all()
+        user_count = users.count()
+        if user_count == 2:
+            user1 = obj.users.all().first()
+            user2 = obj.users.all()[1]
+            user = self.context['request'].user
+            if user == user1:
+                return user2.id
+            return user1.id
 
     def get_username(self, obj):
-        user1 = obj.users.all()[0]
-        user2 = obj.users.all()[1]
-        user = self.context['request'].user
-        if user == user1:
-            return user2.username
-        return user1.username
-
-    def get_formatted_time(self, obj):
-        return naturaltime(obj.modified_at)
+        users = obj.users.all()
+        user_count = users.count()
+        if user_count == 2:
+            user1 = obj.users.all().first()
+            user2 = obj.users.all()[1]
+            user = self.context['request'].user
+            if user == user1:
+                return user2.username
+            return user1.username
 
     class Meta:
         model = Conversation
-        fields = ['id', 'username', 'formatted_time', 'user_id']
+        fields = ['id', 'username', 'modified_at', 'user_id']
 
     

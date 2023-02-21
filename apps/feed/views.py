@@ -57,6 +57,7 @@ def api_add_tweek(request):
 
     if tweek_type == 'retweek':
         Tweek.objects.create(body=body, created_by=user, retweek_id=parent_id, image=image_url)
+       
     elif tweek_type == 'comment':
         Tweek.objects.create(body=body, created_by=user, comment_from=parent_id, image=image_url)
     else:
@@ -186,7 +187,7 @@ def api_get_tweeks(request):
         userids.append(tweeker.user.id)
     tweeks = Tweek.objects.filter(created_by__id__in=userids)
     paginator = PageNumberPagination()
-    paginator.page_size = 20
+    paginator.page_size = 25
     results = paginator.paginate_queryset(tweeks, request)
     serializer = TweekSerializer(results, many=True, context={'request': request})
     return paginator.get_paginated_response(serializer.data)
@@ -198,7 +199,7 @@ def api_get_tweeks(request):
 def api_get_profile_tweeks(request, user_id):
     tweeks = Tweek.objects.filter(created_by=user_id)
     paginator = PageNumberPagination()
-    paginator.page_size = 20
+    paginator.page_size = 25
     results = paginator.paginate_queryset(tweeks, request)
     serializer = TweekSerializer(results, many=True, context={'request': request})
     return paginator.get_paginated_response(serializer.data)

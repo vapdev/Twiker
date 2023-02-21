@@ -6,13 +6,10 @@
             </div>
             <div v-for="conversation in conversations" class="flex">
                 <a @click="goToConversation(conversation.user_id)" class="flex h-fit w-full max-[600px]:w-fit p-4 pt-3 pl-3 border-solid min-[600px]:border-b-2 max-[600px]:border hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
-                    <figure>
-                        <p class="h-12 w-12 max-lg:h-8 max-lg:w-8 rounded-full bg-gray-400 mr-3">
-                        </p>
-                    </figure>
+                    <Avatar />
                     <div>
                         <p>{{ conversation.username }}</p>
-                        <p class="max-lg:hidden">{{ conversation.formatted_time }}</p>
+                        <p class="max-lg:hidden">{{ formatted_time(conversation.modified_at) }}</p>
                     </div>
                 </a>
             </div>
@@ -21,8 +18,9 @@
 </template>
 
 <script setup>
-
+import Avatar from "../components/Avatar.vue"
 import axios from 'axios'
+import { formatted_time } from '../utils/my-ultils.js'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 

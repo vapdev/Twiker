@@ -1,5 +1,5 @@
 <template>
-  <div
+  <router-link :to="`tweek/${tweek.id}`"
     class="flex h-fit w-full p-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700"
   >
     <div class="flex flex-col w-full">
@@ -16,16 +16,22 @@
         <div class="flex flex-col w-full">
           <div class="flex justify-between">
             <div>
-              <span class="font-semibold text-lg">
+              <span 
+              @click.prevent=" 
+                tweek.retweek ? 
+                $router.push(`/profile/${tweek.retweek_tweeker_name}`) 
+                :$router.push(`/profile/${tweek.tweeker_name}`) 
+              " 
+              class="font-semibold text-lg">
                 {{ tweek.retweek ? tweek.retweek_tweeker_name : tweek.tweeker_name }}
               </span>
               <span class="ml-2">
-                {{ tweek.retweek ? tweek.retweek_formatted_time : tweek.formatted_time }}
+                {{ tweek.retweek ? formatted_time(tweek.retweek_created_at) : formatted_time(tweek.created_at) }}
               </span>
             </div>
             <div class="relative flex items-center">
               <div
-                @click="toggle"
+                @click.prevent="toggle"
                 class="flex w-8 h-8 hover:bg-white hover:rounded-full hover:bg-opacity-20"
               >
                 <i class="m-auto text-xl fa-solid fa-ellipsis"></i>
@@ -44,7 +50,7 @@
                   class="absolute flex flex-col right-10 min-w-max bg-white dark:bg-dark shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md"
                 >
                   <div
-                    @click.stop="deleteTweek(tweek.id)"
+                    @click.prevent.stop="deleteTweek(tweek.id)"
                     class="p-2 hover:bg-white hover:rounded-md hover:bg-opacity-20"
                   >
                     <i class="text-red-400 fa-solid fa-trash mr-2"></i>
@@ -56,9 +62,9 @@
               </transition>
             </div>
           </div>
-          <router-link :to="`tweek/${tweek.id}`" class="flex text-xl break-all">{{
-            tweek.retweek ? tweek.retweek_body : tweek.body
-          }}</router-link>
+          <div class="flex text-xl break-all">
+          {{ tweek.retweek ? tweek.retweek_body : tweek.body }}
+          </div>
           <div v-if="tweek.image" class="w-64 h-64">
             <img :src="tweek.image" class="w-full" />
           </div>
@@ -71,7 +77,7 @@
             </div>
             <div class="flex items-center">
               <div
-                @click.stop="toggleRetweek(tweek)"
+                @click.prevent.stop="toggleRetweek(tweek)"
                 class="flex w-8 h-8 hover:bg-blue-300 hover:rounded-full cursor-pointer"
               >
                 <i
@@ -88,7 +94,7 @@
             </div>
             <div class="flex items-center">
               <div
-                @click.stop="toggleLike(tweek)"
+                @click.prevent="toggleLike(tweek)"
                 class="flex w-8 h-8 p-1 mx-1 text-center hover:bg-green-200 hover:rounded-full cursor-pointer"
               >
                 <i
@@ -103,7 +109,7 @@
               </div>
               <span :id="'likes-' + tweek.id">{{ tweek.likes_count }}</span>
               <div
-                @click.stop="toggleDislike(tweek)"
+                @click.prevent.stop="toggleDislike(tweek)"
                 class="flex w-8 h-8 p-1 mx-1 text-center hover:bg-red-200 hover:rounded-full cursor-pointer"
               >
                 <i
@@ -120,7 +126,7 @@
             </div>
           </div>
           <div v-if="tweek.retweek">
-            <div @click.stop="viewTweek(tweek.id)">
+            <div @click.prevent.stop="viewTweek(tweek.id)">
               <p class="text-md mt-2 text-blue-300 w-fit hover:text-blue-100 rounded-xl">
                 Ver tweek original
               </p>
@@ -129,12 +135,13 @@
         </div>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script setup>
 import axios from "axios"
 import { ref } from 'vue'
+import { formatted_time } from '../utils/my-ultils.js'
 import Avatar from "../components/Avatar.vue"
 
 const props =  defineProps({
@@ -154,23 +161,25 @@ function toggle() {
   show.value = !show.value;
 }
 
-async function submitTweek(tweek_id = null, tweek_type = "tweek") {
-  if (body.length > 0 || tweek_id != null) {
-    let tweek = {
-      body: body.value,
-      tweeker: tweeker,
-      created_at: created_at,
-      avatar: avatar,
-      parent_id: tweek_id,
-      tweek_type: tweek_type,
-    };
-    await axios.post("/api/add_tweek/", tweek).catch((error) => {
-      console.log(error);
-    });
-    emit("callGetTweeks");
+async function submitTweek(tweek_id=null, tweek_type = "tweek") {
+  if (body.value.length > 0 || tweek_id != null) {
+      let tweek = new FormData();
+      tweek.append('body', body.value);
+      tweek.append('tweeker', tweeker);
+      tweek.append('created_at', created_at);
+      tweek.append('avatar', avatar);
+      tweek.append('parent_id', tweek_id);
+      tweek.append('tweek_type', tweek_type);
+
+      await axios.post('/api/add_tweek/', tweek)
+      .catch((error) => {
+          console.log(error)
+      })
+      emit("callGetTweeks");
   }
-  body.value = "";
+  body.value = '';
 }
+
 async function toggleLike(tweek) {
   if (tweek.retweek_id) {
     await axios

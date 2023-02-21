@@ -7,11 +7,13 @@
                         <Avatar />
                     </figure>
                     <div class="flex-col ml-2.5">
-                        <div>
-                            <strong>
-                                <a  href="">{{ message.tweeker_name }}</a>
-                            </strong>
-                            <small>{{ message.formatted_time }}</small>
+                        <div class="flex">
+                            <router-link :to="`/profile/${message.tweeker_name}`" class="text-lg font-bold">
+                                {{ message.tweeker_name }}
+                            </router-link>
+                            <div class="pl-1 m-auto text-sm font-light">
+                                {{ formatted_time(message.created_at) }}
+                            </div>
                         </div>
                         <div class="break-all">
                             <span>{{ message.content }}</span>
@@ -37,6 +39,7 @@
 import axios from 'axios'
 import { ref, onMounted, computed } from 'vue'
 import { useUserStore } from '../store/UserStore.js'
+import { formatted_time } from '../utils/my-ultils.js'
 import Avatar from './Avatar.vue'
 const userStore = useUserStore();
 
@@ -49,7 +52,6 @@ let conversation_id = '0';
 const messages = ref([]);
 const content = ref('');
 const tweeker = computed(() => userStore.username);
-const formatted_time = 'Now';
 const avatar = '';
 let chatSocket = null;
 const current_room = 'global';
@@ -85,7 +87,7 @@ function submitMessage() {
         let message = {
             'content': content.value,
             'tweeker_name': tweeker.value,
-            'formatted_time': formatted_time,
+            'created_at': new Date().toISOString(),
             'avatar_url': avatar,
             'conversation_id': conversation_id,
         };

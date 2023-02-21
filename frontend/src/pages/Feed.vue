@@ -120,6 +120,7 @@ async function getTweeks(){
         console.log('error' + error)
     })
 }
+
 onMounted(() => {
     getTweeks()
     window.onscroll = () => {

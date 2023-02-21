@@ -25,6 +25,3 @@ class ConversationMessage(models.Model):
             self.conversation.save()
 
         super(ConversationMessage, self).save(*args, **kwargs)
-
-    def formatted_time(self):
-        return self.created_at.strftime(' %d/%m %H:%M:%S')

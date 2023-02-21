@@ -54,7 +54,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'content': content,
             'tweeker_name': tweeker_name,
-            'formatted_time': timezone.now().strftime(' %d/%m %H:%M:%S'),
+            'created_at': timezone.now().isoformat(),
             'avatar_url': avatar_url,
             'to_user_id': to_user_id,
         }))

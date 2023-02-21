@@ -6,12 +6,15 @@
                 <p>Total users: {{ users.length }}</p>
             </div>
         </div>
-        <div v-for="user in users" class="flex flex-row h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
+        <router-link 
+        :to="`/profile/${user.username}`" 
+        v-for="user in users"
+        class="flex flex-row h-fit w-full p-2 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700">
             <Avatar />
             <div class="flex flex-col">
                 <div class="flex">
                     <h1>
-                        <router-link :to="`/profile/${user.username}`">{{ user.username }}</router-link>
+                        <div>{{ user.username }}</div>
                     </h1>
                 </div>
                 <div class="flex">
@@ -21,7 +24,7 @@
                     <a>Seguindo: {{ user.following }}</a>
                 </div>
             </div>
-        </div>
+        </router-link>
     </div>
 </template>
 
