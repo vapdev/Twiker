@@ -65,7 +65,6 @@ async function getConversationId(){
     await axios.get(`/api/get_conversation/${props.user_id}`)
     .then(response => {
         conversation_id = response.data.conversation_id;
-        console.log(conversation_id);
     })
     .catch(error => {
     })
