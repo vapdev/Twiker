@@ -119,7 +119,8 @@ async function submitTweek(tweek_id = null) {
         try {
             // Send to backend
             await axios.post('/api/add_tweek/', tweek);
-            lastTweekId = null; // clear last tweet ID when new tweet is created
+            currentPage = 1; 
+            lastTweekId = null; // reset last tweet ID to null
             await getTweeks();
         } catch (error) {
             console.log(error);
@@ -134,10 +135,11 @@ async function submitTweek(tweek_id = null) {
 async function getTweeks(refresh = false) {
     isLoading.value = true;
     try {
-        let url = `/api/get_tweeks/?page=${currentPage}`;
         if (refresh) {
-            lastTweekId = null; // clear last tweet ID when refreshing tweets
+            currentPage = 1;
+            lastTweekId = null; // reset last tweet ID to null
         }
+        let url = `/api/get_tweeks/?page=${currentPage}`;
         if (lastTweekId) {
             url += `&last_tweek_id=${lastTweekId}`; // add last tweet ID to URL if it exists
         }
