@@ -104,6 +104,8 @@ function selectImage() {
     input.click();
 }
 
+let lastTweekId = null; // initialize last tweet ID to null
+
 async function submitTweek(tweek_id = null) {
     if (body.value.length > 0 || tweek_id != null || image.value != null) {
         let tweek = new FormData();
@@ -113,31 +115,45 @@ async function submitTweek(tweek_id = null) {
         tweek.append('avatar', avatar);
         tweek.append('retweek_id', tweek_id);
         tweek.append('image', image.value);
-		isPosting.value = true;
+        isPosting.value = true;
         try {
             // Send to backend
             await axios.post('/api/add_tweek/', tweek);
-            currentPage = 1;
+            lastTweekId = null; // clear last tweet ID when new tweet is created
             await getTweeks();
         } catch (error) {
             console.log(error);
         }
-	isPosting.value = false;
+        isPosting.value = false;
     }
     body.value = '';
     selectedImageUrl.value = null;
     image.value = null;
 }
 
-async function getTweeks() {
+async function getTweeks(refresh = false) {
     isLoading.value = true;
     try {
-        const response = await axios.get(`/api/get_tweeks/?page=${currentPage}`);
+        let url = `/api/get_tweeks/?page=${currentPage}`;
+        if (refresh) {
+            lastTweekId = null; // clear last tweet ID when refreshing tweets
+        }
+        if (lastTweekId) {
+            url += `&last_tweek_id=${lastTweekId}`; // add last tweet ID to URL if it exists
+        }
+        const response = await axios.get(url);
         hasNext = false;
         if (response.data.next) {
             hasNext = true;
         }
-        tweeks.value = tweeks.value.concat(response.data.results);
+        if (lastTweekId) {
+            tweeks.value = tweeks.value.concat(response.data.results); // add new tweets to end of existing tweets
+        } else {
+            tweeks.value = response.data.results; // replace existing tweets with new tweets if no last tweet ID
+        }
+        if (response.data.results.length > 0) {
+            lastTweekId = response.data.results[response.data.results.length - 1].id; // set last tweet ID to ID of last tweet in response
+        }
     } catch (error) {
         console.log('error' + error);
     }

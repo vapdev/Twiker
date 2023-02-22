@@ -182,7 +182,7 @@ async function submitTweek(tweek_id=null, tweek_type = "tweek") {
       .catch((error) => {
           console.log(error)
       })
-      emit("callGetTweeks");
+      emit("callGetTweeks", true);
   }
   body.value = '';
 }
@@ -244,7 +244,7 @@ async function unretweekTweek(tweek_id) {
   await axios.post("/api/remove_retweek/", tweek).catch((error) => {
     console.log("error" + error);
   });
-  emit("callGetTweeks");
+  emit("callGetTweeks", true);
 }
 async function toggleDislike(tweek) {
   if (tweek.retweek_id) {
@@ -293,7 +293,7 @@ async function deleteTweek(tweek_id) {
   await axios.post("/api/delete_tweek/", tweek).catch((error) => {
     console.log("error" + error);
   });
-  emit("callGetTweeks");
+  emit("callGetTweeks", true);
 }
 
 </script>
