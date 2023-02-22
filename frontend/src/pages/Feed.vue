@@ -144,18 +144,31 @@ async function getTweeks() {
     isLoading.value = false;
     formSubmitted = false;
 }
+const threshold = 100; // threshold value in pixels
+let isGettingTweeks = false;
+
+function handleScroll() {
+  const scrollPosition = window.scrollY;
+  const windowSize = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+  const visibleBottom = scrollPosition + windowSize;
+
+  if (visibleBottom >= (documentHeight - threshold) && hasNext && !isGettingTweeks) {
+    currentPage += 1;
+    isGettingTweeks = true;
+    getTweeks().then(() => {
+      isGettingTweeks = false;
+    });
+  }
+}
 
 onMounted(() => {
-    getTweeks();
-    window.onscroll = () => {
-        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documtweeksentElement.offsetHeight;
-
-        if (bottomOfWindow && hasNext) {
-            currentPage += 1;
-            getTweeks();
-        }
-    };
+  getTweeks();
+  window.addEventListener('scroll', handleScroll);
 });
+
+
+
 </script>
 
 

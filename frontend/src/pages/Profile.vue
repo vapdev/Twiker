@@ -54,8 +54,6 @@ const user = ref('');
 const followed_by = ref('');
 const following = ref('');
 const follow = ref(false)
-const currentPage = ref(1);
-let hasNext = false;
 
 async function logged_user_follows_user(){
     await axios.get(`/api/user1_follows_user2/${cookie_username}/${route.params.username}`,)
@@ -103,7 +101,7 @@ async function unfollowUser(){
 
 async function getProfileTweeks(){
     isLoading.value = true;
-    await axios.get(`api/get_profile_tweeks/${user.value.id}/?page=${currentPage.value}`) 
+    await axios.get(`api/get_profile_tweeks/${user.value.id}/?page=${currentPage}`) 
     .then(response => {
         hasNext = false
         if (response.data.next) {
@@ -116,10 +114,30 @@ async function getProfileTweeks(){
     isLoading.value = false;
 }
 
-onMounted(async () => {
-    await getUser();
-    logged_user_follows_user();
-    getProfileTweeks();
-})
+const threshold = 100; // threshold value in pixels
+let isGettingTweeks = false;
+let currentPage = 1;
+let hasNext = false;
 
+function handleScroll() {
+  const scrollPosition = window.scrollY;
+  const windowSize = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+  const visibleBottom = scrollPosition + windowSize;
+
+  if (visibleBottom >= (documentHeight - threshold) && hasNext && !isGettingTweeks) {
+    currentPage += 1;
+    isGettingTweeks = true;
+    getProfileTweeks().then(() => {
+      isGettingTweeks = false;
+    });
+  }
+}
+
+onMounted(async () => {
+	await getUser();
+	logged_user_follows_user();
+	getProfileTweeks();
+  window.addEventListener('scroll', handleScroll);
+});
 </script>
