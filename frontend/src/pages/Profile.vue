@@ -54,6 +54,7 @@ const user = ref('');
 const followed_by = ref('');
 const following = ref('');
 const follow = ref(false)
+let lastTweekId = null; // initialize last tweet ID to null
 
 async function logged_user_follows_user(){
     await axios.get(`/api/user1_follows_user2/${cookie_username}/${route.params.username}`,)
@@ -99,18 +100,33 @@ async function unfollowUser(){
     logged_user_follows_user()
 }
 
-async function getProfileTweeks(){
-    isLoading.value = true;
-    await axios.get(`api/get_profile_tweeks/${user.value.id}/?page=${currentPage}`) 
-    .then(response => {
-        hasNext = false
-        if (response.data.next) {
-            hasNext = true
+async function getProfileTweeks(refresh = false){
+    isLoading.value = true
+    try{
+        if (refresh) {
+            currentPage = 1;
+            lastTweekId = null; // reset last tweet ID to null
         }
-        tweeks.value = tweeks.value.concat(response.data.results);
-    }).catch(error => {
-        console.log('error' + error)
-    })
+        let url = `api/get_profile_tweeks/${user.value.id}/?page=${currentPage}`
+        if (lastTweekId) {
+            url += `&last_tweek_id=${lastTweekId}`; // add last tweet ID to URL if it exists
+        }
+        const response = await axios.get(url);
+        hasNext = false;
+        if (response.data.next) {
+            hasNext = true;
+        }
+        if (lastTweekId) {
+            tweeks.value = tweeks.value.concat(response.data.results); // add new tweets to end of existing tweets
+        } else {
+            tweeks.value = response.data.results; // replace existing tweets with new tweets if no last tweet ID
+        }
+        if (response.data.results.length > 0) {
+            lastTweekId = response.data.results[response.data.results.length - 1].id; // set last tweet ID to ID of last tweet in response
+        }
+    } catch (error) {
+        console.log(error)
+    }
     isLoading.value = false;
 }
 
