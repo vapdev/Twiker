@@ -137,7 +137,7 @@ async function getTweeks() {
         if (response.data.next) {
             hasNext = true;
         }
-        tweeks.value = response.data.results;
+        tweeks.value = tweeks.value.concat(response.data.results);
     } catch (error) {
         console.log('error' + error);
     }
