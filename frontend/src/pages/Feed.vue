@@ -1,13 +1,7 @@
 <template>
     <div class="flex min-w-full max-[600px]:mb-14">
-        <div
-            class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0">
-            <div
-                class="min-[600px]:sticky p-3 bg-white dark:bg-dark top-0 w-full h-fit min-[600px]:opacity-90 text-2xl border-b-2 border-gray-100 dark:border-gray-700 ">
-                <a href="">
-                    <span class="opacity-100 font-semibold">Página inicial</span>
-                </a>
-            </div>
+        <div class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0">
+            <a href=""><DefaultHeader :mainText="'Página Inicial'"/></a>
             <NewTextBox v-bind:is-posting="isPosting" @callSubmitTweek="submitTweek" :text="'What you tweeking bro...'"/>
             <Tweek v-for="tweek in tweeks" :key="tweek.id" :tweek="tweek" @callGetTweeks="getTweeks" />
             <LoadingSpinner v-if="isLoading" :size="8" class="mt-5" />
@@ -20,6 +14,7 @@ import axios from 'axios';
 import Tweek from '../components/Tweek.vue';
 import { ref, onMounted, defineAsyncComponent } from 'vue';
 import NewTextBox from '../components/NewTextBox.vue';
+import DefaultHeader from '../components/DefaultHeader.vue';
 import { useUserStore } from '../store/UserStore';
 
 const userStore = useUserStore();

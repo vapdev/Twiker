@@ -1,11 +1,6 @@
 <template>
     <div class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0 max-[600px]:mb-14">
-        <div class="min-[600px]:sticky p-3 bg-white dark:bg-dark top-0 w-full h-fit min-[600px]:opacity-90 text-2xl border-b-2 border-gray-100 dark:border-gray-700 ">
-            <div class="flex justify-between">
-                <span class="opacity-100 font-semibold">Todos Usuários</span>
-                <p>Usuários: {{ users.length }}</p>
-            </div>
-        </div>
+        <DefaultHeader :mainText="'Todos Usuários'" :sideText="'Usuários: ' + users.length"/>
         <router-link 
         :to="`/profile/${user.username}`" 
         v-for="user in users"
@@ -33,6 +28,7 @@ import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import Avatar from '../components/Avatar.vue'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
+import DefaultHeader from '../components/DefaultHeader.vue'
 
 const users = ref([]);
 const isLoading = ref(true);
