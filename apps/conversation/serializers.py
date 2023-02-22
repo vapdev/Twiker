@@ -1,17 +1,17 @@
 from datetime import datetime
 from rest_framework import serializers
 from django.contrib.humanize.templatetags.humanize import naturaltime
-
+from cloudinary import CloudinaryResource
 from .models import ConversationMessage, Conversation
 
 
 class ChatSerializer(serializers.ModelSerializer):
-    avatar = serializers.CharField(source='created_by.twikkerprofile.avatar')
+    avatar_url = serializers.CharField(source='created_by.twikkerprofile.avatar')
     tweeker_name = serializers.CharField(source='created_by.twikkerprofile.user.username')
 
     class Meta:
         model = ConversationMessage
-        fields = ['id', 'content', 'tweeker_name', 'created_at', 'avatar']
+        fields = ['id', 'content', 'tweeker_name', 'created_at', 'avatar_url']
 
 
 class ConversationSerializer(serializers.ModelSerializer):
@@ -49,8 +49,12 @@ class ConversationSerializer(serializers.ModelSerializer):
             user2 = obj.users.all()[1]
             user = self.context['request'].user
             if user == user1:
-                return user2.twikkerprofile.avatar
-            return user1.twikkerprofile.avatar
+                avatar_resource = user2.twikkerprofile.avatar
+            else:
+                avatar_resource = user1.twikkerprofile.avatar
+            if isinstance(avatar_resource, CloudinaryResource):
+                return str(avatar_resource.url)
+            return None
 
     class Meta:
         model = Conversation

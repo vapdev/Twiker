@@ -4,7 +4,7 @@
             <div class="mb-1.5" v-for="message in messages" :class="message.tweeker_name == userStore.username ? 'justify-end flex w-full' : 'flex w-full' ">
                 <article class="flex h-fit w-fit max-w-md p-2 pt-3 pl-3 border-solid border-2 border-gray-200 dark:border-gray-700 bg-lchat shadow-md dark:bg-gray-700" :class="message.tweeker_name == userStore.username ? 'rounded-tl-3xl rounded-tr-3xl  rounded-bl-3xl' : 'rounded-tl-3xl rounded-tr-3xl  rounded-br-3xl' ">
                     <figure class="shrink-0">
-                        <Avatar :avatar_url="message.avatar" />
+                        <Avatar :avatar_url="message.avatar_url" />
                     </figure>
                     <div class="flex-col ml-2.5">
                         <div class="flex">
@@ -59,7 +59,7 @@ let conversation_id = '0';
 const messages = ref([]);
 const content = ref('');
 const tweeker = computed(() => userStore.username);
-const avatar = '';
+const avatar = computed(() => userStore.avatar);
 let chatSocket = null;
 const current_room = 'global';
 
@@ -97,7 +97,7 @@ function submitMessage() {
             'content': content.value,
             'tweeker_name': tweeker.value,
             'created_at': new Date().toISOString(),
-            'avatar_url': avatar,
+            'avatar_url': avatar.value,
             'conversation_id': conversation_id,
         };
         chatSocket.send(JSON.stringify(message));
