@@ -11,7 +11,7 @@
         </span>
       </div>
       <div v-if="tweek.comment_from" class="flex items-center mb-1">
-        <i class="text-blue-600 fa-solid fa-comment mr-2"></i>
+        <i class="text-yellow-400 fa-solid fa-comment mr-2"></i>
         <span class="flex text-sm font-bold opacity-80">
           <span>em resposta ao <a class="text-blue-400" @click.prevent.stop="$router.replace(`/tweek/${tweek.comment_from}`)">tweek</a>
            de {{ tweek.reply_parent_tweeker_name }}
