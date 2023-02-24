@@ -107,7 +107,7 @@
               >
                 <i class="m-auto fa-regular fa-comment-dots"></i>
               </div>
-              <span>0</span>
+              <span>{{ tweek.replies_count }}</span>
             </div>
             <div class="flex items-center">
               <div
