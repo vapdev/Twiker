@@ -50,12 +50,14 @@
             class="absolute w-48 h-fit flex flex-col bottom-16 right-2 min-w-max bg-white dark:bg-dark shadow-3 dark:shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md"
           >
             <div class="flex hover:bg-gray-200 dark:hover:bg-gray-700">
-              <a class="flex font-semibold text-lg p-1" onclick="">
+              <button class="flex font-semibold text-lg p-1" @click="toggleDarkMode()">
                 <div class="flex w-11 h-11">
-                  <i class="text-xl m-auto fa-solid fa-moon"></i>
+                  <i class="text-xl m-auto fa-solid" :class="darkmode ? 'fa-sun' : 'fa-moon'"></i>
                 </div>
-                <span class="m-auto mx-3"> Dark mode </span>
-              </a>
+                <span class="m-auto mx-3"> {{
+                  darkmode ? "Light Mode" : "Dark Mode"
+                }} </span>
+              </button>
             </div>
             <div class="flex hover:bg-gray-200 dark:hover:bg-gray-700">
               <router-link to="/edit" class="flex font-semibold text-lg p-1">
@@ -90,9 +92,34 @@ import { ref, onMounted } from "vue";
 import { useUserStore } from "../store/UserStore.js";
 import Avatar from "./Avatar.vue";
 
+const expiryDate = new Date();
+expiryDate.setTime(expiryDate.getTime() + 3 * 24 * 60 * 60 * 1000);
+
 const userStore = useUserStore();
 
 let show = ref(false);
+
+const darkmode = ref(false);
+
+function toggleDarkMode(){
+  axios
+    .post(`/api/darkmode/`, {
+      user_id : userStore.user_id,
+    })
+    .then((response) => {
+      darkmode.value = response.data.dark_mode
+      if (darkmode.value == true) {
+        document.documentElement.classList.add("dark");
+        document.cookie = "dark_mode=true; expires=" + expiryDate.toUTCString() + "; path=/";
+      } else {
+        document.documentElement.classList.remove("dark");
+        document.cookie = "dark_mode=false; expires=" + expiryDate.toUTCString() + "; path=/";
+      }
+    })
+    .catch((error) => {
+      console.log("error" + error);
+    });
+}
 
 function toggle() {
   show.value = !show.value;

@@ -22,10 +22,10 @@ from .models import TwikkerProfile
 def toggle_dark_mode(request):
     data = request.data
     user_id = data['user_id']
-    user = User.objects.get(id=user_id)
-    user.twikkerprofile.dark_mode = not user.twikkerprofile.dark_mode
-    user.twikkerprofile.save()
-    return JsonResponse({'dark_mode': user.twikkerprofile.dark_mode})
+    profile = TwikkerProfile.objects.get(user_id=user_id)
+    profile.dark_mode = not profile.dark_mode
+    profile.save()
+    return JsonResponse({'dark_mode': profile.dark_mode})
 
 @permission_classes((IsAuthenticated, ))
 @api_view(['GET'])

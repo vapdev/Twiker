@@ -12,8 +12,24 @@
 </html>
 
 <style>
-  html{
+  html.dark{
     overflow-y: scroll;
     overflow-x: hidden;
+    background-color: #202124;
   }
 </style>
+
+<script>
+
+function checkDarkMode() {
+  if (document.cookie.includes("dark_mode=true")) {
+    document.documentElement.classList.add("dark");
+    userStore.setDarkmode(true);
+  } else {
+    document.documentElement.classList.remove("dark");
+    userStore.setDarkmode(false);
+  }
+}
+
+checkDarkMode();
+</script>

@@ -45,7 +45,22 @@ async function getAuthenticatedUser() {
     .catch((error) => {
       console.log(error);
     });
+  let dark_mode;
+  await axios
+    .get(`/api/user_data/${userStore.username}`)
+    .then((response) => {
+      userStore.setDarkmode(response.data.dark_mode);
+      dark_mode = response.data.dark_mode;
+      if (dark_mode == true) {
+        document.documentElement.classList.add("dark"); 
+        document.cookie = `dark_mode=true; expires=${expiryDate.toUTCString()}; path=/`;
+      } else {
+        document.documentElement.classList.remove("dark");
+        document.cookie = `dark_mode=false; expires=${expiryDate.toUTCString()}; path=/`;
+      }
+    })
 }
 
 getAuthenticatedUser();
+
 </script>

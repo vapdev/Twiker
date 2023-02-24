@@ -11,6 +11,7 @@ export const useUserStore = defineStore("UserStore", {
       username: "",
       user_id: "",
       avatar: "",
+      darkmode: true,
     };
   },
   getters: {
@@ -55,5 +56,8 @@ export const useUserStore = defineStore("UserStore", {
     setAvatar(avatar) {
       this.avatar = avatar;
     },
+    setDarkmode(darkmode) {
+      this.darkmode = darkmode;
+    }
   },
 });
