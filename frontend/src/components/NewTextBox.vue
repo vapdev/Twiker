@@ -1,27 +1,42 @@
 <template>
-  <div class="flex h-30 w-full pt-3 pl-3 border-solid border-b-2 border-gray-100 dark:border-gray-700">
+  <div
+    class="flex h-30 w-full pt-3 pl-3 border-solid border-b-2 border-gray-100 dark:border-gray-700"
+  >
     <Avatar :avatar_url="userStore.avatar" />
     <div class="flex flex-col w-full pl-1">
       <form>
         <div class="flex w-full py-2">
-          <textarea @input="textAreaAdjust($event.target)" id="textarea" :placeholder="text"
+          <textarea
+            @input="textAreaAdjust($event.target)"
+            id="textarea"
+            :placeholder="text"
             class="text-xl resize-none overflow-hidden w-full h-8 break-all outline-none pl-1.5 pr-6 bg-white dark:bg-dark"
-            type="text" v-model="body">
-                              </textarea>
+            type="text"
+            v-model="body"
+          >
+          </textarea>
         </div>
-        <div v-if="selectedImageUrl" class="w-64 h-64">
-          <img :src="selectedImageUrl" />
+        <div v-if="selectedImageUrl">
+          <img :src="selectedImageUrl" class="h-64 rounded-xl"/>
         </div>
-        <div class="flex border-solid border-t-2 border-gray-100 dark:border-gray-700 w-full">
+        <div
+          class="flex border-solid border-t-2 border-gray-100 dark:border-gray-700 w-full"
+        >
           <div class="flex mt-2 w-full">
             <div class="flex justify-between h-10 w-full">
               <div @click.prevent="selectImage()" class="flex">
-                <button class=""><i class="p-1 fa-regular fa-image"></i></button>
+                <button class="">
+                  <i class="p-1 fa-regular fa-image"></i>
+                </button>
               </div>
               <div class="flex">
                 <LoadingSpinner v-if="isPosting" :size="8" class="py-1.5" />
-                <button @click.prevent="callSubmitTweek()" id="submit-tweek" type="submit"
-                  class="bg-green-400 rounded-full text-white font-bold mx-3 px-5 py-2">
+                <button
+                  @click.prevent="callSubmitTweek()"
+                  id="submit-tweek"
+                  type="submit"
+                  class="bg-green-400 rounded-full text-white font-bold mx-3 px-5 py-2"
+                >
                   Submit
                 </button>
               </div>
@@ -34,58 +49,57 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import Avatar from '../components/Avatar.vue';
-import { useUserStore } from '../store/UserStore';	
-import LoadingSpinner from '../components/LoadingSpinner.vue';  
+import { ref, watch } from "vue";
+import Avatar from "../components/Avatar.vue";
+import { useUserStore } from "../store/UserStore";
+import LoadingSpinner from "../components/LoadingSpinner.vue";
 const userStore = useUserStore();
 
-const body = ref('');
+const body = ref("");
 const image = ref(null);
 const selectedImageUrl = ref(null);
 
-const emit = defineEmits(['callSubmitTweek']);
+const emit = defineEmits(["callSubmitTweek"]);
 
 function textAreaAdjust(element) {
   element.style.height = "32px";
-  element.style.height = (element.scrollHeight)+"px";
+  element.style.height = element.scrollHeight + "px";
 }
 
 const props = defineProps({
   isPosting: {
     type: Boolean,
-    required: true
+    required: true,
   },
   text: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 function selectImage() {
-    let input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = e => {
-        image.value = e.target.files[0];
-        selectedImageUrl.value = URL.createObjectURL(image.value);
-    }
-    input.click();
+  let input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/*";
+  input.onchange = (e) => {
+    image.value = e.target.files[0];
+    selectedImageUrl.value = URL.createObjectURL(image.value);
+  };
+  input.click();
 }
 
 async function callSubmitTweek() {
-    emit('callSubmitTweek', null, body.value, image.value);
-    body.value = '';
-    image.value = null;
+  emit("callSubmitTweek", null, body.value, image.value);
+  body.value = "";
+  image.value = null;
 }
 
-document.body.addEventListener('keydown', function (e) {
-    if (!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
-    let target = e.target;
-    let submit_button = document.querySelector('#submit-tweek');
-    if (target.form && body.value != '') {
-        submit_button.click();
-    }
+document.body.addEventListener("keydown", function (e) {
+  if (!(e.keyCode == 13 && (e.metaKey || e.ctrlKey))) return;
+  let target = e.target;
+  let submit_button = document.querySelector("#submit-tweek");
+  if (target.form && body.value != "") {
+    submit_button.click();
+  }
 });
-
 </script>

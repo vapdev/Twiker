@@ -1,5 +1,6 @@
 <template>
-  <router-link :to="`/tweek/${tweek.id}`"
+  <router-link
+    :to="`/tweek/${tweek.id}`"
     class="flex h-fit w-full p-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700"
   >
     <div class="flex flex-col w-full">
@@ -19,22 +20,36 @@
       </div>
       <div class="flex">
         <div class="flex w-14 h-full mr-2">
-          <Avatar :avatar_url="tweek.retweek ? tweek.retweek_avatar_url : tweek.avatar_url" class="pt-1.5"/>
+          <Avatar
+            :avatar_url="
+              tweek.retweek ? tweek.retweek_avatar_url : tweek.avatar_url
+            "
+            class="pt-1.5"
+          />
         </div>
         <div class="flex flex-col w-full">
           <div class="flex justify-between">
             <div>
-              <span 
-              @click.prevent=" 
-                tweek.retweek ? 
-                $router.replace(`/profile/${tweek.retweek_tweeker_name}`) 
-                :$router.replace(`/profile/${tweek.tweeker_name}`) 
-              " 
-              class="font-semibold text-lg">
-                {{ tweek.retweek ? tweek.retweek_tweeker_name : tweek.tweeker_name }}
+              <span
+                @click.prevent="
+                  tweek.retweek
+                    ? $router.replace(`/profile/${tweek.retweek_tweeker_name}`)
+                    : $router.replace(`/profile/${tweek.tweeker_name}`)
+                "
+                class="font-semibold text-lg"
+              >
+                {{
+                  tweek.retweek
+                    ? tweek.retweek_tweeker_name
+                    : tweek.tweeker_name
+                }}
               </span>
               <span class="ml-2">
-                {{ tweek.retweek ? formatted_time(tweek.retweek_created_at) : formatted_time(tweek.created_at) }}
+                {{
+                  tweek.retweek
+                    ? formatted_time(tweek.retweek_created_at)
+                    : formatted_time(tweek.created_at)
+                }}
               </span>
             </div>
             <div class="relative flex items-center">
@@ -77,11 +92,19 @@
             </span>
           </div>
           <div v-if="tweek.image || tweek.retweek_image" class="pt-4 pb-2 pr-8">
-            <img :src="tweek.retweek ? tweek.retweek_image : tweek.image " class="w-full rounded-xl " />
+            <img
+              :src="tweek.retweek ? tweek.retweek_image : tweek.image"
+              class="w-full rounded-xl"
+            />
           </div>
-          <div v-if="!tweek.is_retweek" class="flex flex-row justify-between w-2/3 mt-1">
+          <div
+            v-if="!tweek.is_retweek"
+            class="flex flex-row justify-between w-2/3 mt-1"
+          >
             <div class="flex items-center">
-              <div class="flex w-8 h-8 hover:bg-yellow-200 hover:rounded-full cursor-pointer">
+              <div
+                class="flex w-8 h-8 hover:bg-yellow-200 hover:rounded-full cursor-pointer"
+              >
                 <i class="m-auto fa-regular fa-comment-dots"></i>
               </div>
               <span>0</span>
@@ -133,12 +156,20 @@
                   class="m-auto"
                 ></i>
               </div>
-              <span :id="'dislikes-' + tweek.id">{{ tweek.dislikes_count }}</span>
+              <span :id="'dislikes-' + tweek.id">{{
+                tweek.dislikes_count
+              }}</span>
             </div>
           </div>
           <div v-if="tweek.retweek">
-            <div @click.prevent.stop="$router.replace(`/tweek/${tweek.retweek_id}`)">
-              <p class="text-md mt-2 text-blue-300 w-fit hover:text-blue-100 rounded-xl">
+            <div
+              @click.prevent.stop="
+                $router.replace(`/tweek/${tweek.retweek_id}`)
+              "
+            >
+              <p
+                class="text-md mt-2 text-blue-300 w-fit hover:text-blue-100 rounded-xl"
+              >
                 Ver tweek original
               </p>
             </div>
@@ -150,20 +181,21 @@
 </template>
 
 <script setup>
-import axios from "axios"
-import { ref } from 'vue'
-import { formatted_time } from '../utils/my-ultils.js'
-import Avatar from "../components/Avatar.vue"
+import axios from "axios";
+import { ref } from "vue";
+import { formatted_time } from "../utils/my-utils.js";
+import Avatar from "../components/Avatar.vue";
 
-const props =  defineProps({
+const props = defineProps({
   tweek: Object,
-})
+});
 
-const emit = defineEmits(['callGetTweeks',])
+const emit = defineEmits(["callGetTweeks"]);
 
-const cookie_user_id = document.cookie.split('; ')
-            .find(row => row.startsWith('user_id='))
-            ?.split('=')[1];
+const cookie_user_id = document.cookie
+  .split("; ")
+  .find((row) => row.startsWith("user_id="))
+  ?.split("=")[1];
 
 const show = ref(false);
 const body = ref("");
@@ -171,28 +203,26 @@ const tweeker = "tweeker_username";
 const created_at = "Now";
 const avatar = "tweeker_avatar";
 
-
 function toggle() {
   show.value = !show.value;
 }
 
-async function submitTweek(tweek_id=null, tweek_type = "tweek") {
+async function submitTweek(tweek_id = null, tweek_type = "tweek") {
   if (body.value.length > 0 || tweek_id != null) {
-      let tweek = new FormData();
-      tweek.append('body', body.value);
-      tweek.append('tweeker', tweeker);
-      tweek.append('created_at', created_at);
-      tweek.append('avatar', avatar);
-      tweek.append('parent_id', tweek_id);
-      tweek.append('tweek_type', tweek_type);
+    let tweek = new FormData();
+    tweek.append("body", body.value);
+    tweek.append("tweeker", tweeker);
+    tweek.append("created_at", created_at);
+    tweek.append("avatar", avatar);
+    tweek.append("parent_id", tweek_id);
+    tweek.append("tweek_type", tweek_type);
 
-      await axios.post('/api/add_tweek/', tweek)
-      .catch((error) => {
-          console.log(error)
-      })
-      emit("callGetTweeks", true);
+    await axios.post("/api/add_tweek/", tweek).catch((error) => {
+      console.log(error);
+    });
+    emit("callGetTweeks", true);
   }
-  body.value = '';
+  body.value = "";
 }
 
 async function toggleLike(tweek) {
@@ -303,6 +333,4 @@ async function deleteTweek(tweek_id) {
   });
   emit("callGetTweeks", true);
 }
-
 </script>
-

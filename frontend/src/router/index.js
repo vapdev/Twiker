@@ -9,7 +9,7 @@ import Users from "../pages/Users.vue"
 import Globalchat from "../pages/GlobalChat.vue"
 import rSideBar from '../components/rSideBar.vue';
 import noConversation from '../pages/noConversation.vue'
-import EditProfile from '../components/EditProfile.vue'
+import EditProfile from '../pages/EditProfile.vue'
 import Conversation from '../pages/Conversation.vue'
 import TweekPage from '../pages/TweekPage.vue'
 

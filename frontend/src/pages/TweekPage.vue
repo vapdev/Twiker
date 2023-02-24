@@ -9,11 +9,11 @@
 </template>
 
 <script setup>
-import axios from 'axios'
-import Tweek from '../components/Tweek.vue';
-import { ref, onMounted } from 'vue';
-import LoadingSpinner from '../components/LoadingSpinner.vue';
-import NewTextBox from '../components/NewTextBox.vue';
+import axios from "axios";
+import Tweek from "../components/Tweek.vue";
+import { ref, onMounted } from "vue";
+import LoadingSpinner from "../components/LoadingSpinner.vue";
+import NewTextBox from "../components/NewTextBox.vue";
 
 const props = defineProps({
     id: {
@@ -66,7 +66,10 @@ async function getReplies(){
     }).catch(error => {
         console.log('error' + error)
     })
-    isLoading.value = false;
+    .catch((error) => {
+      console.log("error" + error);
+    });
+  isLoading.value = false;
 }
 
 onMounted(async () => {
@@ -74,4 +77,3 @@ onMounted(async () => {
     await getReplies();
 });
 </script>
-
