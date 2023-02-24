@@ -9,6 +9,14 @@
           {{ tweek.tweeker_name + " compartilhou" }}
         </span>
       </div>
+      <div v-if="tweek.comment_from" class="flex items-center mb-1">
+        <i class="text-blue-600 fa-solid fa-comment mr-2"></i>
+        <span class="flex text-sm font-bold opacity-80">
+          <span>em resposta ao <a class="text-blue-400" @click.prevent.stop="$router.replace(`/tweek/${tweek.comment_from}`)">tweek</a>
+           de {{ tweek.reply_parent_tweeker_name }}
+          </span>
+        </span>
+      </div>
       <div class="flex">
         <div class="flex w-14 h-full mr-2">
           <Avatar :avatar_url="tweek.retweek ? tweek.retweek_avatar_url : tweek.avatar_url" class="pt-1.5"/>

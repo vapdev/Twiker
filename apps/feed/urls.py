@@ -1,4 +1,4 @@
-from apps.feed.views import search, view_tweek #
+from apps.feed.views import api_get_reply_tweeks, search, view_tweek #
 from django.urls import path
 from apps.feed.views import api_get_profile_tweeks, api_remove_like, api_delete_tweek, api_get_tweeks, api_remove_dislike, \
     api_remove_retweek, api_add_like, api_add_dislike, api_add_tweek, api_get_tweek
@@ -15,5 +15,5 @@ urlpatterns = [
     path('api/add_dislike/', api_add_dislike, name='remove_dislike'),
     path('api/add_tweek/', api_add_tweek, name='api_add_tweek'),
     path('api/tweek/<int:tweek_id>/', api_get_tweek, name='api_get_tweek'),
-
+    path('api/tweek/<int:tweek_id>/replies/', api_get_reply_tweeks, name='get_reply_tweeks'),
 ]
