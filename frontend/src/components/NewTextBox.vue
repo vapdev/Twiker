@@ -20,12 +20,12 @@
           <img :src="selectedImageUrl" class="h-64 rounded-xl"/>
         </div>
         <div
-          class="flex border-solid border-t-2 border-gray-100 dark:border-gray-700 w-full"
+          class="flex border-solid border-t-2 -mb-1.5 border-gray-100 dark:border-gray-700 w-full"
         >
           <div class="flex mt-2 w-full">
             <div class="flex justify-between h-10 w-full">
               <div @click.prevent="selectImage()" class="flex">
-                <button class="">
+                <button class="rounded-full h-10 w-10 hover:bg-gray-800">
                   <i class="p-1 fa-regular fa-image"></i>
                 </button>
               </div>
@@ -37,7 +37,7 @@
                   type="submit"
                   class="bg-green-400 rounded-full text-white font-bold mx-3 px-5 py-2"
                 >
-                  Submit
+                  Enviar
                 </button>
               </div>
             </div>
