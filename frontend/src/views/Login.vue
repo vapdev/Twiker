@@ -11,22 +11,29 @@
     <div
       class="min-[600px]:w-2/4 max-[600px]:h-3/4 dark w-50 flex items-center justify-center min-[600px]:border-l-2 max-[600px]:border-t-2 border-gray-500 text-black dark:text-gray-400"
     >
+    <div class="m-3 rounded-md border-2 border-gray-500">
+      <div class="py-1 font-bold w-full border-b-2 border-gray-500">
+        <div class="pl-2 py-1 font-bold w-full border-b-2 border-gray-500">
+          <h1 class="text-lg">Login</h1>
+        </div>
       <form @submit.prevent="submitForm" class="text-lg">
-        <p class="text-base">Usuário:</p>
         <div class="flex flex-col">
-          <input
-            class="rounded-md mb-1 bg-lchat border p-0.5 border-gray-700 text-base"
-            type="text"
-            name="username"
-            v-model="username"
-          />
-          <p class="text-base">Senha:</p>
-          <input
-            class="rounded-md mb-2 bg-lchat border p-0.5 border-gray-700 text-base"
-            type="password"
-            name="password"
-            v-model="password"
-          />
+          <p class="text-base">Usuário:</p>
+          <div class="flex flex-col">
+            <input
+              class="rounded-md mb-1 bg-lchat border p-0.5 border-gray-700 text-base"
+              type="text"
+              name="username"
+              v-model="username"
+            />
+            <p class="text-base">Senha:</p>
+            <input
+              class="rounded-md mb-2 bg-lchat border p-0.5 border-gray-700 text-base"
+              type="password"
+              name="password"
+              v-model="password"
+            />
+          </div>
         </div>
         <div class="flex justify-between">
           <button
@@ -43,6 +50,9 @@
           >
         </div>
       </form>
+      </div>
+    </div>
+
     </div>
   </div>
 </template>
