@@ -17,7 +17,9 @@
           </textarea>
         </div>
         <div v-if="selectedImageUrl">
-          <img :src="selectedImageUrl" class="h-64 rounded-xl"/>
+          <div class="mr-10 mb-4 mt-2">
+            <img :src="selectedImageUrl" class="rounded-xl"/>
+          </div>
         </div>
         <div
           class="flex border-solid border-t-2 -mb-1.5 border-gray-100 dark:border-gray-700 w-full"
