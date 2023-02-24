@@ -20,6 +20,7 @@
             name="username"
             v-model="username"
           />
+          <p class="text-base">Senha:</p>
           <input
             class="rounded-md mb-2 bg-lchat border p-0.5 border-gray-700 text-base"
             type="password"

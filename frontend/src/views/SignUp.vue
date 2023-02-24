@@ -11,8 +11,22 @@
           @submit.prevent="submitForm"
           class="flex-col grid justify-items-end mb-2 p-3 font-medium"
         >
-          <input type="text" name="username" v-model="username" />
-          <input type="password" name="password" v-model="password" />
+        <div class="flex flex-col">
+            <p class="text-base">Usuário:</p>
+          <input
+          type="text"
+          name="username"
+          v-model="username"
+          class="rounded-md mb-1 bg-lchat border p-0.5 border-gray-700 text-base"
+          />
+          <p class="text-base">Senha:</p>
+          <input
+          type="password"
+          name="password"
+          v-model="password"
+          class="rounded-md mb-2 bg-lchat border p-0.5 border-gray-700 text-base"
+          />
+        </div>
           <button
             type="submit"
             class="mt-3 px-2 border-2 bg-gray-100 hover:bg-gray-300 rounded-xl"
