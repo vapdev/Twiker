@@ -20,26 +20,20 @@ class ConversationSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField()
 
     def get_user_id(self, obj):
-        users = obj.users.all()
-        user_count = users.count()
-        if user_count == 2:
-            user1 = obj.users.all().first()
-            user2 = obj.users.all()[1]
-            user = self.context['request'].user
-            if user == user1:
-                return user2.id
-            return user1.id
+        user1 = obj.users.all().first()
+        user2 = obj.users.all()[1]
+        user = self.context['request'].user
+        if user == user1:
+            return user2.id
+        return user1.id
 
     def get_username(self, obj):
-        users = obj.users.all()
-        user_count = users.count()
-        if user_count == 2:
-            user1 = obj.users.all().first()
-            user2 = obj.users.all()[1]
-            user = self.context['request'].user
-            if user == user1:
-                return user2.username
-            return user1.username
+        user1 = obj.users.all().first()
+        user2 = obj.users.all()[1]
+        user = self.context['request'].user
+        if user == user1:
+            return user2.username
+        return user1.username
 
     def get_avatar(self, obj):
         users = obj.users.all()
