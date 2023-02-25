@@ -117,8 +117,8 @@ function handleScroll() {
   }
 }
 
-onMounted(() => {
-  getTweeks();
+onMounted(async () => {
+  await getTweeks();
   window.addEventListener("scroll", handleScroll);
 });
 </script>

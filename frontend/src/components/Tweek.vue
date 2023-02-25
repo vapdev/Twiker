@@ -1,7 +1,7 @@
 <template>
   <router-link
     :to="`/tweek/${tweek.id}`"
-    class="flex h-fit w-full p-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700"
+    class="flex w-full break-all p-3 border-solid border-b-2 border-gray-100 dark:border-gray-700"
   >
     <div class="flex flex-col w-full">
       <div v-if="tweek.retweek" class="flex items-center mb-1">
@@ -10,14 +10,19 @@
           {{ tweek.tweeker_name + " compartilhou" }}
         </span>
       </div>
-      <div v-if="tweek.comment_from" class="flex items-center mb-1">
+      <a
+        v-if="tweek.comment_from"
+        class="flex items-center mb-1"
+        @click.prevent.stop="$router.replace(`/tweek/${tweek.comment_from}`)"
+      >
         <i class="text-yellow-400 fa-solid fa-comment mr-2"></i>
         <span class="flex text-sm font-bold opacity-80">
-          <span>em resposta ao <a class="text-blue-400" @click.prevent.stop="$router.replace(`/tweek/${tweek.comment_from}`)">tweek</a>
-           de {{ tweek.reply_parent_tweeker_name }}
+          <span
+            >em resposta ao <span class="text-blue-400">tweek</span> de
+            {{ tweek.reply_parent_tweeker_name }}
           </span>
         </span>
-      </div>
+      </a>
       <div class="flex">
         <div class="flex w-14 h-full mr-2">
           <Avatar
@@ -71,7 +76,7 @@
                   v-if="tweek.created_by == cookie_user_id"
                   id="tweek_menu"
                   v-show="show"
-                  class="absolute flex flex-col right-10 min-w-max bg-white dark:bg-dark shadow-3 dark:shadow-[0_0px_5px_2px_rgba(255,255,255,0.2)] rounded-md"
+                  class="absolute flex flex-col right-10 min-w-max bg-white dark:bg-dark shadow-md dark:shadow-[0px_4px_10px_1px_rgba(255,255,255,0.1)] rounded-md"
                 >
                   <div
                     @click.prevent.stop="deleteTweek(tweek.id)"
@@ -86,16 +91,42 @@
               </transition>
             </div>
           </div>
-          <div class="flex">
-            <span class="flex text-xl break-all cursor-text pr-4">
-              {{ tweek.retweek ? tweek.retweek_body : tweek.body }}
-            </span>
+          <div class="flex flex-col">
+            <div>
+              <span class="flex text-xl break-word cursor-text pr-4">
+                {{ tweek.body }}
+              </span>
+            </div>
+            <div
+              v-if="tweek.retweek"
+              @click.prevent.stop="
+                $router.replace(`/tweek/${tweek.retweek_id}`)
+              "
+              class="flex-col px-2 py-1 mt-1.5 rounded-lg border-2 border-gray-100 dark:border-gray-700"
+            >
+              <div class="flex">
+                <div class="flex w-6 mr-4">
+                  <Avatar :avatar_url="tweek.avatar_url" class="h-6 scale-50" />
+                </div>
+                <span class="font-semibold text-lg">{{
+                  tweek.tweeker_name
+                }}</span>
+                <span class="ml-2 pt-0.5">{{
+                  formatted_time(tweek.created_at)
+                }}</span>
+              </div>
+              <div class="flex ml-3 mt-2">
+                <span class="flex text-lg break-word cursor-text pr-4">
+                  {{ tweek.retweek_body }}
+                </span>
+              </div>
+              <div v-if="tweek.retweek_image" class="pt-4 pb-2 pr-8">
+                <img :src="tweek.retweek_image" class="w-full rounded-xl" />
+              </div>
+            </div>
           </div>
-          <div v-if="tweek.image || tweek.retweek_image" class="pt-4 pb-2 pr-8">
-            <img
-              :src="tweek.retweek ? tweek.retweek_image : tweek.image"
-              class="w-full rounded-xl"
-            />
+          <div v-if="tweek.image" class="pt-4 pb-2 pr-8">
+            <img :src="tweek.image" class="w-full rounded-xl" />
           </div>
           <div
             v-if="!tweek.is_retweek"

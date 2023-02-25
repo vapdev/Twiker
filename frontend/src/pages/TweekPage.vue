@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0">
+    <div class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0 max-[600px]:mb-14">
         <Tweek v-if="!isLoading" :tweek="tweek" :key="id"/>
         <LoadingSpinner v-if="isLoading" :size="8" class="mt-5" />
         <NewTextBox v-bind:is-posting="isPosting" @callSubmitTweek="submitTweek" :text="'Tweeke sua resposta'" />
