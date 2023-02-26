@@ -109,7 +109,7 @@
                   <Avatar :avatar_url="tweek.avatar_url" class="h-6 scale-50" />
                 </div>
                 <span class="font-semibold text-lg">{{
-                  tweek.tweeker_name
+                  tweek.retweek_tweeker_name
                 }}</span>
                 <span class="ml-2 pt-0.5">{{
                   formatted_time(tweek.created_at)
