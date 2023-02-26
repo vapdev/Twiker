@@ -151,7 +151,7 @@ function makeWebSocketConnection() {
       new_uri = "ws:";
     }
     new_uri += "//" + import.meta.env.VITE_SOCKET_HOST;
-    chatSocket = new WebSocket(new_uri + "/ws/" + "direct_chat/" + props.user_id + "/");
+    chatSocket = new WebSocket(new_uri + "/ws/" + "direct_chat/" + conversation_id + "/");
     //append to messages when receive message
     chatSocket.onmessage = function (e) {
       const data = JSON.parse(e.data);
