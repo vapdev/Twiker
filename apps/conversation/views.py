@@ -17,6 +17,9 @@ from .serializers import ChatSerializer, ConversationSerializer
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
 def api_get_conversation(request, user_id):
+    if user_id is None:
+        return JsonResponse({'error': 'user_id is required'})
+    
     conversations = Conversation.objects.filter(users__in=[request.user.id])
     conversations = conversations.filter(users__in=[user_id])
 

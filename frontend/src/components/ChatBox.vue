@@ -78,7 +78,7 @@ const userStore = useUserStore();
 const props = defineProps({
   user_id: {
     type: String,
-    default: 0,
+    default: null,
   },
 });
 
@@ -99,6 +99,7 @@ async function getConversationId() {
     })
     .catch((error) => {});
 }
+
 async function getMessages() {
   isLoading.value = true;
   if (props.user_id) {
@@ -121,6 +122,7 @@ async function getMessages() {
     });
   isLoading.value = false;
 }
+
 function submitMessage() {
   if (content.value.length > 0) {
     let message = {
@@ -134,30 +136,54 @@ function submitMessage() {
     content.value = "";
   }
 }
+
 function scrollToBottom() {
   window.scrollTo(0, document.body.scrollHeight);
 }
+
+function makeWebSocketConnection() {
+  if (props.user_id) {
+      var loc = window.location,
+      new_uri;
+    if (loc.protocol === "https:") {
+      new_uri = "wss:";
+    } else {
+      new_uri = "ws:";
+    }
+    new_uri += "//" + import.meta.env.VITE_SOCKET_HOST;
+    chatSocket = new WebSocket(new_uri + "/ws/" + "direct_chat/" + props.user_id + "/");
+    //append to messages when receive message
+    chatSocket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+      // append message to messages
+      messages.value.push(data);
+      setTimeout(() => {
+        scrollToBottom();
+      }, 0);
+    }.bind(this);
+  } else {
+    var loc = window.location,
+      new_uri;
+    if (loc.protocol === "https:") {
+      new_uri = "wss:";
+    } else {
+      new_uri = "ws:";
+    }
+    new_uri += "//" + import.meta.env.VITE_SOCKET_HOST;
+    chatSocket = new WebSocket(new_uri + "/ws/" + "chat/");
+    //append to messages when receive message
+    chatSocket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+      // append message to messages
+      messages.value.push(data);
+      setTimeout(() => {
+        scrollToBottom();
+      }, 0);
+    }.bind(this);
+  }
+}
 onMounted(async () => {
   await getMessages();
-  var loc = window.location,
-    new_uri;
-  if (loc.protocol === "https:") {
-    new_uri = "wss:";
-  } else {
-    new_uri = "ws:";
-  }
-  new_uri += "//" + import.meta.env.VITE_SOCKET_HOST;
-  chatSocket = new WebSocket(
-    new_uri + "/ws/" + "chat/" + conversation_id + "/"
-  );
-  //append to messages when receive message
-  chatSocket.onmessage = function (e) {
-    const data = JSON.parse(e.data);
-    // append message to messages
-    messages.value.push(data);
-    setTimeout(() => {
-      scrollToBottom();
-    }, 0);
-  }.bind(this);
+  makeWebSocketConnection()
 });
 </script>
