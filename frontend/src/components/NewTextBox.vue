@@ -94,6 +94,7 @@ async function callSubmitTweek() {
   emit("callSubmitTweek", null, body.value, image.value);
   body.value = "";
   image.value = null;
+  selectedImageUrl.value = null;
 }
 
 document.body.addEventListener("keydown", function (e) {
