@@ -44,7 +44,7 @@ const router = useRouter();
 async function getConversations() {
   isLoading.value = true;
   await axios
-    .get(`/api/conversations`)
+    .get(`/api/conversations/`)
     .then((response) => {
       conversations.value = response.data;
     })

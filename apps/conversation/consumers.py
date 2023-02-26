@@ -75,5 +75,72 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 if user != tweeker:
                     create_notification(created_by=tweeker, to_user=user, notification_type='message')
                     return user.id
+                
+class DirectChatConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        # Extract the `id` from the URL
+        self.id = self.scope['url_route']['kwargs']['id']
+        # Join the room using the `id`
+        await self.channel_layer.group_add(f'direct_chat_{self.id}', self.channel_name)
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        # Leave the room
+        await self.channel_layer.group_discard(
+            f'direct_chat_{self.id}',
+            self.channel_name
+        )
+
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        content = data['content']
+        tweeker_name = data['tweeker_name']
+        avatar_url = data['avatar_url']
+
+        to_user_id = await self.save_message(tweeker_name, self.id, content)
+
+        # Send message to the room group
+        await self.channel_layer.group_send(
+            f'direct_chat_{self.id}',
+            {
+                'type': 'chat_message',
+                'content': content,
+                'tweeker_name': tweeker_name,
+                'avatar_url': avatar_url,
+                'to_user_id': to_user_id,
+            }
+        )
+
+    async def chat_message(self, event):
+        content = event['content']
+        tweeker_name = event['tweeker_name']
+        avatar_url = event['avatar_url']
+        to_user_id = event['to_user_id']
+
+        # Send message to WebSocket
+        await self.send(text_data=json.dumps({
+            'content': content,
+            'tweeker_name': tweeker_name,
+            'created_at': timezone.now().isoformat(),
+            'avatar_url': avatar_url,
+            'to_user_id': to_user_id,
+        }))
+
+    @sync_to_async
+    def save_message(self, tweeker_username, conversation_id, content):
+        tweeker = User.objects.get(username=tweeker_username)
+        try:
+            conversation = Conversation.objects.get(id=conversation_id)
+        except:
+            conversation = None
+        if not conversation:
+            ConversationMessage.objects.create(created_by=tweeker, content=content)
+        else:
+            ConversationMessage.objects.create(created_by=tweeker, conversation=conversation, content=content)
+            users = conversation.users.all()
+            for user in users:
+                if user != tweeker:
+                    create_notification(created_by=tweeker, to_user=user, notification_type='message')
+                    return user.id
 
 
