@@ -82,7 +82,5 @@ function uploadImage(event) {
   }
   axios.post("/api/update_avatar/", formData);
 }
-window.addEventListener("DOMContentLoaded", function(){
-  selectedBiography = ref(userStore.biography)
-});
+
 </script>
