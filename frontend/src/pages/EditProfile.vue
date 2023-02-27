@@ -80,6 +80,7 @@ function uploadImage(event) {
     formData.append("bio", selectedBiography.value);
   }
   axios.post("/api/update_avatar/", formData);
+  location.reload()
 }
 
 </script>

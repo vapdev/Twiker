@@ -84,6 +84,7 @@ def update_avatar(request):
     if bio:
         profile = TwikkerProfile.objects.get(user=user)
         profile.biography = bio
+        print(bio)
         profile.save()
     if image:
         result = uploader.upload(image, upload_preset="ml_default")
