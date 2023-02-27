@@ -27,7 +27,7 @@
           <div class="flex mt-2 w-full">
             <div class="flex justify-between h-10 w-full">
               <div @click.prevent="selectImage()" class="flex">
-                <button class="rounded-full h-10 w-10 hover:bg-gray-800">
+                <button class="rounded-full h-10 w-10">
                   <i class="p-1 fa-regular fa-image"></i>
                 </button>
               </div>
