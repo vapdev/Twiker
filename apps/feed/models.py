@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.conf import settings
 
-# if settings.DEBUG:  
-from apps.twikkerprofile.fields import MockCloudinaryField as CloudinaryField
-# else:
-    # from cloudinary.models import CloudinaryField
+if settings.DEBUG:  
+    from apps.twikkerprofile.fields import MockCloudinaryField as CloudinaryField
+else:
+    from cloudinary.models import CloudinaryField
 
 class Tweek(models.Model):
     # A tweek is a post made by a user
