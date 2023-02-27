@@ -25,36 +25,21 @@
       </a>
       <div class="flex">
         <div class="flex w-14 h-full mr-2">
-          <Avatar
-            :avatar_url="
-              tweek.retweek ? tweek.retweek_avatar_url : tweek.avatar_url
-            "
-            class="pt-1.5"
-          />
+          <Avatar :avatar_url="tweek.avatar_url" class="pt-1.5" />
         </div>
         <div class="flex flex-col w-full">
           <div class="flex justify-between">
             <div>
               <span
                 @click.prevent="
-                  tweek.retweek
-                    ? $router.replace(`/profile/${tweek.retweek_tweeker_name}`)
-                    : $router.replace(`/profile/${tweek.tweeker_name}`)
+                  $router.replace(`/profile/${tweek.tweeker_name}`)
                 "
                 class="font-semibold text-lg"
               >
-                {{
-                  tweek.retweek
-                    ? tweek.retweek_tweeker_name
-                    : tweek.tweeker_name
-                }}
+                {{ tweek.tweeker_name }}
               </span>
               <span class="ml-2">
-                {{
-                  tweek.retweek
-                    ? formatted_time(tweek.retweek_created_at)
-                    : formatted_time(tweek.created_at)
-                }}
+                {{ formatted_time(tweek.created_at) }}
               </span>
             </div>
             <div class="relative flex items-center">
@@ -106,13 +91,16 @@
             >
               <div class="flex">
                 <div class="flex w-6 mr-4">
-                  <Avatar :avatar_url="tweek.avatar_url" class="h-6 scale-50" />
+                  <Avatar
+                    :avatar_url="tweek.retweek_avatar_url"
+                    class="h-6 scale-50"
+                  />
                 </div>
                 <span class="font-semibold text-lg">{{
                   tweek.retweek_tweeker_name
                 }}</span>
                 <span class="ml-2 pt-0.5">{{
-                  formatted_time(tweek.created_at)
+                  formatted_time(tweek.retweek_created_at)
                 }}</span>
               </div>
               <div class="flex ml-3 mt-2">

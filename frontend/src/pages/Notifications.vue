@@ -72,7 +72,7 @@ async function getNotifications() {
   isLoading.value = false;
 }
 
-onMounted(() => {
-  getNotifications();
+onMounted(async () => {
+  await getNotifications();
 });
 </script>
