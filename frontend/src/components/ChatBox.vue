@@ -142,48 +142,31 @@ function scrollToBottom() {
 }
 
 function makeWebSocketConnection() {
-  if (props.user_id) {
-      var loc = window.location,
-      new_uri;
-    if (loc.protocol === "https:") {
-      new_uri = "wss:";
-    } else {
-      new_uri = "ws:";
-    }
-    new_uri += "//" + import.meta.env.VITE_SOCKET_HOST;
-    chatSocket = new WebSocket(new_uri + "/ws/" + "direct_chat/" + conversation_id + "/");
-    //append to messages when receive message
-    chatSocket.onmessage = function (e) {
-      const data = JSON.parse(e.data);
-      // append message to messages
-      messages.value.push(data);
-      setTimeout(() => {
-        scrollToBottom();
-      }, 0);
-    }.bind(this);
+  var loc = window.location,
+    new_uri;
+  if (loc.protocol === "https:") {
+    new_uri = "wss:";
   } else {
-    var loc = window.location,
-      new_uri;
-    if (loc.protocol === "https:") {
-      new_uri = "wss:";
-    } else {
-      new_uri = "ws:";
-    }
-    new_uri += "//" + import.meta.env.VITE_SOCKET_HOST;
-    chatSocket = new WebSocket(new_uri + "/ws/" + "chat/");
-    //append to messages when receive message
-    chatSocket.onmessage = function (e) {
-      const data = JSON.parse(e.data);
-      // append message to messages
-      messages.value.push(data);
-      setTimeout(() => {
-        scrollToBottom();
-      }, 0);
-    }.bind(this);
+    new_uri = "ws:";
   }
+  new_uri += "//" + import.meta.env.VITE_SOCKET_HOST;
+  chatSocket = new WebSocket(
+    new_uri + "/ws/" + "chat/" + conversation_id + "/"
+  );
+  //append to messages when receive message
+  chatSocket.onmessage = function (e) {
+    const data = JSON.parse(e.data);
+    // append message to messages
+    if (data.conversation_id == conversation_id) {
+      messages.value.push(data);
+    }
+    setTimeout(() => {
+      scrollToBottom();
+    }, 0);
+  }.bind(this);
 }
 onMounted(async () => {
   await getMessages();
-  makeWebSocketConnection()
+  makeWebSocketConnection();
 });
 </script>
