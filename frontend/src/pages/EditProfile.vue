@@ -54,7 +54,6 @@ import Avatar from "../components/Avatar.vue";
 import axios from "axios";
 import { ref } from "vue";
 import { useUserStore } from "../store/UserStore";
-import NewTextBox from "../components/NewTextBox.vue";
 
 const userStore = useUserStore();
 

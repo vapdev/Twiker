@@ -16,8 +16,12 @@
             <div class="font-bold text-lg">{{ user.username }}</div>
           </div>
           <div class="flex">
-            <a class="cursor-pointer mr-4">Followers: {{ followed_by }}</a>
-            <a class="cursor-pointer">Follows: {{ following }}</a>
+            <router-link
+            :to="`/followers/${user.username}`"
+            >Followers: {{ user.followed_by }}</router-link>
+            <router-link
+            :to="`/following/${user.username}`"
+            > Following: {{ user.following }}</router-link>
           </div>
         </div>
         <div class="flex w-full justify-between">

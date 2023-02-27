@@ -6,6 +6,8 @@ import Conversations from "../components/Conversations.vue"
 import Notifications from "../pages/Notifications.vue"
 import Profile from "../pages/Profile.vue"
 import Users from "../pages/Users.vue"
+import Followers from "../pages/Followers.vue"
+import Following from "../pages/Following.vue"
 import Globalchat from "../pages/GlobalChat.vue"
 import rSideBar from '../components/rSideBar.vue';
 import noConversation from '../pages/noConversation.vue'
@@ -113,6 +115,24 @@ const routes = [
         props: true,
         components: {
           default: TweekPage,
+          right: rSideBar,
+        },
+      },
+      {
+        path: "/followers/:id",
+        name: "Followers",
+        props: true,
+        components: {
+          default: Followers,
+          right: rSideBar,
+        },
+      },
+      {
+        path: "/following/:id",
+        name: "Following",
+        props: true,
+        components: {
+          default: Following,
           right: rSideBar,
         },
       },

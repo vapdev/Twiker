@@ -34,9 +34,20 @@ class UsersList(generics.ListAPIView):
 
     def get_queryset(self):
         return User.objects.all()
+class FollowersList(generics.ListAPIView):
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        return User.objects.filter(twikkerprofile__follows__id__icontains=self.kwargs.get("user_id"))
+
+class FollowingList(generics.ListAPIView):
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        return User.objects.filter(twikkerprofile__followed_by__id__icontains=self.kwargs.get("user_id"))
 
 class ImageViewSet(viewsets.ModelViewSet):
-    
+
     @action(detail=False, methods=['post'])
 
     def upload_image(self, request):
