@@ -6,6 +6,26 @@
       :mainText="'Todos Usuários'"
       :sideText="'Usuários: ' + users.length"
     />
+    <div class="flex flex-col justify-center">
+        <form method="GET" action="" class="m-0" @submit.prevent="getUsers">
+          <div
+            class="flex flex-row p-2 my-2 max-[600px]:my-0 border-solid border-2 border-gray-100 dark:border-gray-700 w-[200px] rounded-full"
+          >
+            <div>
+              <input
+                class="text-sm h-fit w-full outline-none bg-white dark:bg-dark"
+                type="text"
+                name="query"
+                v-model="searchQuery"
+                placeholder="Search"
+              />
+            </div>
+            <div>
+              <button><i class="p-1 fa-solid fa-magnifying-glass"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
     <router-link
       :to="`/profile/${user.username}`"
       v-for="user in users"
@@ -37,11 +57,11 @@ import DefaultHeader from "../components/DefaultHeader.vue";
 
 const users = ref([]);
 const isLoading = ref(true);
-
+const searchQuery = ref('');
 async function getUsers() {
   isLoading.value = true;
   await axios
-    .get(`/api/users/`)
+    .get(`/api/users/?query=${searchQuery.value}`)
     .then((response) => {
       users.value = response.data;
     })

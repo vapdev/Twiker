@@ -9,7 +9,7 @@ import json
 from django.contrib.auth.models import User
 
 from apps.core.models import Image
-
+from django.db.models import Q
 from .serializers import UserSerializer
 from django.contrib.auth import logout
 from django.http import JsonResponse
@@ -33,7 +33,10 @@ class UsersList(generics.ListAPIView):
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        return User.objects.all()
+        queryset = User.objects.all()
+        if self.request.GET.get('query', False):
+            queryset = queryset.filter(username__icontains=self.request.GET.get('query', False))
+        return queryset
 class FollowersList(generics.ListAPIView):
     serializer_class = UserSerializer
 
