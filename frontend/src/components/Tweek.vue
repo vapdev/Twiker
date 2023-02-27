@@ -25,7 +25,12 @@
       </a>
       <div class="flex">
         <div class="flex w-14 h-full mr-2">
-          <Avatar :avatar_url="tweek.avatar_url" class="pt-1.5" />
+          <div
+          @click.prevent="
+          $router.replace(`/profile/${tweek.tweeker_name}`)"
+          >
+            <Avatar :avatar_url="tweek.avatar_url" class="pt-1.5" />
+          </div>
         </div>
         <div class="flex flex-col w-full">
           <div class="flex justify-between">
