@@ -12,6 +12,7 @@ export const useUserStore = defineStore("UserStore", {
       user_id: "",
       avatar: "",
       darkmode: true,
+      biography:""
     };
   },
   getters: {
@@ -58,6 +59,9 @@ export const useUserStore = defineStore("UserStore", {
     },
     setDarkmode(darkmode) {
       this.darkmode = darkmode;
+    },
+    setBiography(biography) {
+      this.biography = biography;
     }
   },
 });

@@ -14,7 +14,28 @@
           <button class=""><i class="p-1 fa-regular fa-image"></i></button>
         </div>
         <img v-if="selectedImageUrl" :src="selectedImageUrl" />
+        <div @click.prevent="selectBio()" class="mt-4">
+          <label class="font-semibold">Biografia:</label>
+          <div
+            class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0"
+          >
+            <div class="flex w-full py-2">
+              <textarea
+                @input="textAreaAdjust($event.target)"
+                id="textarea"
+                :placeholder="text"
+                class="text-xl resize-none overflow-hidden w-full h-8 break-all outline-none pl-1.5 pr-6 bg-white dark:bg-dark"
+                type="text"
+                v-model="selectedBiography"
+              >
+              </textarea>
+            </div>
+          </div>
+        </div>
+        <br>
       </div>
+      </div>
+      <div class="flex justify-end mt-4">
       <div class="flex justify-end">
         <button
           @click="uploadImage()"
@@ -33,12 +54,13 @@ import Avatar from "../components/Avatar.vue";
 import axios from "axios";
 import { ref } from "vue";
 import { useUserStore } from "../store/UserStore";
+import NewTextBox from "../components/NewTextBox.vue";
 
 const userStore = useUserStore();
 
 const selectedImageUrl = ref("");
 const image = ref(null);
-
+const selectedBiography = ref(userStore.biography)
 function selectImage() {
   let input = document.createElement("input");
   input.type = "file";
@@ -51,10 +73,16 @@ function selectImage() {
 }
 
 function uploadImage(event) {
-  let avatar = new FormData();
-  avatar.append("file", image.value);
+  let formData = new FormData();
   if (image.value) {
-    axios.post("/api/update_avatar/", avatar);
+    formData.append("file", image.value);
   }
+  if (selectedBiography.value) {
+    formData.append("bio", selectedBiography.value);
+  }
+  axios.post("/api/update_avatar/", formData);
 }
+window.addEventListener("DOMContentLoaded", function(){
+  selectedBiography = ref(userStore.biography)
+});
 </script>

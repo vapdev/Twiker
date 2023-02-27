@@ -80,6 +80,11 @@ def user1_follows_user2(request, username1, username2):
 def update_avatar(request):
     user = request.user
     image = request.FILES.get('file', None)
+    bio = request.POST.get('bio', None)
+    if bio:
+        profile = TwikkerProfile.objects.get(user=user)
+        profile.biography = bio
+        profile.save()
     if image:
         result = uploader.upload(image, upload_preset="ml_default")
         image_url = result['secure_url']

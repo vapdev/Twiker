@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from django.db import models
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -7,7 +8,8 @@ class UserSerializer(serializers.ModelSerializer):
     following = serializers.IntegerField(source='twikkerprofile.follows.count', read_only=True)
     avatar = serializers.CharField(source='twikkerprofile.avatar', read_only=True)
     dark_mode = serializers.BooleanField(source='twikkerprofile.dark_mode', read_only=True)
+    biography = serializers.CharField(source='twikkerprofile.biography', read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'followed_by', 'following', 'avatar', 'dark_mode']
+        fields = ['id', 'username', 'followed_by', 'following', 'avatar', 'dark_mode', 'biography']

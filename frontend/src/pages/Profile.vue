@@ -20,6 +20,9 @@
             <a class="cursor-pointer">Follows: {{ following }}</a>
           </div>
         </div>
+        <div class="flex w-full justify-between">
+          {{ biography }}
+        </div>
         <div class="flex justify-end">
           <div
             class="flex flex-col ml-4"
@@ -60,19 +63,20 @@ import LoadingSpinner from "../components/LoadingSpinner.vue";
 const isLoading = ref(true);
 
 const cookie_user_id = document.cookie
-  .split("; ")
-  .find((row) => row.startsWith("user_id="))
-  ?.split("=")[1];
+.split("; ")
+.find((row) => row.startsWith("user_id="))
+?.split("=")[1];
 
 const cookie_username = document.cookie
-  .split("; ")
-  .find((row) => row.startsWith("username="))
-  ?.split("=")[1];
+.split("; ")
+.find((row) => row.startsWith("username="))
+?.split("=")[1];
 
 const route = useRoute();
 
 const tweeks = ref([]);
 const user = ref("");
+const biography = ref("")
 const followed_by = ref("");
 const following = ref("");
 const follow = ref(false);
@@ -99,6 +103,7 @@ async function getUser() {
       user.value = response.data;
       followed_by.value = response.data.followed_by;
       following.value = response.data.following;
+      biography.value = response.data.biography;
     })
     .catch((error) => {
       console.log("error" + error);

@@ -47,7 +47,7 @@ const routes = [
         name: "EditProfile",
         components: {
           default: EditProfile,
-          right: rSideBar, 
+          right: rSideBar,
         },
       },
       {
@@ -55,7 +55,7 @@ const routes = [
         name: "Conversations",
         components: {
           default: noConversation,
-          right: Conversations, 
+          right: Conversations,
         },
       },
       {
@@ -130,10 +130,10 @@ router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
 
   const isAuthenticated = userStore.isAuthenticated;
-  
+
   // if user is not logged in and tries to access a page that requires authentication then redirect to login page
-  if (!isAuthenticated && (to.name === 'Feed' || to.name === 'Notifications' || 
-  to.name === 'Users' || to.name === 'GlobalChat' || to.name === 'Profile' || to.name === 'EditProfile' || 
+  if (!isAuthenticated && (to.name === 'Feed' || to.name === 'Notifications' ||
+  to.name === 'Users' || to.name === 'GlobalChat' || to.name === 'Profile' || to.name === 'EditProfile' ||
   to.name === 'Conversation' || to.name === 'Tweek')) {
     next({ name: 'Login' })
   } else {

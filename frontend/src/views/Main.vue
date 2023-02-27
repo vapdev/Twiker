@@ -35,6 +35,7 @@ async function getAuthenticatedUser() {
       userStore.setUsername(response.data.username);
       userStore.setUserId(response.data.id);
       userStore.setAvatar(response.data.avatar);
+      userStore.setBiography(response.data.biography)
       document.cookie = `username=${
         response.data.username
       }; expires=${expiryDate.toUTCString()}; path=/`;
@@ -45,14 +46,14 @@ async function getAuthenticatedUser() {
     .catch((error) => {
       console.log(error);
     });
-  let dark_mode;
-  await axios
+    let dark_mode;
+    await axios
     .get(`/api/user_data/${userStore.username}`)
     .then((response) => {
       userStore.setDarkmode(response.data.dark_mode);
       dark_mode = response.data.dark_mode;
       if (dark_mode == true) {
-        document.documentElement.classList.add("dark"); 
+        document.documentElement.classList.add("dark");
         document.cookie = `dark_mode=true; expires=${expiryDate.toUTCString()}; path=/`;
       } else {
         document.documentElement.classList.remove("dark");
