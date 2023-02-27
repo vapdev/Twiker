@@ -9,7 +9,7 @@ services:
 #      - POSTGRES_PASSWORD=postgres
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000 && python manage.py migrate && python manage.py migrate core 0012 --fake && python manage.py migrate && python manage.py migrate twikkerprofile 0006 --fake  && python manage.py migrate
+    command: python manage.py runserver 0.0.0.0:8000 && python manage.py migrate && python manage.py migrate feed 0012 --fake && python manage.py migrate && python manage.py migrate twikkerprofile 0006 --fake  && python manage.py migrate
     volumes:
       - .:/code
     ports:
