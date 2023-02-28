@@ -10,6 +10,9 @@ from django.contrib.auth.models import User
 
 from apps.core.models import Image
 from django.db.models import Q
+
+from apps.twikkerprofile.models import TwikkerProfile
+from apps.twikkerprofile.serializers import TwikkerProfileSerializer
 from .serializers import UserSerializer
 from django.contrib.auth import logout
 from django.http import JsonResponse
@@ -37,17 +40,22 @@ class UsersList(generics.ListAPIView):
         if self.request.GET.get('query', False):
             queryset = queryset.filter(username__icontains=self.request.GET.get('query', False))
         return queryset
+    
 class FollowersList(generics.ListAPIView):
-    serializer_class = UserSerializer
+    serializer_class = TwikkerProfileSerializer
 
     def get_queryset(self):
-        return User.objects.filter(twikkerprofile__follows__id__icontains=self.kwargs.get("user_id"))
+        user_id = self.kwargs.get("user_id")
+        profile = TwikkerProfile.objects.get(user_id=user_id)
+        return profile.followed_by.all()
 
 class FollowingList(generics.ListAPIView):
-    serializer_class = UserSerializer
+    serializer_class = TwikkerProfileSerializer
 
     def get_queryset(self):
-        return User.objects.filter(twikkerprofile__followed_by__id__icontains=self.kwargs.get("user_id"))
+        user_id = self.kwargs.get("user_id")
+        profile = TwikkerProfile.objects.get(user_id=user_id)
+        return profile.follows.all()
 
 class ImageViewSet(viewsets.ModelViewSet):
 
