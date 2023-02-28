@@ -38,9 +38,10 @@
             to="/signup"
             class="hover:scale-105 text-bold hover:text-gray-200 text-sm mr-1"
             href="{% url 'signup' %} "
-            >Sign Up</router-link
+            >Registrar</router-link
           >
         </div>
+        <p class="text-red-500 text-sm mt-4">{{ errorMsg }}</p>
       </form>
     </div>
   </div>
@@ -58,6 +59,7 @@ const route = useRoute();
 
 const username = ref("");
 const password = ref("");
+const errorMsg = ref("");
 
 const expiryDate = new Date();
 expiryDate.setTime(expiryDate.getTime() + 3 * 24 * 60 * 60 * 1000);
@@ -80,7 +82,7 @@ function submitForm(e) {
       }
     })
     .catch((error) => {
-      console.log("error" + error);
+      errorMsg.value = 'Usuário ou senha incorretos';
     });
 }
 
