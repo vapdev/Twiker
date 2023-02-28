@@ -15,13 +15,13 @@
         <p class="text-base">Usuário:</p>
         <div class="flex flex-col">
           <input
-            class="rounded-md mb-1 bg-lchat border p-0.5 border-gray-700 text-base"
+            class="rounded-md mb-1 text-black bg-lchat border p-0.5 border-gray-700 text-base"
             type="text"
             name="username"
             v-model="username"
           />
           <input
-            class="rounded-md mb-2 bg-lchat border p-0.5 border-gray-700 text-base"
+            class="rounded-md mb-2 text-black bg-lchat border p-0.5 border-gray-700 text-base"
             type="password"
             name="password"
             v-model="password"

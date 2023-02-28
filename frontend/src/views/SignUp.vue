@@ -17,21 +17,21 @@
           type="text"
           name="username"
           v-model="username"
-          class="rounded-md mb-1 bg-lchat border p-0.5 border-gray-700 text-base"
+          class="rounded-md mb-1 text-black bg-lchat border p-0.5 border-gray-700 text-base"
           />
           <p class="text-base">Senha:</p>
           <input
           type="password"
           name="password"
           v-model="password"
-          class="rounded-md mb-2 bg-lchat border p-0.5 border-gray-700 text-base"
+          class="rounded-md mb-2 text-black bg-lchat border p-0.5 border-gray-700 text-base"
           />
           <p class="text-base">Confirme a senha:</p>
           <input
           type="password"
           name="password"
           v-model="passwordCopy"
-          class="rounded-md mb-2 bg-lchat border p-0.5 border-gray-700 text-base"
+          class="rounded-md mb-2 text-black bg-lchat border p-0.5 border-gray-700 text-base"
           />
         </div>
           <button
