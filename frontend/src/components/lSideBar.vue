@@ -17,6 +17,7 @@
         <router-link
           to="/"
           class="flex justify-center font-semibold text-xl max-[600px]:py-1 p-2 hover:bg-gray-200 dark:hover:bg-gray-700 hover:rounded-full"
+          @click="scrollToTop"
         >
           <div class="flex w-11 h-11">
             <i class="text-xl m-auto fa-solid fa-house"></i>
@@ -90,6 +91,10 @@
 
 <script setup>
 import { useUserStore } from "../store/UserStore.js";
+
+function scrollToTop() {
+  window.scrollTo(0, 0);
+}
 
 const userStore = useUserStore();
 </script>
