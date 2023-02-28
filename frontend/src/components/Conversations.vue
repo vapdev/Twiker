@@ -12,9 +12,9 @@
       </div>
       <LoadingSpinner v-if="isLoading" :size="8" class="mt-5" />
       <div v-for="conversation in conversations" class="flex">
-        <a href=""
+        <a
           @click="goToConversation(conversation.user_id)"
-          class="flex h-fit w-full max-[600px]:w-fit p-4 pt-3 pl-3 border-solid min-[600px]:border-b-2 max-[600px]:border hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700"
+          class="flex h-fit cursor-pointer w-full max-[600px]:w-fit p-4 pt-3 pl-3 border-solid min-[600px]:border-b-2 max-[600px]:border hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700"
         >
           <Avatar :avatar_url="conversation.avatar" />
           <div>
