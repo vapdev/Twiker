@@ -47,7 +47,6 @@ let hasNext = false;
 let lastTweekId = null; // initialize last tweet ID to null
 
 async function submitTweek(tweek_id = null, body = null, image = null) {
-  console.log(tweek_id, body, image);
   if (body.length > 0 || tweek_id != null || image.value != null) {
     let tweek = new FormData();
     tweek.append("body", body);

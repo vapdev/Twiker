@@ -21,7 +21,7 @@
                   @input="textAreaAdjust($event.target)"
                   id="textarea"
                   :placeholder="text"
-                  class="text-xl resize-none border-2 border-gray-500 rounded-lg h-16 p-1 overflow-hidden w-full break-all outline-none pl-1.5 pr-6 bg-white dark:bg-dark"
+                  class="text-md resize-none border border-gray-500 rounded-lg h-16 p-1 overflow-hidden w-full break-all outline-none pl-1.5 pr-6 bg-white dark:bg-dark"
                   type="text"
                   v-model="bio"
                 >
