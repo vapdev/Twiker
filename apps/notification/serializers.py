@@ -10,7 +10,7 @@ class NotificationSerializer(serializers.ModelSerializer):
 
     def get_avatar_url(self, obj):
         profile = TwikkerProfile.objects.get(user=obj.created_by)
-        return profile.avatar
+        return str(profile.avatar)
     
 
     class Meta:
