@@ -11,6 +11,7 @@
       <div
         class="flex flex-row h-fit w-full p-4 pt-3 pl-3 border-solid border-b-2 hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-100 dark:border-gray-700"
       >
+      <Avatar :avatar_url="notification.avatar_url" :size="8" class="mr-2"/>
         <div>
           <a v-if="notification.notification_type == 'message'">
             <strong>{{ notification.created_by_username }}</strong> te mandou
@@ -50,6 +51,7 @@ import { ref, onMounted } from "vue";
 import { formatted_time } from "../utils/my-utils.js";
 import LoadingSpinner from "../components/LoadingSpinner.vue";
 import DefaultHeader from "../components/DefaultHeader.vue";
+import Avatar from "../components/Avatar.vue";
 
 const notifications = ref([]);
 const isLoading = ref(true);

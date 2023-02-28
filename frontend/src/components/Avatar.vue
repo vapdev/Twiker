@@ -12,5 +12,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  user_id: {
+    type: Number,
+    required: false,
+  },
 });
 </script>
+
