@@ -77,14 +77,13 @@ def user1_follows_user2(request, username1, username2):
 
 @permission_classes((IsAuthenticated, ))
 @api_view(['POST'])
-def update_avatar(request):
+def update_profile(request):
     user = request.user
-    image = request.FILES.get('file', None)
+    image = request.FILES.get('avatar', None)
     bio = request.POST.get('bio', None)
     if bio:
         profile = TwikkerProfile.objects.get(user=user)
         profile.biography = bio
-        print(bio)
         profile.save()
     if image:
         result = uploader.upload(image, upload_preset="ml_default")
@@ -95,3 +94,4 @@ def update_avatar(request):
     else:
         image_url = None
     return JsonResponse({'success': True})
+

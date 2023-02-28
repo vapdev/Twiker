@@ -26,7 +26,7 @@
                 :placeholder="text"
                 class="text-xl resize-none overflow-hidden w-full h-8 break-all outline-none pl-1.5 pr-6 bg-white dark:bg-dark"
                 type="text"
-                v-model="selectedBiography"
+                v-model="bio"
               >
               </textarea>
             </div>
@@ -38,7 +38,7 @@
       <div class="flex justify-end mt-4">
       <div class="flex justify-end">
         <button
-          @click="uploadImage()"
+          @click="editProfile()"
           class="p-1 rounded-xl bg-green-400 hover:text-white"
         >
           Save changes
@@ -59,7 +59,8 @@ const userStore = useUserStore();
 
 const selectedImageUrl = ref("");
 const image = ref(null);
-const selectedBiography = ref(userStore.biography)
+const bio = ref(userStore.biography)
+
 function selectImage() {
   let input = document.createElement("input");
   input.type = "file";
@@ -71,16 +72,22 @@ function selectImage() {
   input.click();
 }
 
-function uploadImage(event) {
+function editProfile() {
   let formData = new FormData();
   if (image.value) {
-    formData.append("file", image.value);
+    formData.append("avatar", image.value);
   }
-  if (selectedBiography.value) {
-    formData.append("bio", selectedBiography.value);
+  if (bio.value) {
+    formData.append("bio", bio.value);
   }
-  axios.post("/api/update_avatar/", formData);
-  location.reload()
+  axios.post("/api/update_profile/", formData)
+    .then(() => {
+      location.reload();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }
+
 
 </script>

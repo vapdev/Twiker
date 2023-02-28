@@ -12,4 +12,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'followed_by', 'following', 'avatar', 'dark_mode', 'biography']
+        fields = '__all__'

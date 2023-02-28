@@ -16,3 +16,27 @@ export function formatted_time(time) {
         return `há ${diffDays} dia${diffDays > 1 ? "s" : ""}.`;
     }
 }
+
+export function formatDatetimeCustom(datetimeString) {
+    const date = new Date(datetimeString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    return `${padZero(day)}/${padZero(month)}/${year} ${padZero(hour)}:${padZero(minute)}`;
+}
+
+export function formatMonthYear(dateString) {
+    const date = new Date(dateString);
+    const monthNames = [
+      "janeiro", "fevereiro", "março",
+      "abril", "maio", "junho", "julho",
+      "agosto", "setembro", "outubro",
+      "novembro", "dezembro"
+    ];
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    return `${month} de ${year}`;
+}
+  

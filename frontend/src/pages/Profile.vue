@@ -5,28 +5,33 @@
   >
     <div
       id="profile"
-      class="flex flex-col p-6 border-solid border-b-2 border-gray-100 dark:border-gray-700"
+      class="flex flex-col p-6 pb-3 border-solid border-b-2 border-gray-100 dark:border-gray-700"
     >
       <div class="bg-opacity-40">
         <div class="flex w-full justify-between">
           <div class="flex">
             <article>
-              <Avatar :avatar_url="user.avatar" />
+              <Avatar class="scale-125" :avatar_url="user.avatar" />
             </article>
-            <div class="font-bold text-lg">{{ user.username }}</div>
+            <div class="font-bold text-lg ml-5">{{ user.username }}</div>
           </div>
           <div class="flex">
             <router-link
+            class="mr-2"
             :to="`/followers/${user.username}`"
-            >Followers: {{ user.followed_by }}</router-link>
+            >Seguidores: {{ user.followed_by }}</router-link>
             <router-link
+            class="ml-1 mr-2"
             :to="`/following/${user.username}`"
-            > Following: {{ user.following }}</router-link>
+            > Seguindo: {{ user.following }}</router-link>
           </div>
         </div>
-        <div class="flex w-full justify-between">
+        <div class="mt-4 mb-3">
           {{ biography }}
         </div>
+        <span class="text-gray-500">
+          No twikker desde {{ formatMonthYear(user.date_joined) }}
+        </span>
         <div class="flex justify-end">
           <div
             class="flex flex-col ml-4"
@@ -63,6 +68,7 @@ import { useRoute } from "vue-router";
 import Tweek from "../components/Tweek.vue";
 import Avatar from "../components/Avatar.vue";
 import LoadingSpinner from "../components/LoadingSpinner.vue";
+import { formatMonthYear } from "../utils/my-utils.js";
 
 const isLoading = ref(true);
 
