@@ -17,14 +17,10 @@
             <div class="font-bold">{{ user.username }}</div>
           </div>
           <div class="flex">
-            <router-link
-            :to="`/followers/${user.username}`"
-            >Followers: {{ user.followed_by }}</router-link>
+            Followers: {{ user.followed_by }}
           </div>
           <div class="flex">
-            <router-link
-            :to="`/following/${user.username}`"
-            >Following: {{ user.following }}</router-link>
+            Following: {{ user.following }}
           </div>
         </div>
       </router-link>
@@ -40,16 +36,20 @@
   import DefaultHeader from "../components/DefaultHeader.vue";
   import { useUserStore } from "../store/UserStore";
 
+  const props = defineProps({
+    id: {
+      type: Number,
+      required: true
+    }
+  });
+
   const users = ref([]);
   const isLoading = ref(true);
-  const cookie_user_id = document.cookie
-  .split("; ")
-  .find((row) => row.startsWith("user_id="))
-  ?.split("=")[1];
+
   async function getUsers() {
     isLoading.value = true;
     await axios
-      .get(`/api/users/followers/${cookie_user_id}`)
+      .get(`/api/users/followers/${props.id}`)
       .then((response) => {
         users.value = response.data;
       })

@@ -18,11 +18,11 @@
           <div class="flex">
             <router-link
             class="mr-2"
-            :to="`/followers/${user.username}`"
+            :to="`/followers/${user.id}`"
             >Seguidores: {{ user.followed_by }}</router-link>
             <router-link
             class="ml-1 mr-2"
-            :to="`/following/${user.username}`"
+            :to="`/following/${user.id}`"
             > Seguindo: {{ user.following }}</router-link>
           </div>
         </div>
