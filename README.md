@@ -2,7 +2,7 @@
 Social network built with Django and Vue.js
 
 ---- LIVE NOW -----
-https://twiker.herokuapp.com/
+https://twiker.social/
 --- OPEN SOURCE -----
 We will be pleased if you contribute
 
