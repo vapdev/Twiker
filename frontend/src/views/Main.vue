@@ -79,7 +79,7 @@ onMounted(async () => {
   }
   new_uri += "//" + import.meta.env.VITE_SOCKET_HOST;
 
-  websocket = new WebSocket(
+  const websocket = new WebSocket(
     new_uri + "/ws/" + "feed/" +  userStore.profile_id + ''
   );
 
