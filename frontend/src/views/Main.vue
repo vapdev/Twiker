@@ -71,7 +71,17 @@ onMounted(async () => {
   
   await getAuthenticatedUser();
 
-  const websocket = new WebSocket('ws://localhost:8000/ws/feed/' + userStore.profile_id + '')
+  var loc = window.location, new_uri;
+  if (loc.protocol === "https:") {
+    new_uri = "wss:";
+  } else {
+    new_uri = "ws:";
+  }
+  new_uri += "//" + import.meta.env.VITE_SOCKET_HOST;
+
+  websocket = new WebSocket(
+    new_uri + "/ws/" + "feed/" +  userStore.profile_id + ''
+  );
 
   websocket.addEventListener('open', () => {
   })
