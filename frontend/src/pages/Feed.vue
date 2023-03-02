@@ -18,17 +18,37 @@
       <LoadingSpinner v-if="isLoading" :size="8" class="mt-5" />
     </div>
   </div>
+  
+  <div v-if="unseen_tweeks" @click="reloadTweeks()" class="cursor-pointer shadow-outline fixed top-20 left-1/2 transform -translate-x-1/2 bg-blue-500 rounded-xl text-white p-2 text-center w-664 h-10">
+    Ver novos tweeks!
+  </div>
 </template>
 
 <script setup>
 import axios from "axios";
 import Tweek from "../components/Tweek.vue";
-import { ref, onMounted, defineAsyncComponent } from "vue";
+import { ref, watch, onMounted, onUnmounted, defineAsyncComponent } from "vue";
 import NewTextBox from "../components/NewTextBox.vue";
 import DefaultHeader from "../components/DefaultHeader.vue";
 import { useUserStore } from "../store/UserStore";
 
 const userStore = useUserStore();
+
+const props = defineProps({
+  unseenTweeks: Boolean
+})
+
+const emit = defineEmits(["update:unseenTweeks"]);
+
+function reloadTweeks() {
+  isLoading.value = true;
+  scrollToTop();
+  currentPage = 1;
+  lastTweekId = null; // reset last tweet ID to null
+  getTweeks();
+  emit("update:unseenTweeks", false);
+  isLoading.value = false;
+}
 
 function textAreaAdjust(element) {
   element.style.height = "32px";
@@ -37,6 +57,10 @@ function textAreaAdjust(element) {
 const LoadingSpinner = defineAsyncComponent(() =>
   import("../components/LoadingSpinner.vue")
 );
+
+function scrollToTop() {
+  window.scrollTo(0, 0);
+}
 
 const tweeks = ref([]);
 const isLoading = ref(true);
@@ -116,10 +140,29 @@ function handleScroll() {
   }
 }
 
+watch(() => props.unseenTweeks, (value) => {
+  unseen_tweeks.value = value;
+})
+
 onMounted(async () => {
+  console.log("motnando")
   await getTweeks();
   window.addEventListener("scroll", handleScroll);
 });
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+  unseen_tweeks.value = false;
+  console.log("poasss on moutend ")
+  emit("update:unseenTweeks", false);
+});
+
+const unseen_tweeks = ref(false);
+
 </script>
 
-<style></style>
+<style>
+.shadow-outline {
+  box-shadow: 0 0 10px 5px rgba(59, 130, 246, 0.5);
+}
+</style>

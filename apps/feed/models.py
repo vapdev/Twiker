@@ -23,6 +23,10 @@ class Tweek(models.Model):
         ordering = ('-created_at',)
         unique_together = 'id', 'retweek'
 
+    def author_followers(self):
+        return self.created_by.twikkerprofile.followed_by.all()
+
+
 class Like(models.Model):
     tweek = models.ForeignKey(Tweek, related_name='likes', on_delete=models.CASCADE)
     created_by = models.ForeignKey(User, related_name='likes', on_delete=models.CASCADE)

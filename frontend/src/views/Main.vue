@@ -10,7 +10,7 @@
     <main
       class="flex max-w-2xl grow max-[600px]:min-h-full max-[720px]:max-w-[600px]"
     >
-      <router-view :key="$route.params.id || $route.params" />
+      <router-view :key="$route.params.id || $route.params" v-model:unseenTweeks="unseen_tweeks"/>
     </main>
     <aside class="flex">
       <router-view name="right" />
@@ -22,11 +22,15 @@
 import axios from "axios";
 import lSideBar from "../components/lSideBar.vue";
 import { useUserStore } from "../store/UserStore.js";
+import { ref, onMounted } from "vue";
 
 const userStore = useUserStore();
 
 const expiryDate = new Date();
+
 expiryDate.setTime(expiryDate.getTime() + 3 * 24 * 60 * 60 * 1000);
+
+const unseen_tweeks = ref(false);
 
 async function getAuthenticatedUser() {
   await axios
@@ -51,6 +55,7 @@ async function getAuthenticatedUser() {
     .get(`/api/user_data/${userStore.username}`)
     .then((response) => {
       userStore.setDarkmode(response.data.dark_mode);
+      userStore.setProfileId(response.data.profile_id);
       dark_mode = response.data.dark_mode;
       if (dark_mode == true) {
         document.documentElement.classList.add("dark");
@@ -62,6 +67,26 @@ async function getAuthenticatedUser() {
     })
 }
 
-getAuthenticatedUser();
+onMounted(async () => {
+  
+  await getAuthenticatedUser();
+
+  const websocket = new WebSocket('ws://localhost:8000/ws/feed/' + userStore.profile_id + '')
+
+  websocket.addEventListener('open', () => {
+  })
+
+  websocket.addEventListener('message', event => {
+    unseen_tweeks.value = true;
+  })
+
+  websocket.addEventListener('close', event => {
+  })
+
+  websocket.addEventListener('error', event => {
+  })
+
+  websocket.send(JSON.stringify({ type: 'ping' }))
+});
 
 </script>

@@ -10,6 +10,7 @@ export const useUserStore = defineStore("UserStore", {
       isAuthenticated: false,
       username: "",
       user_id: "",
+      profile_id: "",
       avatar: "",
       darkmode: true,
       biography:""
@@ -62,6 +63,9 @@ export const useUserStore = defineStore("UserStore", {
     },
     setBiography(biography) {
       this.biography = biography;
+    },
+    setProfileId(profile_id) {
+      this.profile_id = profile_id;
     }
   },
 });

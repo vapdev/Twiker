@@ -9,6 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.CharField(source='twikkerprofile.avatar', read_only=True)
     dark_mode = serializers.BooleanField(source='twikkerprofile.dark_mode', read_only=True)
     biography = serializers.CharField(source='twikkerprofile.biography', read_only=True)
+    profile_id = serializers.IntegerField(source='twikkerprofile.id', read_only=True)
 
     class Meta:
         model = User

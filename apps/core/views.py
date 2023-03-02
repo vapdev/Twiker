@@ -20,6 +20,12 @@ from cloudinary import uploader
 import cloudinary
 from django.conf import settings
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.models import Token
+
 cloudinary.config(
   cloud_name = settings.CLOUDINARY_CLOUD_NAME,
   api_key = settings.CLOUDINARY_API_KEY,
@@ -67,3 +73,12 @@ class ImageViewSet(viewsets.ModelViewSet):
         image_url = result['secure_url']
         Image.objects.create(image_url=image_url)
         return Response({'image_url': image_url})
+
+
+class VerifyTokenView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        token = Token.objects.get(key=request.auth.key)
+        return Response({'detail': 'Token is valid'})
