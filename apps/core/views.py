@@ -1,25 +1,26 @@
 import os
 from rest_framework import generics
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework.decorators import action
 import requests
 import json
 from django.contrib.auth.models import User
 
 from apps.core.models import Image
-from django.db.models import Q
-
+from apps.core import defaults
 from apps.twikkerprofile.models import TwikkerProfile
 from apps.twikkerprofile.serializers import TwikkerProfileSerializer
+from django.db.models import Q
 from .serializers import UserSerializer
+from django.conf import settings
 from django.contrib.auth import logout
+from django.db.models import Count
 from django.http import JsonResponse
 from cloudinary import uploader
 import cloudinary
-from django.conf import settings
 
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
@@ -42,11 +43,20 @@ class UsersList(generics.ListAPIView):
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        queryset = User.objects.all()
+        queryset = User.objects.annotate(
+        num_following=Count('twikkerprofile__follows'),
+        num_followers=Count('twikkerprofile__followed_by')
+    )
         if self.request.GET.get('query', False):
             queryset = queryset.filter(username__icontains=self.request.GET.get('query', False))
+        if self.request.GET.get('query', False):
+            queryset = queryset.filter(username__icontains=self.request.GET.get('query', False))
+        if self.request.GET.get('order_by') == defaults.USER_FILTER_FOLLOWERS:
+            queryset = queryset.order_by('-num_followers')
+        elif self.request.GET.get('order_by') == defaults.USER_FILTER_FOLLOWING:
+            queryset = queryset.order_by('-num_following')
         return queryset
-    
+
 class FollowersList(generics.ListAPIView):
     serializer_class = TwikkerProfileSerializer
 
