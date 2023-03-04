@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import json
 import re
+from django.db.models import Count
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
@@ -57,7 +58,7 @@ def api_add_tweek(request):
 
     if tweek_type == 'retweek':
         Tweek.objects.create(body=body, created_by=user, retweek_id=parent_id, image=image_url)
-       
+
     elif tweek_type == 'reply':
         Tweek.objects.create(body=body, created_by=user, comment_from_id=parent_id, image=image_url)
     else:
@@ -73,7 +74,7 @@ def api_add_tweek(request):
             notification = Notification(created_by=request, to_user=user, notification_type='mention')
             notifications.append(notification)
     create_notification_bulk(notifications)
-            
+
     return JsonResponse({'success': True})
 
 
@@ -186,6 +187,12 @@ def api_get_tweeks(request):
     for tweeker in request.user.twikkerprofile.follows.all():
         userids.append(tweeker.user.id)
     tweeks = Tweek.objects.filter(created_by__id__in=userids)
+    if request.GET.get('order_by') == '0':
+        tweeks = tweeks.order_by('-created_at')
+    elif request.GET.get('order_by') == '1':
+        tweeks = tweeks.order_by('-likes')
+    elif request.GET.get('order_by') == '2':
+        tweeks = tweeks.annotate(num_retweets=Count('retweek')).order_by('-num_retweets')
     paginator = PageNumberPagination()
     paginator.page_size = 25
     results = paginator.paginate_queryset(tweeks, request)

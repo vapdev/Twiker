@@ -4,6 +4,13 @@
       class="flex flex-col w-full border-solid border-x-2 border-gray-100 dark:border-gray-700 max-[600px]:border-x-0"
     >
       <DefaultHeader :mainText="'Página Inicial'" />
+      <div class="mb-2">
+        <select v-model="selectedOption" @change="reloadTweeks()">
+          <option value="0">Mais recentes</option>
+          <option value="1">Mais Curtidos</option>
+          <option value="2">Mais Compartilhamentos</option>
+        </select>
+      </div>
       <NewTextBox
         v-bind:is-posting="isPosting"
         @callSubmitTweek="submitTweek"
@@ -18,7 +25,7 @@
       <LoadingSpinner v-if="isLoading" :size="8" class="mt-5" />
     </div>
   </div>
-  
+
   <div v-if="unseen_tweeks" @click="reloadTweeks()" class="cursor-pointer shadow-outline fixed top-20 left-1/2 transform -translate-x-1/2 bg-blue-500 rounded-xl text-white p-2 text-center w-664 h-10">
     Ver novos tweeks!
   </div>
@@ -33,6 +40,7 @@ import DefaultHeader from "../components/DefaultHeader.vue";
 import { useUserStore } from "../store/UserStore";
 
 const userStore = useUserStore();
+const selectedOption = ref(0); // defina selectedOption como uma referência reativa
 
 const props = defineProps({
   unseenTweeks: Boolean
@@ -96,7 +104,7 @@ async function getTweeks(refresh = false) {
       currentPage = 1;
       lastTweekId = null; // reset last tweet ID to null
     }
-    let url = `/api/get_tweeks/?page=${currentPage}`;
+    let url = `/api/get_tweeks/?page=${currentPage}&order_by=${selectedOption.value}`;
     if (lastTweekId) {
       url += `&last_tweek_id=${lastTweekId}`; // add last tweet ID to URL if it exists
     }
