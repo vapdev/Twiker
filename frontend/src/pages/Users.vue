@@ -10,6 +10,13 @@
             v-model="searchQuery" placeholder="Search" />
           <button><i class="p-1 fa-solid fa-magnifying-glass"></i></button>
         </div>
+        <div class="mb-2">
+            <select v-model="selectedOption" @change="getUsers()">
+              <option value="0">Ordem alfabética</option>
+              <option value="1">Mais Seguidos</option>
+              <option value="2">Mais Seguindo</option>
+            </select>
+          </div>
       </form>
     </div>
     <router-link :to="`/profile/${user.username}`" v-for="user in users"
@@ -41,10 +48,11 @@ import DefaultHeader from "../components/DefaultHeader.vue";
 const users = ref([]);
 const isLoading = ref(true);
 const searchQuery = ref('');
+const selectedOption = ref(0);
 async function getUsers() {
   isLoading.value = true;
   await axios
-    .get(`/api/users/?query=${searchQuery.value}`)
+    .get(`/api/users/?query=${searchQuery.value}&order_by=${selectedOption.value}`)
     .then((response) => {
       users.value = response.data;
     })
