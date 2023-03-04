@@ -192,14 +192,11 @@ def api_get_tweeks(request):
     elif request.GET.get('order_by') == '1':
         tweeks = tweeks.order_by('-likes')
     elif request.GET.get('order_by') == '2':
-        print(request.GET.get('order_by'))
         tweeks = tweeks.annotate(num_retweets=Count('retweek')).order_by('-num_retweets')
     paginator = PageNumberPagination()
     paginator.page_size = 25
-    print("ui")
     results = paginator.paginate_queryset(tweeks, request)
     serializer = TweekSerializer(results, many=True, context={'request': request})
-    print(serializer.data)
     return paginator.get_paginated_response(serializer.data)
 
 

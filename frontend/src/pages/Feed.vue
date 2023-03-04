@@ -5,7 +5,7 @@
     >
       <DefaultHeader :mainText="'Página Inicial'" />
       <div class="mb-2">
-        <select v-model="selectedOption" @change="getTweeks()">
+        <select v-model="selectedOption" @change="reloadTweeks()">
           <option value="0">Mais recentes</option>
           <option value="1">Mais Curtidos</option>
           <option value="2">Mais Compartilhamentos</option>
