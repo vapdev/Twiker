@@ -14,7 +14,7 @@ from rest_framework.decorators import permission_classes
 from ..notification.models import Notification
 from .serializers import TweekSerializer
 from apps.feed.models import Tweek, Like, Dislike
-
+from apps.core import defaults
 
 
 @permission_classes((IsAuthenticated, ))
@@ -187,11 +187,11 @@ def api_get_tweeks(request):
     for tweeker in request.user.twikkerprofile.follows.all():
         userids.append(tweeker.user.id)
     tweeks = Tweek.objects.filter(created_by__id__in=userids)
-    if request.GET.get('order_by') == '0':
+    if request.GET.get('order_by') == defaults.TWEEK_FILTER_RECENTLY:
         tweeks = tweeks.order_by('-created_at')
-    elif request.GET.get('order_by') == '1':
+    elif request.GET.get('order_by') == defaults.TWEEK_FILTER_LIKES:
         tweeks = tweeks.order_by('-likes')
-    elif request.GET.get('order_by') == '2':
+    elif request.GET.get('order_by') == defaults.TWEEK_FILTER_SHARES:
         tweeks = tweeks.annotate(num_retweets=Count('retweek')).order_by('-num_retweets')
     paginator = PageNumberPagination()
     paginator.page_size = 25
