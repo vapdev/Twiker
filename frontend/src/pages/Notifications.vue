@@ -19,7 +19,7 @@
             <small>{{ formatted_time(notification.created_at) }}</small>
           </router-link>
           <router-link :to="`/profile/${notification.created_by_username}`" v-if="notification.notification_type == 'follower'">
-            <strong>{{ notification.created_by_username }}</strong> começou router-link te
+            <strong>{{ notification.created_by_username }}</strong> começou a te
             seguir
             <small>{{ formatted_time(notification.created_at) }}</small>
           </router-link>
