@@ -13,31 +13,31 @@
       >
       <Avatar :avatar_url="notification.avatar_url" :size="8" class="mr-2"/>
         <div>
-          <a v-if="notification.notification_type == 'message'">
+          <router-link :to="`/profile/${notification.created_by_username}`" v-if="notification.notification_type == 'message'">
             <strong>{{ notification.created_by_username }}</strong> te mandou
             uma mensagem
             <small>{{ formatted_time(notification.created_at) }}</small>
-          </a>
-          <a v-if="notification.notification_type == 'follower'">
-            <strong>{{ notification.created_by_username }}</strong> começou a te
+          </router-link>
+          <router-link :to="`/profile/${notification.created_by_username}`" v-if="notification.notification_type == 'follower'">
+            <strong>{{ notification.created_by_username }}</strong> começou router-link te
             seguir
             <small>{{ formatted_time(notification.created_at) }}</small>
-          </a>
-          <a v-if="notification.notification_type == 'like'">
+          </router-link>
+          <router-link :to="`/profile/${notification.created_by_username}`" v-if="notification.notification_type == 'like'">
             <strong>{{ notification.created_by_username }}</strong> curtiu um
             tweek que você fez
             <small>{{ formatted_time(notification.created_at) }}</small>
-          </a>
-          <a v-if="notification.notification_type == 'dislike'">
+          </router-link>
+          <router-link :to="`/profile/${notification.created_by_username}`" v-if="notification.notification_type == 'dislike'">
             <strong>{{ notification.created_by_username }}</strong> não curtiu
             um tweek que você fez
             <small>{{ formatted_time(notification.created_at) }}</small>
-          </a>
-          <a v-if="notification.notification_type == 'mention'">
+          </router-link>
+          <router-link :to="`/profile/${notification.created_by_username}`" v-if="notification.notification_type == 'mention'">
             <strong>{{ notification.created_by_username }}</strong> mencionou
             você em um tweek
             <small>{{ formatted_time(notification.created_at) }}</small>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
